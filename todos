@@ -31,5 +31,63 @@
       "createdAt": 1792437111046
     }
   ],
-  "misc": []
+  "misc": [],
+  "mainquest": [],
+  "sidequest": [],
+  "categoryConfig": {
+    "mainquest": {
+      "labels": [
+        "Story",
+        "Boss",
+        "Dungeon",
+        "Escort"
+      ],
+      "collapsed": {}
+    },
+    "sidequest": {
+      "labels": [
+        "Fetch",
+        "Explore",
+        "Hunt",
+        "Collect"
+      ],
+      "collapsed": {}
+    },
+    "food": {
+      "labels": [
+        "Produce",
+        "Meat",
+        "Cold",
+        "Dry",
+        "Snacks"
+      ],
+      "collapsed": {}
+    },
+    "supplies": {
+      "labels": [
+        "Gear",
+        "Tools",
+        "Consumable",
+        "Ammo",
+        "General",
+        "Bat"
+      ],
+      "collapsed": {
+        "Consumable": false
+      }
+    },
+    "misc": {
+      "labels": [
+        "Quest",
+        "Loot",
+        "Note",
+        "General"
+      ],
+      "collapsed": {}
+    }
+  },
+  "meta": {
+    "lastModified": 1792439677510,
+    "version": 2
+  }
 }
