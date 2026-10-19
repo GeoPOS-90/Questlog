@@ -7,6 +7,14 @@
   "categoryConfig": {
     "food": {
       "labels": [
+        "ð¥© Proteins",
+        "ð¥¬ Vegetables",
+        "ð§ Dairy",
+        "ð Grains",
+        "ð Fruits",
+        "âï¸ Frozen",
+        "ð¥« Canned",
+        "ðª Snacks",
         "🥩 Proteins",
         "🥬 Vegetables",
         "🧀 Dairy",
@@ -20,6 +28,10 @@
     },
     "supplies": {
       "labels": [
+        "ð§¹ Cleaning",
+        "ð§´ Personal Care",
+        "ð¦ Household",
+        "ð¾ Pet Supplies",
         "🧹 Cleaning",
         "🧴 Personal Care",
         "📦 Household",
@@ -29,6 +41,10 @@
     },
     "mainquest": {
       "labels": [
+        "âï¸ Story",
+        "ð Boss Battles",
+        "ð° Dungeons",
+        "ð Milestones",
         "⚔️ Story",
         "🐉 Boss Battles",
         "🏰 Dungeons",
@@ -38,6 +54,10 @@
     },
     "sidequest": {
       "labels": [
+        "ðºï¸ Exploration",
+        "ð Collectibles",
+        "ð¤ Favors",
+        "ð¯ Challenges",
         "🗺️ Exploration",
         "💎 Collectibles",
         "🤝 Favors",
@@ -47,6 +67,11 @@
     },
     "skills": {
       "labels": [
+        "âï¸ Combat",
+        "ð§ Magic",
+        "ð ï¸ Crafting",
+        "ð£ï¸ Social",
+        "ð Physical",
         "⚔️ Combat",
         "🧙 Magic",
         "🛠️ Crafting",
@@ -57,7 +82,7 @@
     }
   },
   "meta": {
-    "lastModified": 0,
+    "lastModified": 1792442140394,
     "version": 3
   }
 }
