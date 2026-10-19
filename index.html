@@ -65,12 +65,29 @@
       border: 1px solid;
       background: #1a1a2e;
       letter-spacing: 0.5px;
+      cursor: pointer;
     }
 
     .status-synced   { color: #7fff7f; border-color: #3a6a3a; }
     .status-syncing  { color: #ffd700; border-color: #c9a227; }
     .status-local    { color: #80d8ff; border-color: #0091ea; }
     .status-error    { color: #ff5252; border-color: #d50000; }
+
+    .error-detail {
+      font-size: 7px;
+      color: #ff5252;
+      background: #2a1a1a;
+      border: 1px solid #d50000;
+      border-radius: 4px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      word-break: break-all;
+      display: none;
+    }
+
+    .error-detail.visible {
+      display: block;
+    }
 
     .icon-btn {
       background: #1a1a2e;
@@ -406,10 +423,11 @@
       <div class="header-top-row">
         <div class="header-title">📜 QUEST LOG VAULT</div>
         <div class="header-actions">
-          <span class="status-badge status-local" id="sync-status">💾 LOCAL ONLY</span>
+          <span class="status-badge status-local" id="sync-status" onclick="toggleErrorDetail()" title="Click for details">💾 LOCAL ONLY</span>
           <button class="icon-btn" onclick="syncWithGithub()" title="Sync memory now">🔄 SYNC</button>
         </div>
       </div>
+      <div class="error-detail" id="error-detail"></div>
     </header>
 
     <!-- TABS NAVIGATION -->
@@ -464,6 +482,63 @@
 
     // Auto-poll interval (in milliseconds) - 30 seconds
     const AUTO_POLL_INTERVAL = 30000;
+
+    // ============================================
+    // DEBUG HELPERS
+    // ============================================
+    let lastError = null;
+
+    function logDebug(context, data) {
+      console.log(`[QuestLog Debug] ${context}:`, data);
+    }
+
+    function setError(message, details = null) {
+      lastError = { message, details, timestamp: new Date().toISOString() };
+      console.error('[QuestLog Error]', message, details);
+
+      const errorEl = document.getElementById('error-detail');
+      errorEl.innerHTML = `<strong>${message}</strong>${details ? '<br>' + escapeHtml(JSON.stringify(details, null, 2)) : ''}`;
+      errorEl.classList.add('visible');
+    }
+
+    function clearError() {
+      lastError = null;
+      const errorEl = document.getElementById('error-detail');
+      errorEl.classList.remove('visible');
+      errorEl.innerHTML = '';
+    }
+
+    function toggleErrorDetail() {
+      const errorEl = document.getElementById('error-detail');
+      if (lastError) {
+        errorEl.classList.toggle('visible');
+      }
+    }
+
+    function validateConfig() {
+      const cfg = GITHUB_CONFIG;
+      const issues = [];
+
+      if (!cfg.owner) issues.push('Missing owner');
+      if (!cfg.repo) issues.push('Missing repo');
+      if (!cfg.branch) issues.push('Missing branch');
+      if (!cfg.path) issues.push('Missing path');
+      if (!cfg.token) issues.push('Missing token');
+      else if (cfg.token.length < 40) issues.push(`Token too short (${cfg.token.length} chars, expected 40+)`);
+      else if (cfg.token.includes(' ')) issues.push('Token contains spaces');
+
+      logDebug('Config Validation', {
+        owner: cfg.owner,
+        repo: cfg.repo,
+        branch: cfg.branch,
+        path: cfg.path,
+        tokenLength: cfg.token ? cfg.token.length : 0,
+        tokenPrefix: cfg.token ? cfg.token.substring(0, 15) + '...' : 'MISSING',
+        issues: issues.length ? issues : 'NONE'
+      });
+
+      return issues;
+    }
 
     // ============================================
 
@@ -528,11 +603,24 @@
       const el = document.getElementById('sync-status');
       el.className = `status-badge status-${state}`;
       el.textContent = label;
+
+      if (state !== 'error') {
+        clearError();
+      }
     }
 
     /* GitHub Sync Engine */
     async function syncWithGithub(silent = false) {
       const cfg = getGithubConfig();
+
+      // Validate config first
+      const configIssues = validateConfig();
+      if (configIssues.length > 0) {
+        setError('Config Issues', configIssues);
+        updateStatus('error', '⚠️ CONFIG ERROR');
+        return;
+      }
+
       if (!cfg.token) {
         updateStatus('local', '💾 LOCAL ONLY');
         return;
@@ -543,6 +631,7 @@
       if (!silent) updateStatus('syncing', '🔄 SYNCING...');
 
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
+      logDebug('Fetch URL', url);
 
       try {
         const res = await fetch(url, {
@@ -552,24 +641,47 @@
           }
         });
 
+        logDebug('Response Status', { status: res.status, statusText: res.statusText });
+
         if (res.status === 200) {
           const body = await res.json();
           currentSha = body.sha;
+          logDebug('File SHA', currentSha);
+
           // Decode utf8 from base64
           const decoded = decodeURIComponent(escape(atob(body.content.replace(/\s/g, ''))));
           const remoteData = JSON.parse(decoded);
+          logDebug('Remote Data', remoteData);
 
           saveStoreLocal(remoteData);
           render();
           updateStatus('synced', '☁️ SYNCED');
         } else if (res.status === 404) {
+          logDebug('File Not Found', 'Creating new file...');
           // File does not exist yet: push initial structure
           await pushToGithub(getStore());
         } else {
+          // Get error details from response
+          let errorBody = null;
+          try {
+            errorBody = await res.json();
+          } catch (e) {
+            errorBody = await res.text();
+          }
+
+          setError(`Sync Failed (HTTP ${res.status})`, {
+            status: res.status,
+            statusText: res.statusText,
+            url: url,
+            response: errorBody
+          });
           updateStatus('error', '⚠️ SYNC ERROR');
         }
       } catch (err) {
-        console.error('Fetch error:', err);
+        setError('Network/Fetch Error', {
+          message: err.message,
+          stack: err.stack
+        });
         updateStatus('error', '⚠️ SYNC ERROR');
       } finally {
         isSyncing = false;
@@ -596,6 +708,8 @@
       };
       if (currentSha) payload.sha = currentSha;
 
+      logDebug('Push Payload', { url, hasSha: !!currentSha, contentLength: content.length });
+
       try {
         const res = await fetch(url, {
           method: 'PUT',
@@ -607,18 +721,39 @@
           body: JSON.stringify(payload)
         });
 
+        logDebug('Push Response', { status: res.status, statusText: res.statusText });
+
         if (res.ok) {
           const body = await res.json();
           currentSha = body.content.sha;
+          logDebug('New SHA after push', currentSha);
           updateStatus('synced', '☁️ SYNCED');
         } else if (res.status === 409) {
+          logDebug('Conflict detected', 'Fetching newer version...');
           // Conflict: fetch newer version first
           await syncWithGithub(true);
         } else {
+          // Get error details from response
+          let errorBody = null;
+          try {
+            errorBody = await res.json();
+          } catch (e) {
+            errorBody = await res.text();
+          }
+
+          setError(`Push Failed (HTTP ${res.status})`, {
+            status: res.status,
+            statusText: res.statusText,
+            url: url,
+            response: errorBody
+          });
           updateStatus('error', '⚠️ PUSH ERROR');
         }
       } catch (err) {
-        console.error('Push error:', err);
+        setError('Push Network Error', {
+          message: err.message,
+          stack: err.stack
+        });
         updateStatus('error', '⚠️ PUSH ERROR');
       }
     }
@@ -635,12 +770,14 @@
       autoPollTimer = setInterval(() => {
         syncWithGithub(true); // silent sync
       }, AUTO_POLL_INTERVAL);
+      logDebug('Auto-poll started', `${AUTO_POLL_INTERVAL / 1000} seconds interval`);
     }
 
     function stopAutoPoll() {
       if (autoPollTimer) {
         clearInterval(autoPollTimer);
         autoPollTimer = null;
+        logDebug('Auto-poll stopped', null);
       }
     }
 
@@ -878,6 +1015,8 @@
     });
 
     // Startup
+    logDebug('App Starting', { timestamp: new Date().toISOString() });
+    validateConfig(); // Log config validation on startup
     switchTab(currentTab);
     syncWithGithub();
     startAutoPoll(); // Start auto-polling every 30 seconds
