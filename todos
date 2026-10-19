@@ -7,6 +7,14 @@
   "categoryConfig": {
     "food": {
       "labels": [
+        "ÃÂ°ÃÂÃÂ¥ÃÂ© Proteins",
+        "ÃÂ°ÃÂÃÂ¥ÃÂ¬ Vegetables",
+        "ÃÂ°ÃÂÃÂ§ÃÂ Dairy",
+        "ÃÂ°ÃÂÃÂÃÂ Grains",
+        "ÃÂ°ÃÂÃÂÃÂ Fruits",
+        "ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ Frozen",
+        "ÃÂ°ÃÂÃÂ¥ÃÂ« Canned",
+        "ÃÂ°ÃÂÃÂÃÂª Snacks",
         "Ã°ÂÂ¥Â© Proteins",
         "Ã°ÂÂ¥Â¬ Vegetables",
         "Ã°ÂÂ§Â Dairy",
@@ -36,6 +44,10 @@
     },
     "supplies": {
       "labels": [
+        "ÃÂ°ÃÂÃÂ§ÃÂ¹ Cleaning",
+        "ÃÂ°ÃÂÃÂ§ÃÂ´ Personal Care",
+        "ÃÂ°ÃÂÃÂÃÂ¦ Household",
+        "ÃÂ°ÃÂÃÂÃÂ¾ Pet Supplies",
         "Ã°ÂÂ§Â¹ Cleaning",
         "Ã°ÂÂ§Â´ Personal Care",
         "Ã°ÂÂÂ¦ Household",
@@ -53,6 +65,10 @@
     },
     "mainquest": {
       "labels": [
+        "ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ Story",
+        "ÃÂ°ÃÂÃÂÃÂ Boss Battles",
+        "ÃÂ°ÃÂÃÂÃÂ° Dungeons",
+        "ÃÂ°ÃÂÃÂÃÂ Milestones",
         "Ã¢ÂÂÃ¯Â¸Â Story",
         "Ã°ÂÂÂ Boss Battles",
         "Ã°ÂÂÂ° Dungeons",
@@ -70,6 +86,10 @@
     },
     "sidequest": {
       "labels": [
+        "ÃÂ°ÃÂÃÂÃÂºÃÂ¯ÃÂ¸ÃÂ Exploration",
+        "ÃÂ°ÃÂÃÂÃÂ Collectibles",
+        "ÃÂ°ÃÂÃÂ¤ÃÂ Favors",
+        "ÃÂ°ÃÂÃÂÃÂ¯ Challenges",
         "Ã°ÂÂÂºÃ¯Â¸Â Exploration",
         "Ã°ÂÂÂ Collectibles",
         "Ã°ÂÂ¤Â Favors",
@@ -87,6 +107,11 @@
     },
     "skills": {
       "labels": [
+        "ÃÂ¢ÃÂÃÂÃÂ¯ÃÂ¸ÃÂ Combat",
+        "ÃÂ°ÃÂÃÂ§ÃÂ Magic",
+        "ÃÂ°ÃÂÃÂÃÂ ÃÂ¯ÃÂ¸ÃÂ Crafting",
+        "ÃÂ°ÃÂÃÂÃÂ£ÃÂ¯ÃÂ¸ÃÂ Social",
+        "ÃÂ°ÃÂÃÂÃÂ Physical",
         "Ã¢ÂÂÃ¯Â¸Â Combat",
         "Ã°ÂÂ§Â Magic",
         "Ã°ÂÂÂ Ã¯Â¸Â Crafting",
@@ -107,7 +132,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792442200333,
+    "lastModified": 1792442261051,
     "version": 3
   }
 }
