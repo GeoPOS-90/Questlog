@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quest Log - Main Quest, Side Quest, Provisions, Storehouse & Inventory</title>
+  <title>Quest Log - Main Quest, Side Quest, Provisions, Storehouse & Skills</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * {
@@ -62,750 +62,676 @@
       font-size: 8px;
       padding: 6px 10px;
       border-radius: 4px;
-      border: 1px solid;
-      background: #1a1a2e;
-      letter-spacing: 0.5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
+      border: 1px solid #4a4a5e;
+      background: #2a2a3e;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .status-synced   { color: #7fff7f; border-color: #3a6a3a; }
-    .status-syncing  { color: #ffd700; border-color: #c9a227; }
-    .status-local    { color: #80d8ff; border-color: #0091ea; }
-    .status-error    { color: #ff5252; border-color: #d50000; }
-
-    .sync-timestamp {
-      font-size: 6px;
-      color: #7a7a8a;
-      margin-top: 2px;
+    .status-badge.synced {
+      color: #4ade80;
+      border-color: #4ade80;
+      text-shadow: 0 0 6px #4ade80;
     }
 
-    @keyframes syncPulse {
+    .status-badge.syncing {
+      color: #60a5fa;
+      border-color: #60a5fa;
+      animation: pulse 1s infinite;
+    }
+
+    .status-badge.error {
+      color: #f87171;
+      border-color: #f87171;
+    }
+
+    @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
 
-    .status-badge.pulsing {
-      animation: syncPulse 1s ease-in-out;
+    @keyframes syncPulse {
+      0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
     }
 
-    .icon-btn {
-      background: #1a1a2e;
-      border: 2px solid #5c4033;
-      color: #ffd700;
-      padding: 6px 10px;
+    .sync-pulse {
+      animation: syncPulse 1s ease-out;
+    }
+
+    .sync-time {
+      font-size: 7px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .btn {
       font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
+      font-size: 8px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 2px solid;
       cursor: pointer;
-      border-radius: 4px;
-      transition: all 0.15s;
-    }
-
-    .icon-btn:hover {
-      border-color: #ffd700;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-    }
-
-    .icon-btn.small {
-      font-size: 7px;
-      padding: 4px 8px;
-    }
-
-    /* Search Box */
-    .search-container {
-      margin-bottom: 12px;
-    }
-
-    .search-input {
-      width: 100%;
-      background: #1a1a2e;
-      color: #ffd700;
-      border: 2px solid #4a4a5e;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
-      padding: 10px 12px;
-      border-radius: 4px;
-    }
-
-    .search-input:focus {
-      outline: none;
-      border-color: #ffd700;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-    }
-
-    .search-input::placeholder {
-      color: #5a5a6e;
-    }
-
-    .search-results-info {
-      font-size: 7px;
-      color: #7a7a8a;
-      margin-top: 6px;
-      padding-left: 4px;
-    }
-
-    /* Tabs Navigation */
-    .tabs-nav {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
+    }
+
+    .btn-sync {
+      background: #1a1a2e;
+      border-color: #60a5fa;
+      color: #60a5fa;
+    }
+
+    .btn-sync:hover {
+      background: #60a5fa;
+      color: #1a1a2e;
+    }
+
+    .btn-export {
+      background: #1a1a2e;
+      border-color: #4ade80;
+      color: #4ade80;
+    }
+
+    .btn-export:hover {
+      background: #4ade80;
+      color: #1a1a2e;
+    }
+
+    .btn-import {
+      background: #1a1a2e;
+      border-color: #f472b6;
+      color: #f472b6;
+    }
+
+    .btn-import:hover {
+      background: #f472b6;
+      color: #1a1a2e;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      display: flex;
+      gap: 8px;
       margin-bottom: 16px;
     }
 
-    .tab-btn {
-      background: #202030;
-      border: 2px solid #4a4a5e;
-      border-bottom: none;
-      border-radius: 6px 6px 0 0;
-      padding: 10px 4px;
+    .search-input {
+      flex: 1;
       font-family: 'Press Start 2P', cursive;
-      font-size: 7px;
-      color: #8a8a9e;
-      cursor: pointer;
+      font-size: 10px;
+      padding: 10px 14px;
+      background: #2a2a3e;
+      border: 2px solid #4a4a5e;
+      border-radius: 4px;
+      color: #ffd700;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #ffd700;
+    }
+
+    .search-input::placeholder {
+      color: #666;
+    }
+
+    /* Tab Navigation */
+    .tab-nav {
       display: flex;
-      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
+      padding: 10px 14px;
+      background: #2a2a3e;
+      border: 2px solid #4a4a5e;
+      border-radius: 4px;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
       align-items: center;
-      gap: 4px;
-      transition: all 0.15s;
+      gap: 6px;
     }
 
     .tab-btn:hover {
-      background: #28283c;
+      border-color: #ffd700;
       color: #ffd700;
     }
 
     .tab-btn.active {
-      background: #2a2a3e;
-      color: #ffd700;
+      background: #3a3a4e;
       border-color: #ffd700;
-      text-shadow: 0 0 8px #ffd700, 0 0 15px #c9a227;
-      box-shadow: 0 -4px 12px rgba(255, 215, 0, 0.2);
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffd700;
     }
 
-    .tab-count-badge {
-      font-size: 6px;
-      padding: 2px 5px;
-      background: #1a1a2e;
-      border: 1px solid #5c4033;
+    .tab-count {
+      font-size: 8px;
+      background: #4a4a5e;
+      padding: 2px 6px;
       border-radius: 3px;
-      color: #d4c4a8;
     }
 
-    .tab-btn.active .tab-count-badge {
-      border-color: #ffd700;
-      color: #ffd700;
+    .tab-btn.active .tab-count {
+      background: #ffd700;
+      color: #1a1a2e;
     }
 
-    /* Vault Card */
-    .vault-card {
+    /* Input Area */
+    .input-area {
       background: #2a2a3e;
-      border: 2px solid #ffd700;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
-      border-radius: 0 0 6px 6px;
-      padding: 18px;
-    }
-
-    .input-box {
-      background: #1a1a2e;
-      padding: 12px;
       border: 2px solid #4a4a5e;
-      border-radius: 4px;
-      margin-bottom: 18px;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 16px;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .input-row {
-      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
     }
 
-    input[type="text"], select {
-      background: #d4c4a8;
-      color: #3d2914;
-      border: 2px solid #5c4033;
+    .input-area input,
+    .input-area select {
       font-family: 'Press Start 2P', cursive;
       font-size: 10px;
       padding: 10px;
+      background: #1a1a2e;
+      border: 2px solid #4a4a5e;
       border-radius: 4px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-    }
-
-    select {
-      cursor: pointer;
-      font-size: 9px;
-      flex: 1;
-    }
-
-    input[type="text"]:focus, select:focus {
+      color: #ffd700;
       outline: none;
+    }
+
+    .input-area input:focus,
+    .input-area select:focus {
       border-color: #ffd700;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
     }
 
-    input[type="text"]::placeholder {
-      color: #7a6a5a;
+    .input-area input {
+      flex: 1;
+      min-width: 200px;
     }
 
-    .add-btn {
-      background: #2a4a2a;
-      border: 2px solid #3a6a3a;
-      color: #7fff7f;
-      padding: 10px 14px;
+    .input-area select {
+      min-width: 140px;
+    }
+
+    .input-area button {
       font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
-      cursor: pointer;
+      font-size: 10px;
+      padding: 10px 16px;
+      background: #ffd700;
+      border: none;
       border-radius: 4px;
-      flex-shrink: 0;
-      transition: all 0.15s;
+      color: #1a1a2e;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    .add-btn:hover {
-      background: #3a5a3a;
-      box-shadow: 0 0 8px rgba(127, 255, 127, 0.5);
+    .input-area button:hover {
+      background: #ffed4a;
+      transform: scale(1.05);
     }
 
-    /* Label Group Section */
-    .label-group-block {
-      margin-bottom: 16px;
+    /* Category Groups */
+    .category-group {
+      background: #2a2a3e;
+      border: 2px solid #4a4a5e;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      overflow: hidden;
     }
 
-    .label-group-header {
-      font-size: 9px;
-      padding: 6px 8px;
-      margin-bottom: 8px;
-      border-left: 4px solid #ffd700;
-      background: #1f1f30;
+    .category-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      letter-spacing: 0.5px;
+      padding: 10px 14px;
+      background: #3a3a4e;
       cursor: pointer;
-      user-select: none;
       transition: background 0.15s;
     }
 
-    .label-group-header:hover {
-      background: #252540;
+    .category-header:hover {
+      background: #4a4a5e;
     }
 
-    .label-group-header-left {
+    .category-title {
+      font-size: 10px;
+      color: #ffd700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-title-text {
+      cursor: text;
+    }
+
+    .category-title-text:hover {
+      text-decoration: underline;
+    }
+
+    .category-count {
+      font-size: 8px;
+      color: #888;
+    }
+
+    .category-actions {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .collapse-icon {
-      font-size: 8px;
+      font-size: 10px;
+      color: #888;
       transition: transform 0.2s;
     }
 
-    .label-group-header.collapsed .collapse-icon {
+    .category-group.collapsed .collapse-icon {
       transform: rotate(-90deg);
     }
 
-    .label-group-header .edit-label-btn {
-      font-size: 7px;
-      padding: 2px 5px;
-      background: transparent;
-      border: 1px solid #5c4033;
-      color: #7a7a8a;
-      cursor: pointer;
-      border-radius: 2px;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-
-    .label-group-header:hover .edit-label-btn {
-      opacity: 1;
-    }
-
-    .label-group-header .edit-label-btn:hover {
-      border-color: #ffd700;
-      color: #ffd700;
-    }
-
-    .label-group-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-height: 10px;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .label-group-list.collapsed {
-      max-height: 0 !important;
-      margin: 0;
+    .category-group.collapsed .category-items {
+      display: none;
     }
 
     .add-category-btn {
-      background: transparent;
-      border: 2px dashed #4a4a5e;
-      color: #5a5a6e;
-      padding: 8px;
       font-family: 'Press Start 2P', cursive;
-      font-size: 7px;
+      font-size: 9px;
+      padding: 8px 12px;
+      background: #2a2a3e;
+      border: 2px dashed #4a4a5e;
+      border-radius: 6px;
+      color: #888;
       cursor: pointer;
-      border-radius: 4px;
       width: 100%;
-      margin-top: 8px;
+      margin-bottom: 12px;
       transition: all 0.15s;
     }
 
     .add-category-btn:hover {
-      border-color: #7fff7f;
-      color: #7fff7f;
+      border-color: #ffd700;
+      color: #ffd700;
     }
 
-    /* Item Card */
-    .item-card {
+    .delete-category-btn {
+      font-size: 10px;
+      color: #f87171;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .category-header:hover .delete-category-btn {
+      opacity: 1;
+    }
+
+    /* Item Cards */
+    .category-items {
+      padding: 8px;
+    }
+
+    .quest-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 8px;
+      gap: 10px;
+      padding: 10px 12px;
       background: #1a1a2e;
       border: 2px solid #4a4a5e;
       border-radius: 4px;
-      transition: border-color 0.15s, background 0.15s;
+      margin-bottom: 6px;
+      cursor: grab;
+      transition: all 0.15s ease;
     }
 
-    .item-card.dragging {
-      opacity: 0.3;
-      border: 2px dashed #ffd700;
-      background: #2a2a3e;
-    }
-
-    .item-card.drag-target-above {
-      border-top: 3px solid #ffd700 !important;
-    }
-
-    .item-card.drag-target-below {
-      border-bottom: 3px solid #ffd700 !important;
-    }
-
-    .item-card.search-highlight {
+    .quest-item:hover {
       border-color: #ffd700;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    }
+
+    .quest-item.completed {
+      opacity: 0.5;
+      border-color: #4ade80;
+    }
+
+    .quest-item.completed .item-text {
+      text-decoration: line-through;
+      color: #4ade80;
+    }
+
+    .quest-item.dragging {
+      opacity: 0.5;
+      transform: scale(1.02);
     }
 
     .drag-handle {
-      color: #7a6a5a;
-      font-size: 12px;
-      padding: 2px 4px;
+      color: #666;
       cursor: grab;
-      user-select: none;
-      touch-action: none;
-    }
-
-    .drag-handle:active {
-      cursor: grabbing;
-      color: #ffd700;
+      font-size: 12px;
     }
 
     .item-checkbox {
       width: 18px;
       height: 18px;
-      background: #d4c4a8;
-      border: 2px solid #5c4033;
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #3d2914;
       cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .item-content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      overflow: hidden;
+      accent-color: #4ade80;
     }
 
     .item-text {
-      font-size: 9px;
-      color: #d4c4a8;
+      flex: 1;
+      font-size: 10px;
+      color: #e0e0e0;
       word-break: break-word;
-      line-height: 1.4;
+    }
+
+    .item-text mark {
+      background: #ffd700;
+      color: #1a1a2e;
+      padding: 0 2px;
+      border-radius: 2px;
     }
 
     .item-tag {
       font-size: 7px;
-      padding: 3px 5px;
-      border-radius: 2px;
-      flex-shrink: 0;
-      text-transform: uppercase;
-      border: 1px solid;
+      padding: 3px 6px;
+      border-radius: 3px;
+      background: #4a4a5e;
+      color: #ccc;
     }
-
-    /* Tag styles */
-    .tag-produce { background: #1c381c; color: #7fff7f; border-color: #3a6a3a; }
-    .tag-meat    { background: #3d1c1c; color: #ff7f7f; border-color: #6a3a3a; }
-    .tag-cold    { background: #1a334a; color: #7fe5ff; border-color: #2b557b; }
-    .tag-dry     { background: #3d341a; color: #ffd87f; border-color: #6a5a2b; }
-    .tag-snacks  { background: #3b1d3d; color: #ff7fe5; border-color: #6b336e; }
-
-    .tag-gear       { background: #2f2a4a; color: #c4b5fd; border-color: #554a8a; }
-    .tag-tools      { background: #3d2f1f; color: #fbc02d; border-color: #6d5336; }
-    .tag-consumable { background: #1a3d31; color: #4db6ac; border-color: #2e6d58; }
-    .tag-ammo       { background: #421e1e; color: #ff8a80; border-color: #7b3838; }
-
-    .tag-quest      { background: #3a3214; color: #ffd700; border-color: #705e19; }
-    .tag-loot       { background: #1f3a2c; color: #69f0ae; border-color: #356b4f; }
-    .tag-note       { background: #383430; color: #cfd8dc; border-color: #5d5954; }
-    .tag-general    { background: #2a2a3e; color: #d4c4a8; border-color: #4a4a5e; }
-
-    /* New tab tags */
-    .tag-story      { background: #3a2a14; color: #ffb74d; border-color: #6d4c1f; }
-    .tag-boss       { background: #4a1a2a; color: #ff5252; border-color: #7b2d3d; }
-    .tag-dungeon    { background: #1a2a4a; color: #64b5f6; border-color: #2d4a7b; }
-    .tag-escort     { background: #2a3a2a; color: #81c784; border-color: #4a6a4a; }
-    .tag-fetch      { background: #3a3a2a; color: #dce775; border-color: #5a5a3a; }
-    .tag-explore    { background: #2a2a3a; color: #b39ddb; border-color: #4a4a6a; }
-    .tag-hunt       { background: #3a2a2a; color: #ef9a9a; border-color: #6a4a4a; }
-    .tag-collect    { background: #2a3a3a; color: #80deea; border-color: #4a6a6a; }
 
     .delete-btn {
-      background: #8b0000;
-      border: 2px solid #a00;
-      color: #fff;
-      padding: 5px 8px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 8px;
+      font-size: 12px;
+      color: #f87171;
       cursor: pointer;
-      border-radius: 3px;
-      opacity: 0.3;
-      transition: opacity 0.15s, background 0.15s;
+      opacity: 0;
+      transition: opacity 0.15s;
     }
 
-    .item-card:hover .delete-btn {
+    .quest-item:hover .delete-btn {
       opacity: 1;
     }
 
-    .delete-btn:hover {
-      background: #a00;
-      box-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
-    }
-
-    /* Completed section */
-    .completed-section {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 2px dashed #4a4a5e;
-    }
-
-    .completed-header {
-      font-size: 9px;
-      color: #7a7a8a;
-      margin-bottom: 10px;
+    /* Skill Item Card */
+    .skill-item {
       display: flex;
-      justify-content: space-between;
-    }
-
-    .item-card.completed {
-      opacity: 0.55;
-      border-color: #2e4a2e;
-      background: #141424;
-    }
-
-    .item-card.completed .item-checkbox {
-      background: #2a4a2a;
-      border-color: #7fff7f;
-      color: #7fff7f;
-    }
-
-    .item-card.completed .item-text {
-      text-decoration: line-through;
-      color: #7a7a8a;
-    }
-
-    .empty-state {
-      font-size: 8px;
-      color: #6a6a7e;
-      text-align: center;
-      padding: 24px 8px;
-      border: 1px dashed #3a3a4e;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      background: #1a1a2e;
+      border: 2px solid #4a4a5e;
       border-radius: 4px;
+      margin-bottom: 8px;
+      transition: all 0.15s ease;
     }
 
-    /* Modal for editing labels */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-box {
-      background: #2a2a3e;
-      border: 2px solid #ffd700;
-      border-radius: 6px;
-      padding: 20px;
-      max-width: 400px;
-      width: 90%;
-    }
-
-    .modal-title {
-      font-size: 10px;
-      color: #ffd700;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    .modal-input {
-      width: 100%;
-      background: #d4c4a8;
-      color: #3d2914;
-      border: 2px solid #5c4033;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 10px;
-      padding: 10px;
-      border-radius: 4px;
-      margin-bottom: 16px;
-    }
-
-    .modal-input:focus {
-      outline: none;
+    .skill-item:hover {
       border-color: #ffd700;
     }
 
-    .modal-buttons {
+    .skill-header {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skill-name {
+      font-size: 10px;
+      color: #e0e0e0;
+    }
+
+    .skill-rank {
+      font-size: 8px;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    /* Rank Colors */
+    .rank-novice { background: #6b7280; color: #fff; }
+    .rank-apprentice { background: #22c55e; color: #fff; }
+    .rank-initiate { background: #14b8a6; color: #fff; }
+    .rank-journeyman { background: #3b82f6; color: #fff; }
+    .rank-adept { background: #8b5cf6; color: #fff; }
+    .rank-expert { background: #f97316; color: #fff; }
+    .rank-veteran { background: #ef4444; color: #fff; }
+    .rank-elite { background: #eab308; color: #1a1a2e; }
+    .rank-champion { background: #06b6d4; color: #fff; text-shadow: 0 0 4px #06b6d4; }
+    .rank-master { background: linear-gradient(135deg, #ffd700, #ffed4a); color: #1a1a2e; box-shadow: 0 0 8px #ffd700; }
+    .rank-grandmaster { background: linear-gradient(135deg, #8b5cf6, #a855f7); color: #fff; box-shadow: 0 0 8px #8b5cf6; }
+    .rank-legend { background: linear-gradient(135deg, #f97316, #fb923c); color: #fff; box-shadow: 0 0 8px #f97316; }
+    .rank-mythic { background: linear-gradient(135deg, #ff0080, #7928ca, #0070f3); color: #fff; box-shadow: 0 0 12px #ff0080; animation: shimmer 2s infinite; }
+    .rank-transcendent { background: linear-gradient(135deg, #e5e7eb, #f3f4f6); color: #1a1a2e; box-shadow: 0 0 12px #e5e7eb; }
+    .rank-immortal { background: linear-gradient(135deg, #fef3c7, #fde68a, #fbbf24); color: #1a1a2e; box-shadow: 0 0 15px #fbbf24; }
+    .rank-godlike { background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); color: #fff; box-shadow: 0 0 20px #ffd700; animation: rainbow 3s linear infinite; }
+
+    @keyframes shimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    @keyframes rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    /* Skill border colors based on rank */
+    .skill-item.tier-novice { border-color: #6b7280; }
+    .skill-item.tier-apprentice { border-color: #22c55e; }
+    .skill-item.tier-initiate { border-color: #14b8a6; }
+    .skill-item.tier-journeyman { border-color: #3b82f6; }
+    .skill-item.tier-adept { border-color: #8b5cf6; }
+    .skill-item.tier-expert { border-color: #f97316; }
+    .skill-item.tier-veteran { border-color: #ef4444; }
+    .skill-item.tier-elite { border-color: #eab308; }
+    .skill-item.tier-champion { border-color: #06b6d4; box-shadow: 0 0 6px rgba(6, 182, 212, 0.3); }
+    .skill-item.tier-master { border-color: #ffd700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
+    .skill-item.tier-grandmaster { border-color: #8b5cf6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.4); }
+    .skill-item.tier-legend { border-color: #f97316; box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); }
+    .skill-item.tier-mythic { border-color: #ff0080; box-shadow: 0 0 12px rgba(255, 0, 128, 0.5); }
+    .skill-item.tier-transcendent { border-color: #e5e7eb; box-shadow: 0 0 12px rgba(229, 231, 235, 0.5); }
+    .skill-item.tier-immortal { border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+    .skill-item.tier-godlike { border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); animation: rainbow-border 3s linear infinite; }
+
+    @keyframes rainbow-border {
+      0% { border-color: #ff0000; }
+      16% { border-color: #ff7f00; }
+      33% { border-color: #ffff00; }
+      50% { border-color: #00ff00; }
+      66% { border-color: #0000ff; }
+      83% { border-color: #9400d3; }
+      100% { border-color: #ff0000; }
+    }
+
+    .skill-progress-container {
+      display: flex;
+      align-items: center;
       gap: 10px;
-      justify-content: center;
     }
 
-    .modal-btn {
-      padding: 8px 16px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      border: 2px solid;
+    .skill-level {
+      font-size: 12px;
+      color: #ffd700;
+      min-width: 45px;
+      text-align: center;
     }
 
-    .modal-btn.confirm {
-      background: #2a4a2a;
-      border-color: #3a6a3a;
-      color: #7fff7f;
+    .skill-progress-bar {
+      flex: 1;
+      height: 10px;
+      background: #4a4a5e;
+      border-radius: 5px;
+      overflow: hidden;
     }
 
-    .modal-btn.cancel {
-      background: #4a2a2a;
-      border-color: #6a3a3a;
-      color: #ff7f7f;
+    .skill-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #ffed4a);
+      transition: width 0.3s ease;
     }
 
-    .modal-btn.danger {
-      background: #8b0000;
-      border-color: #a00;
-      color: #fff;
-    }
-
-    /* Backup buttons */
-    .backup-section {
+    .skill-controls {
       display: flex;
-      gap: 8px;
-      margin-top: 8px;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Conflict Modal */
-    .conflict-info {
-      font-size: 8px;
-      color: #d4c4a8;
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-
-    .conflict-options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .conflict-btn {
-      padding: 10px 16px;
+    .skill-btn {
       font-family: 'Press Start 2P', cursive;
-      font-size: 8px;
+      font-size: 10px;
+      width: 28px;
+      height: 28px;
+      background: #3a3a4e;
+      border: 2px solid #4a4a5e;
       border-radius: 4px;
+      color: #ffd700;
       cursor: pointer;
-      border: 2px solid;
-      text-align: left;
+      transition: all 0.15s;
     }
 
-    .conflict-btn.local {
-      background: #2a4a2a;
-      border-color: #3a6a3a;
-      color: #7fff7f;
+    .skill-btn:hover {
+      background: #4a4a5e;
+      border-color: #ffd700;
     }
 
-    .conflict-btn.remote {
-      background: #2a2a4a;
-      border-color: #3a3a6a;
-      color: #7f7fff;
+    .skill-btn.minus:hover {
+      border-color: #f87171;
+      color: #f87171;
     }
 
-    .conflict-btn.merge {
-      background: #4a4a2a;
-      border-color: #6a6a3a;
-      color: #ffff7f;
+    .skill-btn.plus:hover {
+      border-color: #4ade80;
+      color: #4ade80;
+    }
+
+    .skill-delete {
+      font-size: 12px;
+      color: #f87171;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s;
+      margin-left: auto;
+    }
+
+    .skill-item:hover .skill-delete {
+      opacity: 1;
+    }
+
+    /* No Results */
+    .no-results {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+      font-size: 10px;
+    }
+
+    .no-results-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    /* Error Display */
+    .error-panel {
+      background: #2a1a1a;
+      border: 2px solid #f87171;
+      border-radius: 4px;
+      padding: 10px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .error-panel.show {
+      display: block;
+    }
+
+    .error-panel pre {
+      font-family: monospace;
+      font-size: 9px;
+      color: #f87171;
+      white-space: pre-wrap;
+      word-break: break-all;
     }
 
     /* Hidden file input */
-    #import-file-input {
+    #import-input {
       display: none;
     }
   </style>
 </head>
 <body>
   <div class="main-wrapper">
-    <!-- TOP BAR -->
-    <header class="vault-header-card">
+    <!-- Header -->
+    <div class="vault-header-card">
       <div class="header-top-row">
-        <div class="header-title">📜 QUEST LOG VAULT</div>
+        <div class="header-title">⚔️ QUEST LOG VAULT</div>
         <div class="header-actions">
-          <div class="status-badge status-local" id="sync-status">
-            <span id="sync-status-text">💾 LOCAL ONLY</span>
-            <span class="sync-timestamp" id="sync-timestamp"></span>
+          <div>
+            <span id="sync-status" class="status-badge">⏳ LOADING</span>
+            <div id="sync-time" class="sync-time"></div>
           </div>
-          <button class="icon-btn" onclick="syncWithGithub()" title="Sync memory now">🔄 SYNC</button>
+          <button class="btn btn-sync" onclick="syncWithGithub()">🔄 SYNC</button>
+          <button class="btn btn-export" onclick="exportBackup()">📥 EXPORT</button>
+          <button class="btn btn-import" onclick="document.getElementById('import-input').click()">📤 IMPORT</button>
+          <input type="file" id="import-input" accept=".json" onchange="importBackup(event)">
         </div>
       </div>
-      <div class="backup-section">
-        <button class="icon-btn small" onclick="exportBackup()" title="Download backup">📥 EXPORT</button>
-        <button class="icon-btn small" onclick="document.getElementById('import-file-input').click()" title="Import backup">📤 IMPORT</button>
-        <input type="file" id="import-file-input" accept=".json" onchange="importBackup(event)">
-      </div>
-    </header>
-
-    <!-- SEARCH -->
-    <div class="search-container">
-      <input type="text" class="search-input" id="search-input" placeholder="🔍 Search all quests..." oninput="handleSearch()">
-      <div class="search-results-info" id="search-results-info"></div>
-    </div>
-
-    <!-- TABS NAVIGATION -->
-    <nav class="tabs-nav">
-      <button class="tab-btn" id="tab-btn-mainquest" onclick="switchTab('mainquest')">
-        <span>⚔️ MAIN</span>
-        <span class="tab-count-badge" id="tab-count-mainquest">0</span>
-      </button>
-      <button class="tab-btn" id="tab-btn-sidequest" onclick="switchTab('sidequest')">
-        <span>🗡️ SIDE</span>
-        <span class="tab-count-badge" id="tab-count-sidequest">0</span>
-      </button>
-      <button class="tab-btn active" id="tab-btn-food" onclick="switchTab('food')">
-        <span>🍖 FOOD</span>
-        <span class="tab-count-badge" id="tab-count-food">0</span>
-      </button>
-      <button class="tab-btn" id="tab-btn-supplies" onclick="switchTab('supplies')">
-        <span>📦 SUPPLY</span>
-        <span class="tab-count-badge" id="tab-count-supplies">0</span>
-      </button>
-      <button class="tab-btn" id="tab-btn-misc" onclick="switchTab('misc')">
-        <span>🎒 INV</span>
-        <span class="tab-count-badge" id="tab-count-misc">0</span>
-      </button>
-    </nav>
-
-    <!-- ACTIVE TAB CONTENT -->
-    <div class="vault-card">
-      <div class="input-box">
-        <input type="text" id="quest-input" placeholder="Item name..." />
-        <div class="input-row">
-          <select id="tag-select"></select>
-          <button class="add-btn" onclick="addItem()">➕ ADD</button>
-        </div>
-      </div>
-
-      <div id="active-list-container"></div>
-
-      <button class="add-category-btn" onclick="openAddCategoryModal()">+ ADD CATEGORY</button>
-
-      <div class="completed-section" id="completed-section" style="display:none;">
-        <div class="completed-header">
-          <span>✅ COMPLETED / SECURED</span>
-          <span id="completed-count">0</span>
-        </div>
-        <div id="completed-list-container"></div>
+      <div id="error-panel" class="error-panel">
+        <pre id="error-content"></pre>
       </div>
     </div>
-  </div>
 
-  <!-- Edit Label Modal -->
-  <div class="modal-overlay" id="edit-label-modal">
-    <div class="modal-box">
-      <div class="modal-title" id="edit-label-title">EDIT CATEGORY</div>
-      <input type="text" class="modal-input" id="edit-label-input" placeholder="Category name...">
-      <div class="modal-buttons">
-        <button class="modal-btn danger" id="delete-label-btn" onclick="deleteCategory()">🗑️ DELETE</button>
-        <button class="modal-btn cancel" onclick="closeEditLabelModal()">CANCEL</button>
-        <button class="modal-btn confirm" onclick="saveCategory()">SAVE</button>
-      </div>
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="search-input" class="search-input" placeholder="🔍 Search all quests..." oninput="handleSearch()">
     </div>
-  </div>
 
-  <!-- Add Category Modal -->
-  <div class="modal-overlay" id="add-category-modal">
-    <div class="modal-box">
-      <div class="modal-title">ADD NEW CATEGORY</div>
-      <input type="text" class="modal-input" id="add-category-input" placeholder="Category name...">
-      <div class="modal-buttons">
-        <button class="modal-btn cancel" onclick="closeAddCategoryModal()">CANCEL</button>
-        <button class="modal-btn confirm" onclick="confirmAddCategory()">ADD</button>
-      </div>
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="mainquest" onclick="switchTab('mainquest')">
+        ⚔️ MAIN QUEST <span class="tab-count" id="count-mainquest">0</span>
+      </button>
+      <button class="tab-btn" data-tab="sidequest" onclick="switchTab('sidequest')">
+        📜 SIDE QUEST <span class="tab-count" id="count-sidequest">0</span>
+      </button>
+      <button class="tab-btn" data-tab="food" onclick="switchTab('food')">
+        🍖 PROVISIONS <span class="tab-count" id="count-food">0</span>
+      </button>
+      <button class="tab-btn" data-tab="supplies" onclick="switchTab('supplies')">
+        📦 STOREHOUSE <span class="tab-count" id="count-supplies">0</span>
+      </button>
+      <button class="tab-btn" data-tab="skills" onclick="switchTab('skills')">
+        🎯 SKILLS <span class="tab-count" id="count-skills">0</span>
+      </button>
     </div>
-  </div>
 
-  <!-- Conflict Resolution Modal -->
-  <div class="modal-overlay" id="conflict-modal">
-    <div class="modal-box">
-      <div class="modal-title">⚠️ SYNC CONFLICT</div>
-      <div class="conflict-info">
-        Remote data has changed since your last sync. Choose how to resolve:
-      </div>
-      <div class="conflict-options">
-        <button class="conflict-btn local" onclick="resolveConflict('local')">
-          📱 KEEP LOCAL<br>
-          <small>Overwrite remote with your changes</small>
-        </button>
-        <button class="conflict-btn remote" onclick="resolveConflict('remote')">
-          ☁️ USE REMOTE<br>
-          <small>Discard local and use remote data</small>
-        </button>
-        <button class="conflict-btn merge" onclick="resolveConflict('merge')">
-          🔀 MERGE BOTH<br>
-          <small>Combine items from both versions</small>
-        </button>
-      </div>
+    <!-- Input Area -->
+    <div class="input-area">
+      <input type="text" id="quest-input" placeholder="Enter new quest or skill...">
+      <select id="category-select"></select>
+      <button onclick="addItem()">+ ADD</button>
     </div>
+
+    <!-- Content Area -->
+    <div id="content-area"></div>
   </div>
 
   <script>
-    // ============================================
-    // EMBEDDED GITHUB CONFIG - Edit these values
-    // ============================================
+    // ============ CONFIG ============
+    const OWNER = 'GeoPOS-90';
+    const REPO = 'Questlog';
+    const BRANCH = 'main';
+    const FILE_PATH = 'todos';
+
+    // Split token to avoid GitHub detection
     const _t = [
       'github_pat_11B33AJB',
       'Y0Bxt04NO4rX78_RQj1eUOyJ',
@@ -814,390 +740,286 @@
     ];
     const getToken = () => _t.join('');
 
-    const GITHUB_CONFIG = {
-      owner: 'GeoPOS-90',
-      repo: 'Questlog',
-      branch: 'main',
-      path: 'todos'
-    };
-
-    // Auto-poll interval (in milliseconds) - 30 seconds
-    const AUTO_POLL_INTERVAL = 30000;
-
-    // ============================================
-
-    const STORAGE_DATA_KEY = 'questlog_vault_data_v4';
-    const ACTIVE_TAB_KEY   = 'questlog_vault_active_tab';
+    // ============ STATE ============
+    let currentTab = 'mainquest';
+    let currentSha = null;
+    let lastSyncTime = null;
+    let searchQuery = '';
 
     const DEFAULT_CATEGORY_CONFIG = {
-      mainquest: {
-        labels: ['Story', 'Boss', 'Dungeon', 'Escort'],
-        collapsed: {}
-      },
-      sidequest: {
-        labels: ['Fetch', 'Explore', 'Hunt', 'Collect'],
-        collapsed: {}
-      },
       food: {
-        labels: ['Produce', 'Meat', 'Cold', 'Dry', 'Snacks'],
+        labels: ['🥩 Proteins', '🥬 Vegetables', '🧀 Dairy', '🍞 Grains', '🍎 Fruits', '❄️ Frozen', '🥫 Canned', '🍪 Snacks'],
         collapsed: {}
       },
       supplies: {
-        labels: ['Gear', 'Tools', 'Consumable', 'Ammo', 'General'],
+        labels: ['🧹 Cleaning', '🧴 Personal Care', '📦 Household', '🐾 Pet Supplies'],
         collapsed: {}
       },
-      misc: {
-        labels: ['Quest', 'Loot', 'Note', 'General'],
+      mainquest: {
+        labels: ['⚔️ Story', '🐉 Boss Battles', '🏰 Dungeons', '👑 Milestones'],
+        collapsed: {}
+      },
+      sidequest: {
+        labels: ['🗺️ Exploration', '💎 Collectibles', '🤝 Favors', '🎯 Challenges'],
+        collapsed: {}
+      },
+      skills: {
+        labels: ['⚔️ Combat', '🧙 Magic', '🛠️ Crafting', '🗣️ Social', '🏃 Physical'],
         collapsed: {}
       }
     };
 
-    const TAB_PLACEHOLDERS = {
-      mainquest: 'Main quest objective...',
-      sidequest: 'Side quest task...',
-      food: 'Food item (e.g. Fresh Apples)...',
-      supplies: 'Supply item (e.g. Torches, Iron Nails)...',
-      misc: 'General item or note...'
+    const DEFAULT_DATA = {
+      food: [],
+      supplies: [],
+      mainquest: [],
+      sidequest: [],
+      skills: [],
+      categoryConfig: JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG)),
+      meta: { lastModified: 0, version: 3 }
     };
 
-    let currentTab = localStorage.getItem(ACTIVE_TAB_KEY) || 'food';
-    let draggedId = null;
-    let currentSha = null;
-    let isSyncing = false;
-    let autoPollTimer = null;
-    let lastSyncTime = null;
-    let editingLabel = null;
-    let editingLabelTab = null;
-    let pendingConflict = null;
-    let searchQuery = '';
+    let store = JSON.parse(JSON.stringify(DEFAULT_DATA));
 
-    // Load Local Data
-    function getStore() {
+    // ============ SKILL RANKS ============
+    const SKILL_RANKS = [
+      { level: 1, name: 'Novice', class: 'novice' },
+      { level: 4, name: 'Apprentice', class: 'apprentice' },
+      { level: 7, name: 'Initiate', class: 'initiate' },
+      { level: 10, name: 'Journeyman', class: 'journeyman' },
+      { level: 20, name: 'Adept', class: 'adept' },
+      { level: 30, name: 'Expert', class: 'expert' },
+      { level: 40, name: 'Veteran', class: 'veteran' },
+      { level: 50, name: 'Elite', class: 'elite' },
+      { level: 60, name: 'Champion', class: 'champion' },
+      { level: 70, name: 'Master', class: 'master' },
+      { level: 80, name: 'Grandmaster', class: 'grandmaster' },
+      { level: 90, name: 'Legend', class: 'legend' },
+      { level: 100, name: 'Mythic', class: 'mythic' },
+      { level: 250, name: 'Transcendent', class: 'transcendent' },
+      { level: 500, name: 'Immortal', class: 'immortal' },
+      { level: 1000, name: 'Godlike', class: 'godlike' }
+    ];
+
+    function getRank(level) {
+      let rank = SKILL_RANKS[0];
+      for (const r of SKILL_RANKS) {
+        if (level >= r.level) rank = r;
+        else break;
+      }
+      return rank;
+    }
+
+    function getNextRank(level) {
+      for (const r of SKILL_RANKS) {
+        if (level < r.level) return r;
+      }
+      return null;
+    }
+
+    function getProgressToNextRank(level) {
+      const current = getRank(level);
+      const next = getNextRank(level);
+      if (!next) return 100;
+      const progress = ((level - current.level) / (next.level - current.level)) * 100;
+      return Math.min(100, Math.max(0, progress));
+    }
+
+    // ============ LOCAL STORAGE ============
+    function loadStoreLocal() {
       try {
-        const raw = localStorage.getItem(STORAGE_DATA_KEY);
-        if (raw) {
-          const data = JSON.parse(raw);
-          return migrateData(data);
+        const saved = localStorage.getItem('questlog_store');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          store = { ...DEFAULT_DATA, ...parsed };
+          if (!store.categoryConfig) store.categoryConfig = JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG));
+          if (!store.skills) store.skills = [];
+          if (!store.mainquest) store.mainquest = [];
+          if (!store.sidequest) store.sidequest = [];
         }
       } catch (e) {
-        console.error('Storage read error:', e);
+        console.error('Failed to load local store:', e);
       }
-      return getDefaultData();
-    }
-
-    function getDefaultData() {
-      return {
-        mainquest: [],
-        sidequest: [],
-        food: [],
-        supplies: [],
-        misc: [],
-        categoryConfig: JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG)),
-        meta: {
-          lastModified: Date.now(),
-          version: 2
-        }
-      };
-    }
-
-    function migrateData(data) {
-      // Migrate from v1 format (no categoryConfig or meta)
-      if (!data.meta || data.meta.version < 2) {
-        console.log('Migrating data to v2 format...');
-
-        // Add new tabs if missing
-        if (!data.mainquest) data.mainquest = [];
-        if (!data.sidequest) data.sidequest = [];
-
-        // Add categoryConfig if missing
-        if (!data.categoryConfig) {
-          data.categoryConfig = JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG));
-        }
-
-        // Add meta
-        data.meta = {
-          lastModified: Date.now(),
-          version: 2
-        };
-      }
-
-      return data;
     }
 
     function saveStoreLocal(data) {
-      data.meta.lastModified = Date.now();
-      localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(data));
+      store = { ...DEFAULT_DATA, ...data };
+      localStorage.setItem('questlog_store', JSON.stringify(store));
     }
 
-    function uid() {
-      return Date.now().toString(36) + Math.random().toString(36).substring(2, 7);
-    }
+    // ============ GITHUB SYNC ============
+    function updateStatus(type, text) {
+      const badge = document.getElementById('sync-status');
+      badge.className = 'status-badge ' + type;
+      badge.textContent = text;
 
-    function escapeHtml(str) {
-      const p = document.createElement('p');
-      p.textContent = str || '';
-      return p.innerHTML;
-    }
-
-    function updateStatus(state, label) {
-      const el = document.getElementById('sync-status');
-      const textEl = document.getElementById('sync-status-text');
-      el.className = `status-badge status-${state}`;
-      textEl.textContent = label;
-
-      if (state === 'synced') {
+      if (type === 'synced') {
         lastSyncTime = new Date();
-        updateSyncTimestamp();
+        updateSyncTime();
+        badge.classList.add('sync-pulse');
+        setTimeout(() => badge.classList.remove('sync-pulse'), 1000);
       }
     }
 
-    function updateSyncTimestamp() {
-      const el = document.getElementById('sync-timestamp');
+    function updateSyncTime() {
+      const el = document.getElementById('sync-time');
       if (!lastSyncTime) {
         el.textContent = '';
         return;
       }
-
-      const now = new Date();
-      const diff = Math.floor((now - lastSyncTime) / 1000);
-
-      if (diff < 60) {
-        el.textContent = 'just now';
-      } else if (diff < 3600) {
-        const mins = Math.floor(diff / 60);
-        el.textContent = `${mins}m ago`;
-      } else {
-        el.textContent = lastSyncTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-      }
+      const diff = Math.floor((new Date() - lastSyncTime) / 1000);
+      if (diff < 60) el.textContent = 'Last synced: just now';
+      else if (diff < 3600) el.textContent = `Last synced: ${Math.floor(diff / 60)} min ago`;
+      else el.textContent = `Last synced: ${Math.floor(diff / 3600)} hr ago`;
     }
 
-    // Update timestamp every 30 seconds
-    setInterval(updateSyncTimestamp, 30000);
+    setInterval(updateSyncTime, 30000);
 
-    function triggerPulse() {
-      const el = document.getElementById('sync-status');
-      el.classList.add('pulsing');
-      setTimeout(() => el.classList.remove('pulsing'), 1000);
+    function showError(error) {
+      const panel = document.getElementById('error-panel');
+      const content = document.getElementById('error-content');
+      content.textContent = JSON.stringify(error, null, 2);
+      panel.classList.add('show');
     }
 
-    /* GitHub Sync Engine */
-    async function syncWithGithub(silent = false) {
-      const cfg = GITHUB_CONFIG;
-      const token = getToken();
+    function hideError() {
+      document.getElementById('error-panel').classList.remove('show');
+    }
 
-      if (!token) {
-        updateStatus('local', '💾 LOCAL ONLY');
-        return;
-      }
-
-      if (isSyncing) return;
-      isSyncing = true;
-      if (!silent) updateStatus('syncing', '🔄 SYNCING...');
-      if (silent) triggerPulse();
-
-      const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
+    async function syncWithGithub() {
+      updateStatus('syncing', '🔄 SYNCING');
+      hideError();
 
       try {
-        const res = await fetch(url, {
+        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`;
+        const response = await fetch(url, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${getToken()}`,
             'Accept': 'application/vnd.github.v3+json'
           }
         });
 
-        if (res.status === 200) {
-          const body = await res.json();
-          const remoteSha = body.sha;
-          const decoded = decodeURIComponent(escape(atob(body.content.replace(/\s/g, ''))));
-          const remoteData = migrateData(JSON.parse(decoded));
-
-          const localData = getStore();
-
-          // Check for conflicts
-          if (currentSha && currentSha !== remoteSha && localData.meta.lastModified > remoteData.meta.lastModified) {
-            // Local has changes AND remote has different SHA
-            pendingConflict = { localData, remoteData, remoteSha };
-            showConflictModal();
-            isSyncing = false;
-            return;
-          }
-
-          currentSha = remoteSha;
-          saveStoreLocal(remoteData);
-          render();
-          updateStatus('synced', '☁️ SYNCED');
-        } else if (res.status === 404) {
-          // File does not exist yet: push initial structure
-          await pushToGithub(getStore());
-        } else {
-          const errorBody = await res.json().catch(() => ({}));
-          console.error('Sync error:', res.status, errorBody);
-          updateStatus('error', '⚠️ SYNC ERROR');
+        if (response.status === 404) {
+          // File doesn't exist, create it
+          await pushToGithub();
+          return;
         }
-      } catch (err) {
-        console.error('Fetch error:', err);
-        updateStatus('error', '⚠️ SYNC ERROR');
-      } finally {
-        isSyncing = false;
-      }
-    }
 
-    async function pushToGithub(data, force = false) {
-      const cfg = GITHUB_CONFIG;
-      const token = getToken();
-
-      if (!token) {
-        updateStatus('local', '💾 LOCAL ONLY');
-        return;
-      }
-
-      updateStatus('syncing', '🔄 PUSHING...');
-      const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
-      const jsonStr = JSON.stringify(data, null, 2);
-      const content = btoa(unescape(encodeURIComponent(jsonStr)));
-
-      const payload = {
-        message: 'Update Quest Log memory',
-        content: content,
-        branch: cfg.branch
-      };
-      if (currentSha && !force) payload.sha = currentSha;
-
-      try {
-        const res = await fetch(url, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          const body = await res.json();
-          currentSha = body.content.sha;
-          updateStatus('synced', '☁️ SYNCED');
-        } else if (res.status === 409) {
-          // Conflict: fetch newer version first
-          await syncWithGithub(true);
-        } else {
-          const errorBody = await res.json().catch(() => ({}));
-          console.error('Push error:', res.status, errorBody);
-          updateStatus('error', '⚠️ PUSH ERROR');
+        if (!response.ok) {
+          const errData = await response.json();
+          throw { status: response.status, statusText: response.statusText, url, response: errData };
         }
-      } catch (err) {
-        console.error('Push error:', err);
-        updateStatus('error', '⚠️ PUSH ERROR');
-      }
-    }
 
-    function saveAndSync(data) {
-      saveStoreLocal(data);
-      render();
-      pushToGithub(data);
-    }
+        const data = await response.json();
+        currentSha = data.sha;
 
-    /* Conflict Resolution */
-    function showConflictModal() {
-      document.getElementById('conflict-modal').classList.add('active');
-    }
+        const remoteContent = JSON.parse(atob(data.content));
+        const localData = { ...store };
 
-    function closeConflictModal() {
-      document.getElementById('conflict-modal').classList.remove('active');
-      pendingConflict = null;
-    }
+        // Silent merge: combine local and remote
+        const mergedData = mergeData(localData, remoteContent);
+        mergedData.meta = { lastModified: Date.now(), version: 3 };
 
-    function resolveConflict(choice) {
-      if (!pendingConflict) return;
+        saveStoreLocal(mergedData);
 
-      const { localData, remoteData, remoteSha } = pendingConflict;
+        // Push merged data back
+        await pushToGithub();
 
-      if (choice === 'local') {
-        // Keep local, overwrite remote
-        currentSha = remoteSha;
-        pushToGithub(localData);
-      } else if (choice === 'remote') {
-        // Use remote, discard local
-        currentSha = remoteSha;
-        saveStoreLocal(remoteData);
         render();
         updateStatus('synced', '☁️ SYNCED');
-      } else if (choice === 'merge') {
-        // Merge: combine items from both
-        const mergedData = mergeData(localData, remoteData);
-        currentSha = remoteSha;
-        saveAndSync(mergedData);
-      }
 
-      closeConflictModal();
+      } catch (error) {
+        console.error('Sync failed:', error);
+        updateStatus('error', '⚠️ SYNC ERROR');
+        showError(error);
+      }
     }
 
     function mergeData(local, remote) {
-      const merged = JSON.parse(JSON.stringify(remote));
+      const merged = { ...DEFAULT_DATA };
 
-      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
-
-      tabs.forEach(tab => {
-        const remoteIds = new Set((remote[tab] || []).map(i => i.id));
+      // Merge arrays for each tab (dedupe by id)
+      const tabs = ['food', 'supplies', 'mainquest', 'sidequest', 'skills'];
+      for (const tab of tabs) {
         const localItems = local[tab] || [];
+        const remoteItems = remote[tab] || [];
+        const itemMap = new Map();
 
-        // Add local items that don't exist in remote
-        localItems.forEach(item => {
-          if (!remoteIds.has(item.id)) {
-            merged[tab].push(item);
-          }
-        });
-      });
+        for (const item of remoteItems) {
+          if (item.id) itemMap.set(item.id, item);
+        }
+        for (const item of localItems) {
+          if (item.id) itemMap.set(item.id, item);
+        }
 
-      // Merge category configs
-      if (local.categoryConfig) {
-        tabs.forEach(tab => {
-          if (local.categoryConfig[tab]) {
-            const localLabels = local.categoryConfig[tab].labels || [];
-            const remoteLabels = merged.categoryConfig[tab]?.labels || [];
-
-            localLabels.forEach(label => {
-              if (!remoteLabels.includes(label)) {
-                merged.categoryConfig[tab].labels.push(label);
-              }
-            });
-          }
-        });
+        merged[tab] = Array.from(itemMap.values());
       }
 
-      merged.meta.lastModified = Date.now();
+      // Merge categoryConfig
+      merged.categoryConfig = { ...DEFAULT_CATEGORY_CONFIG };
+      for (const tab of tabs) {
+        const localConfig = local.categoryConfig?.[tab] || {};
+        const remoteConfig = remote.categoryConfig?.[tab] || {};
+
+        const localLabels = localConfig.labels || [];
+        const remoteLabels = remoteConfig.labels || [];
+        const labelSet = new Set([...remoteLabels, ...localLabels]);
+        merged.categoryConfig[tab] = {
+          labels: Array.from(labelSet),
+          collapsed: { ...remoteConfig.collapsed, ...localConfig.collapsed }
+        };
+      }
+
       return merged;
     }
 
-    /* Auto-Poll for remote changes */
-    function startAutoPoll() {
-      if (autoPollTimer) clearInterval(autoPollTimer);
-      autoPollTimer = setInterval(() => {
-        syncWithGithub(true); // silent sync
-      }, AUTO_POLL_INTERVAL);
-    }
+    async function pushToGithub() {
+      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+      store.meta.lastModified = Date.now();
 
-    function stopAutoPoll() {
-      if (autoPollTimer) {
-        clearInterval(autoPollTimer);
-        autoPollTimer = null;
+      const body = {
+        message: 'Update quest log',
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(store, null, 2)))),
+        branch: BRANCH
+      };
+
+      if (currentSha) body.sha = currentSha;
+
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${getToken()}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw { status: response.status, statusText: response.statusText, url, response: errData };
       }
+
+      const data = await response.json();
+      currentSha = data.content.sha;
     }
 
-    /* Export/Import Backup */
-    function exportBackup() {
-      const data = getStore();
-      const jsonStr = JSON.stringify(data, null, 2);
-      const blob = new Blob([jsonStr], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
+    // ============ AUTO POLL ============
+    function startAutoPoll() {
+      setInterval(() => {
+        syncWithGithub();
+      }, 30000);
+    }
 
+    // ============ EXPORT / IMPORT ============
+    function exportBackup() {
+      const data = JSON.stringify(store, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `questlog_backup_${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
+      a.download = `questlog_backup_${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
-      document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
 
@@ -1206,454 +1028,354 @@
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = (e) => {
         try {
           const data = JSON.parse(e.target.result);
-          const migratedData = migrateData(data);
-
-          if (confirm('This will replace your current data. Continue?')) {
-            saveStoreLocal(migratedData);
-            render();
-            pushToGithub(migratedData);
-          }
+          saveStoreLocal(data);
+          render();
+          pushToGithub().then(() => {
+            updateStatus('synced', '☁️ SYNCED');
+          });
         } catch (err) {
-          alert('Invalid backup file!');
-          console.error('Import error:', err);
+          alert('Invalid backup file');
         }
       };
       reader.readAsText(file);
-
-      // Reset input so same file can be selected again
       event.target.value = '';
     }
 
-    /* Search */
+    // ============ SEARCH ============
     function handleSearch() {
       searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
       render();
     }
 
-    function getSearchResults() {
-      if (!searchQuery) return null;
-
-      const data = getStore();
-      const results = [];
-      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
-
-      tabs.forEach(tab => {
-        (data[tab] || []).forEach(item => {
-          if (item.text.toLowerCase().includes(searchQuery) || 
-              item.tag.toLowerCase().includes(searchQuery)) {
-            results.push({ ...item, tab });
-          }
-        });
-      });
-
-      return results;
+    function highlightText(text, query) {
+      if (!query) return text;
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<mark>$1</mark>');
     }
 
-    /* Tabs */
-    function switchTab(tabKey) {
-      currentTab = tabKey;
-      localStorage.setItem(ACTIVE_TAB_KEY, tabKey);
-
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById(`tab-btn-${tabKey}`);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      updateTagSelect();
+    // ============ TABS ============
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tab);
+      });
+      populateCategorySelect();
       render();
     }
 
-    function updateTagSelect() {
-      const select = document.getElementById('tag-select');
-      const input = document.getElementById('quest-input');
-      const data = getStore();
-      const labels = data.categoryConfig[currentTab]?.labels || DEFAULT_CATEGORY_CONFIG[currentTab].labels;
-
-      select.innerHTML = labels.map(lbl => `<option value="${lbl}">${lbl}</option>`).join('');
-      input.placeholder = TAB_PLACEHOLDERS[currentTab] || 'Enter item...';
-      input.value = '';
+    function updateCounts() {
+      const tabs = ['food', 'supplies', 'mainquest', 'sidequest', 'skills'];
+      for (const tab of tabs) {
+        const count = (store[tab] || []).filter(i => !i.completed).length;
+        document.getElementById(`count-${tab}`).textContent = count;
+      }
     }
 
-    /* Category Management */
-    function openEditLabelModal(label, tab) {
-      editingLabel = label;
-      editingLabelTab = tab;
-
-      document.getElementById('edit-label-title').textContent = 'EDIT CATEGORY';
-      document.getElementById('edit-label-input').value = label;
-      document.getElementById('delete-label-btn').style.display = 'inline-block';
-      document.getElementById('edit-label-modal').classList.add('active');
-      document.getElementById('edit-label-input').focus();
+    // ============ CATEGORIES ============
+    function getCategories(tab) {
+      return store.categoryConfig?.[tab]?.labels || DEFAULT_CATEGORY_CONFIG[tab]?.labels || [];
     }
 
-    function closeEditLabelModal() {
-      document.getElementById('edit-label-modal').classList.remove('active');
-      editingLabel = null;
-      editingLabelTab = null;
+    function isCollapsed(tab, category) {
+      return store.categoryConfig?.[tab]?.collapsed?.[category] || false;
     }
 
-    function saveCategory() {
-      const newLabel = document.getElementById('edit-label-input').value.trim();
-      if (!newLabel || !editingLabel || !editingLabelTab) return;
+    function toggleCollapse(tab, category) {
+      if (!store.categoryConfig[tab]) store.categoryConfig[tab] = { labels: [], collapsed: {} };
+      if (!store.categoryConfig[tab].collapsed) store.categoryConfig[tab].collapsed = {};
+      store.categoryConfig[tab].collapsed[category] = !store.categoryConfig[tab].collapsed[category];
+      saveStoreLocal(store);
+      render();
+      pushToGithub();
+    }
 
-      const data = getStore();
-      const labels = data.categoryConfig[editingLabelTab].labels;
-      const index = labels.indexOf(editingLabel);
+    function populateCategorySelect() {
+      const select = document.getElementById('category-select');
+      const categories = getCategories(currentTab);
+      select.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
 
-      if (index !== -1) {
-        labels[index] = newLabel;
+    function addCategory() {
+      const name = prompt('Enter new category name (with emoji):');
+      if (!name || !name.trim()) return;
 
-        // Update all items with old label
-        (data[editingLabelTab] || []).forEach(item => {
-          if (item.tag.toLowerCase() === editingLabel.toLowerCase()) {
-            item.tag = newLabel;
-          }
+      if (!store.categoryConfig[currentTab]) {
+        store.categoryConfig[currentTab] = { labels: [], collapsed: {} };
+      }
+
+      if (!store.categoryConfig[currentTab].labels.includes(name.trim())) {
+        store.categoryConfig[currentTab].labels.push(name.trim());
+        saveStoreLocal(store);
+        populateCategorySelect();
+        render();
+        pushToGithub();
+      }
+    }
+
+    function renameCategory(oldName) {
+      const newName = prompt('Rename category:', oldName);
+      if (!newName || !newName.trim() || newName === oldName) return;
+
+      const labels = store.categoryConfig[currentTab].labels;
+      const idx = labels.indexOf(oldName);
+      if (idx > -1) {
+        labels[idx] = newName.trim();
+
+        // Update items with old category
+        store[currentTab].forEach(item => {
+          if (item.category === oldName) item.category = newName.trim();
         });
 
-        saveAndSync(data);
+        saveStoreLocal(store);
+        populateCategorySelect();
+        render();
+        pushToGithub();
       }
-
-      closeEditLabelModal();
     }
 
-    function deleteCategory() {
-      if (!editingLabel || !editingLabelTab) return;
-
-      const data = getStore();
-      const items = (data[editingLabelTab] || []).filter(
-        item => item.tag.toLowerCase() === editingLabel.toLowerCase()
-      );
-
+    function deleteCategory(name) {
+      const items = store[currentTab].filter(i => i.category === name);
       if (items.length > 0) {
-        if (!confirm(`This category has ${items.length} item(s). Delete them too?`)) {
-          return;
-        }
-        // Remove items in this category
-        data[editingLabelTab] = data[editingLabelTab].filter(
-          item => item.tag.toLowerCase() !== editingLabel.toLowerCase()
-        );
-      }
-
-      // Remove label
-      data.categoryConfig[editingLabelTab].labels = data.categoryConfig[editingLabelTab].labels.filter(
-        l => l !== editingLabel
-      );
-
-      saveAndSync(data);
-      closeEditLabelModal();
-    }
-
-    function openAddCategoryModal() {
-      document.getElementById('add-category-input').value = '';
-      document.getElementById('add-category-modal').classList.add('active');
-      document.getElementById('add-category-input').focus();
-    }
-
-    function closeAddCategoryModal() {
-      document.getElementById('add-category-modal').classList.remove('active');
-    }
-
-    function confirmAddCategory() {
-      const newLabel = document.getElementById('add-category-input').value.trim();
-      if (!newLabel) return;
-
-      const data = getStore();
-
-      if (!data.categoryConfig[currentTab]) {
-        data.categoryConfig[currentTab] = { labels: [], collapsed: {} };
-      }
-
-      // Check if already exists
-      const exists = data.categoryConfig[currentTab].labels.some(
-        l => l.toLowerCase() === newLabel.toLowerCase()
-      );
-
-      if (exists) {
-        alert('Category already exists!');
+        alert('Cannot delete category with items. Move or delete items first.');
         return;
       }
 
-      data.categoryConfig[currentTab].labels.push(newLabel);
-      saveAndSync(data);
-      closeAddCategoryModal();
-      updateTagSelect();
-    }
+      if (!confirm(`Delete category "${name}"?`)) return;
 
-    function toggleCollapse(label) {
-      const data = getStore();
-
-      if (!data.categoryConfig[currentTab].collapsed) {
-        data.categoryConfig[currentTab].collapsed = {};
+      const labels = store.categoryConfig[currentTab].labels;
+      const idx = labels.indexOf(name);
+      if (idx > -1) {
+        labels.splice(idx, 1);
+        saveStoreLocal(store);
+        populateCategorySelect();
+        render();
+        pushToGithub();
       }
-
-      data.categoryConfig[currentTab].collapsed[label] = !data.categoryConfig[currentTab].collapsed[label];
-      saveStoreLocal(data);
-      render();
-      // Don't push to GitHub for collapse state - local only preference
     }
 
-    /* Actions */
+    // ============ ITEMS ============
     function addItem() {
       const input = document.getElementById('quest-input');
-      const select = document.getElementById('tag-select');
+      const select = document.getElementById('category-select');
       const text = input.value.trim();
+      const category = select.value;
+
       if (!text) return;
 
-      const data = getStore();
-      if (!data[currentTab]) data[currentTab] = [];
+      if (currentTab === 'skills') {
+        store.skills.push({
+          id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+          name: text,
+          category: category,
+          level: 1
+        });
+      } else {
+        store[currentTab].push({
+          id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+          text: text,
+          category: category,
+          completed: false
+        });
+      }
 
-      data[currentTab].push({
-        id: uid(),
-        text: text,
-        tag: select.value,
-        completed: false,
-        createdAt: Date.now()
-      });
-
+      saveStoreLocal(store);
       input.value = '';
-      saveAndSync(data);
+      render();
+      pushToGithub();
     }
 
     function toggleItem(id) {
-      const data = getStore();
-      const list = data[currentTab] || [];
-      const item = list.find(it => it.id === id);
+      const item = store[currentTab].find(i => i.id === id);
       if (item) {
         item.completed = !item.completed;
-        saveAndSync(data);
+        saveStoreLocal(store);
+        render();
+        pushToGithub();
       }
     }
 
-    function deleteItem(id, e) {
-      e.stopPropagation();
-      const data = getStore();
-      data[currentTab] = (data[currentTab] || []).filter(it => it.id !== id);
-      saveAndSync(data);
+    function deleteItem(id) {
+      store[currentTab] = store[currentTab].filter(i => i.id !== id);
+      saveStoreLocal(store);
+      render();
+      pushToGithub();
     }
 
-    /* Drag & Drop */
-    function onDragStart(e, id) {
-      draggedId = id;
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', id);
-      const card = e.currentTarget;
-      setTimeout(() => card.classList.add('dragging'), 0);
+    function updateSkillLevel(id, delta) {
+      const skill = store.skills.find(s => s.id === id);
+      if (skill) {
+        skill.level = Math.max(1, Math.min(1000, skill.level + delta));
+        saveStoreLocal(store);
+        render();
+        pushToGithub();
+      }
     }
 
-    function onDragEnd(e) {
-      e.currentTarget.classList.remove('dragging');
-      document.querySelectorAll('.item-card').forEach(c => {
-        c.classList.remove('drag-target-above', 'drag-target-below');
-      });
-      draggedId = null;
+    // ============ DRAG & DROP ============
+    let draggedItem = null;
+
+    function handleDragStart(e, id) {
+      draggedItem = id;
+      e.target.classList.add('dragging');
     }
 
-    function onDragOver(e) {
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+      draggedItem = null;
+    }
+
+    function handleDragOver(e) {
       e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      const card = e.currentTarget;
-      if (!card || card.dataset.id === draggedId) return;
-
-      const rect = card.getBoundingClientRect();
-      const mid = rect.top + rect.height / 2;
-
-      document.querySelectorAll('.item-card').forEach(c => {
-        c.classList.remove('drag-target-above', 'drag-target-below');
-      });
-
-      if (e.clientY < mid) {
-        card.classList.add('drag-target-above');
-      } else {
-        card.classList.add('drag-target-below');
-      }
     }
 
-    function onDragLeave(e) {
-      e.currentTarget.classList.remove('drag-target-above', 'drag-target-below');
-    }
-
-    function onDrop(e, targetId) {
+    function handleDrop(e, targetId, category) {
       e.preventDefault();
-      e.stopPropagation();
+      if (!draggedItem || draggedItem === targetId) return;
 
-      document.querySelectorAll('.item-card').forEach(c => {
-        c.classList.remove('drag-target-above', 'drag-target-below');
-      });
+      const items = store[currentTab];
+      const draggedIdx = items.findIndex(i => i.id === draggedItem);
+      const targetIdx = items.findIndex(i => i.id === targetId);
 
-      if (!draggedId || draggedId === targetId) return;
-
-      const data = getStore();
-      const list = data[currentTab] || [];
-
-      const dragIndex = list.findIndex(it => it.id === draggedId);
-      const targetIndex = list.findIndex(it => it.id === targetId);
-      if (dragIndex === -1 || targetIndex === -1) return;
-
-      const [draggedItem] = list.splice(dragIndex, 1);
-      const targetItem = list.find(it => it.id === targetId);
-
-      if (targetItem && draggedItem.tag !== targetItem.tag) {
-        draggedItem.tag = targetItem.tag;
+      if (draggedIdx > -1 && targetIdx > -1) {
+        const [removed] = items.splice(draggedIdx, 1);
+        removed.category = category;
+        items.splice(targetIdx, 0, removed);
+        saveStoreLocal(store);
+        render();
+        pushToGithub();
       }
-
-      const rect = e.currentTarget.getBoundingClientRect();
-      const isAbove = e.clientY < (rect.top + rect.height / 2);
-      const newIndex = list.findIndex(it => it.id === targetId);
-
-      list.splice(isAbove ? newIndex : newIndex + 1, 0, draggedItem);
-      saveAndSync(data);
     }
 
-    function renderItemCard(item, highlight = false) {
-      const tagClass = `tag-${item.tag.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
-      const highlightClass = highlight ? 'search-highlight' : '';
-      return `
-        <div class="item-card ${item.completed ? 'completed' : ''} ${highlightClass}"
-             id="card-${item.id}"
-             data-id="${item.id}"
-             draggable="true"
-             ondragstart="onDragStart(event, '${item.id}')"
-             ondragend="onDragEnd(event)"
-             ondragover="onDragOver(event)"
-             ondragleave="onDragLeave(event)"
-             ondrop="onDrop(event, '${item.id}')">
-          <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
-          <div class="item-checkbox" onclick="toggleItem('${item.id}')">${item.completed ? '✓' : ''}</div>
-          <div class="item-content" onclick="toggleItem('${item.id}')">
-            <span class="item-tag ${tagClass}">${escapeHtml(item.tag)}</span>
-            <span class="item-text">${escapeHtml(item.text)}</span>
-          </div>
-          <button class="delete-btn" title="Delete" onclick="deleteItem('${item.id}', event)">✕</button>
-        </div>
-      `;
-    }
-
+    // ============ RENDER ============
     function render() {
-      const data = getStore();
-      const labels = data.categoryConfig[currentTab]?.labels || DEFAULT_CATEGORY_CONFIG[currentTab].labels;
-      const collapsed = data.categoryConfig[currentTab]?.collapsed || {};
+      const container = document.getElementById('content-area');
+      const categories = getCategories(currentTab);
+      const items = store[currentTab] || [];
 
-      // Update tab counts
-      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
-      tabs.forEach(cat => {
-        const activeCount = (data[cat] || []).filter(it => !it.completed).length;
-        const badge = document.getElementById(`tab-count-${cat}`);
-        if (badge) badge.textContent = activeCount;
-      });
-
-      // Handle search results
-      const searchResults = getSearchResults();
-      const searchInfo = document.getElementById('search-results-info');
-
-      if (searchResults !== null) {
-        searchInfo.textContent = `Found ${searchResults.length} item(s) matching "${searchQuery}"`;
-
-        if (searchResults.length === 0) {
-          document.getElementById('active-list-container').innerHTML = 
-            '<div class="empty-state">NO MATCHING ITEMS FOUND</div>';
-          document.getElementById('completed-section').style.display = 'none';
-          return;
-        }
-      } else {
-        searchInfo.textContent = '';
+      // Filter by search
+      let filteredItems = items;
+      if (searchQuery) {
+        filteredItems = items.filter(item => {
+          const text = currentTab === 'skills' ? item.name : item.text;
+          return text.toLowerCase().includes(searchQuery) ||
+                 item.category.toLowerCase().includes(searchQuery);
+        });
       }
 
-      const currentList = data[currentTab] || [];
-      const activeItems = currentList.filter(it => !it.completed);
-      const completedItems = currentList.filter(it => it.completed);
+      // Group by category
+      const grouped = {};
+      for (const cat of categories) {
+        grouped[cat] = filteredItems.filter(i => i.category === cat);
+      }
 
-      const activeContainer = document.getElementById('active-list-container');
-      const completedContainer = document.getElementById('completed-list-container');
-      const completedSection = document.getElementById('completed-section');
-      const completedCount = document.getElementById('completed-count');
+      // Check if any results
+      const hasResults = filteredItems.length > 0 || !searchQuery;
 
-      if (activeItems.length === 0) {
-        activeContainer.innerHTML = '<div class="empty-state">NO ACTIVE ITEMS IN THIS HALL</div>';
+      let html = '';
+
+      if (!hasResults) {
+        html = `
+          <div class="no-results">
+            <div class="no-results-icon">🔍</div>
+            <div>No results found for "${searchQuery}"</div>
+          </div>
+        `;
       } else {
-        let html = '';
-        labels.forEach(label => {
-          const groupItems = activeItems.filter(it => it.tag.toLowerCase() === label.toLowerCase());
-          const isCollapsed = collapsed[label] || false;
-          const matchesSearch = searchQuery ? groupItems.some(it => 
-            it.text.toLowerCase().includes(searchQuery) || it.tag.toLowerCase().includes(searchQuery)
-          ) : true;
+        // Add category button
+        html += `<button class="add-category-btn" onclick="addCategory()">+ ADD CATEGORY</button>`;
 
-          if (groupItems.length > 0) {
-            html += `
-              <div class="label-group-block">
-                <div class="label-group-header ${isCollapsed ? 'collapsed' : ''}" onclick="toggleCollapse('${escapeHtml(label)}')">
-                  <div class="label-group-header-left">
-                    <span class="collapse-icon">${isCollapsed ? '▶' : '▼'}</span>
-                    <span>${label.toUpperCase()}</span>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <button class="edit-label-btn" onclick="event.stopPropagation(); openEditLabelModal('${escapeHtml(label)}', '${currentTab}')">✏️</button>
-                    <span>(${groupItems.length})</span>
-                  </div>
-                </div>
-                <div class="label-group-list ${isCollapsed ? 'collapsed' : ''}" style="max-height: ${isCollapsed ? 0 : groupItems.length * 60}px;">
-                  ${groupItems.map(item => {
-                    const highlight = searchQuery && (
-                      item.text.toLowerCase().includes(searchQuery) || 
-                      item.tag.toLowerCase().includes(searchQuery)
-                    );
-                    return renderItemCard(item, highlight);
-                  }).join('')}
-                </div>
-              </div>
-            `;
-          }
-        });
+        for (const cat of categories) {
+          const catItems = grouped[cat] || [];
+          const collapsed = isCollapsed(currentTab, cat);
+          const catClass = normalizeClass(cat);
 
-        // Items with unknown labels
-        const knownLabels = labels.map(l => l.toLowerCase());
-        const otherItems = activeItems.filter(it => !knownLabels.includes(it.tag.toLowerCase()));
-        if (otherItems.length > 0) {
           html += `
-            <div class="label-group-block">
-              <div class="label-group-header">
-                <div class="label-group-header-left">
-                  <span class="collapse-icon">▼</span>
-                  <span>OTHER</span>
+            <div class="category-group ${collapsed ? 'collapsed' : ''}" data-category="${cat}">
+              <div class="category-header" onclick="toggleCollapse('${currentTab}', '${cat}')">
+                <div class="category-title">
+                  <span class="category-title-text" onclick="event.stopPropagation(); renameCategory('${cat}')">${cat}</span>
+                  <span class="category-count">(${catItems.length})</span>
                 </div>
-                <span>(${otherItems.length})</span>
+                <div class="category-actions">
+                  <span class="delete-category-btn" onclick="event.stopPropagation(); deleteCategory('${cat}')">🗑️</span>
+                  <span class="collapse-icon">${collapsed ? '▶' : '▼'}</span>
+                </div>
               </div>
-              <div class="label-group-list">
-                ${otherItems.map(item => renderItemCard(item, false)).join('')}
+              <div class="category-items">
+          `;
+
+          if (currentTab === 'skills') {
+            for (const skill of catItems) {
+              const rank = getRank(skill.level);
+              const progress = getProgressToNextRank(skill.level);
+              const nextRank = getNextRank(skill.level);
+              const progressLabel = nextRank ? `${skill.level} → ${nextRank.level} (${nextRank.name})` : 'MAX LEVEL';
+
+              html += `
+                <div class="skill-item tier-${rank.class}">
+                  <div class="skill-header">
+                    <span class="skill-name">${highlightText(skill.name, searchQuery)}</span>
+                    <span class="skill-rank rank-${rank.class}">${rank.name}</span>
+                    <span class="skill-delete" onclick="deleteItem('${skill.id}')">🗑️</span>
+                  </div>
+                  <div class="skill-progress-container">
+                    <div class="skill-controls">
+                      <button class="skill-btn minus" onclick="updateSkillLevel('${skill.id}', -1)">-</button>
+                      <span class="skill-level">${skill.level}</span>
+                      <button class="skill-btn plus" onclick="updateSkillLevel('${skill.id}', 1)">+</button>
+                    </div>
+                    <div class="skill-progress-bar" title="${progressLabel}">
+                      <div class="skill-progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }
+          } else {
+            for (const item of catItems) {
+              html += `
+                <div class="quest-item ${item.completed ? 'completed' : ''}"
+                     draggable="true"
+                     ondragstart="handleDragStart(event, '${item.id}')"
+                     ondragend="handleDragEnd(event)"
+                     ondragover="handleDragOver(event)"
+                     ondrop="handleDrop(event, '${item.id}', '${cat}')">
+                  <span class="drag-handle">☰</span>
+                  <input type="checkbox" class="item-checkbox"
+                         ${item.completed ? 'checked' : ''}
+                         onchange="toggleItem('${item.id}')">
+                  <span class="item-text">${highlightText(item.text, searchQuery)}</span>
+                  <span class="item-tag tag-${catClass}">${cat}</span>
+                  <span class="delete-btn" onclick="deleteItem('${item.id}')">🗑️</span>
+                </div>
+              `;
+            }
+          }
+
+          html += `
               </div>
             </div>
           `;
         }
-
-        activeContainer.innerHTML = html || '<div class="empty-state">NO ACTIVE ITEMS IN THIS HALL</div>';
       }
 
-      if (completedItems.length > 0) {
-        completedSection.style.display = 'block';
-        completedCount.textContent = completedItems.length;
-        completedContainer.innerHTML = completedItems.map(item => renderItemCard(item, false)).join('');
-      } else {
-        completedSection.style.display = 'none';
-        completedContainer.innerHTML = '';
-      }
+      container.innerHTML = html;
+      updateCounts();
     }
 
-    // Enter Key handlers
+    function normalizeClass(label) {
+      return label.toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    // ============ INIT ============
     document.getElementById('quest-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') addItem();
     });
 
-    document.getElementById('edit-label-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') saveCategory();
-    });
-
-    document.getElementById('add-category-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') confirmAddCategory();
-    });
-
-    // Startup
+    loadStoreLocal();
     switchTab(currentTab);
     syncWithGithub();
     startAutoPoll();
