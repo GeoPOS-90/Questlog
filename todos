@@ -2,15 +2,7 @@
   "food": [],
   "supplies": [],
   "misc": [],
-  "mainquest": [
-    {
-      "id": "mvfoh47lwa24q",
-      "text": "Book Uber Return",
-      "tag": "⚔️ Story",
-      "completed": true,
-      "createdAt": 1792439964563
-    }
-  ],
+  "mainquest": [],
   "sidequest": [],
   "categoryConfig": {
     "food": {
@@ -51,9 +43,7 @@
         "🏰 Dungeons",
         "👑 Milestones"
       ],
-      "collapsed": {
-        "⚔️ Story": false
-      }
+      "collapsed": {}
     },
     "sidequest": {
       "labels": [
@@ -66,7 +56,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792439982418,
+    "lastModified": 1792440010610,
     "version": 2
   }
 }
