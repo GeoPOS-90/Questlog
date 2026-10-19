@@ -1,17 +1,9 @@
 {
   "food": [],
   "supplies": [],
-  "misc": [],
-  "mainquest": [
-    {
-      "id": "mvfoipqjo9nll",
-      "text": "Uber ride",
-      "tag": "⚔️ Story",
-      "completed": false,
-      "createdAt": 1792440039115
-    }
-  ],
+  "mainquest": [],
   "sidequest": [],
+  "skills": [],
   "categoryConfig": {
     "food": {
       "labels": [
@@ -35,15 +27,6 @@
       ],
       "collapsed": {}
     },
-    "misc": {
-      "labels": [
-        "📋 Tasks",
-        "🛠️ Projects",
-        "💡 Ideas",
-        "📝 Notes"
-      ],
-      "collapsed": {}
-    },
     "mainquest": {
       "labels": [
         "⚔️ Story",
@@ -61,10 +44,20 @@
         "🎯 Challenges"
       ],
       "collapsed": {}
+    },
+    "skills": {
+      "labels": [
+        "⚔️ Combat",
+        "🧙 Magic",
+        "🛠️ Crafting",
+        "🗣️ Social",
+        "🏃 Physical"
+      ],
+      "collapsed": {}
     }
   },
   "meta": {
-    "lastModified": 1792440039115,
-    "version": 2
+    "lastModified": 0,
+    "version": 3
   }
 }
