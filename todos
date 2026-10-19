@@ -6,6 +6,13 @@
       "tag": "Produce",
       "completed": false,
       "createdAt": 1792436296977
+    },
+    {
+      "id": "mvfmapm7pvntm",
+      "text": "Banana",
+      "tag": "Produce",
+      "completed": false,
+      "createdAt": 1792436306479
     }
   ],
   "supplies": [],
