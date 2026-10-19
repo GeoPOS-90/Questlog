@@ -7,7 +7,7 @@
       "id": "mvfoh47lwa24q",
       "text": "Book Uber Return",
       "tag": "⚔️ Story",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792439964563
     }
   ],
@@ -66,7 +66,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792439978459,
+    "lastModified": 1792439982418,
     "version": 2
   }
 }
