@@ -7,7 +7,7 @@
       "id": "mvfoh47lwa24q",
       "text": "Book Uber Return",
       "tag": "⚔️ Story",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792439964563
     }
   ],
@@ -51,7 +51,9 @@
         "🏰 Dungeons",
         "👑 Milestones"
       ],
-      "collapsed": {}
+      "collapsed": {
+        "⚔️ Story": false
+      }
     },
     "sidequest": {
       "labels": [
@@ -64,7 +66,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792439964563,
+    "lastModified": 1792439969983,
     "version": 2
   }
 }
