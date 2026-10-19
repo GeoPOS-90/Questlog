@@ -2,7 +2,15 @@
   "food": [],
   "supplies": [],
   "misc": [],
-  "mainquest": [],
+  "mainquest": [
+    {
+      "id": "mvfoh47lwa24q",
+      "text": "Book Uber Return",
+      "tag": "⚔️ Story",
+      "completed": false,
+      "createdAt": 1792439964563
+    }
+  ],
   "sidequest": [],
   "categoryConfig": {
     "food": {
@@ -56,7 +64,7 @@
     }
   },
   "meta": {
-    "lastModified": 0,
+    "lastModified": 1792439964563,
     "version": 2
   }
 }
