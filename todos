@@ -1,5 +1,13 @@
 {
-  "food": [],
+  "food": [
+    {
+      "id": "mvfmaia9hhhxg",
+      "text": "Apple",
+      "tag": "Produce",
+      "completed": false,
+      "createdAt": 1792436296977
+    }
+  ],
   "supplies": [],
   "misc": []
 }
