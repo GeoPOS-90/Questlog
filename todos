@@ -22,15 +22,7 @@
       "createdAt": 1792437099402
     }
   ],
-  "supplies": [
-    {
-      "id": "mvfmryfapbzv2",
-      "text": "Toothpaste",
-      "tag": "Consumable",
-      "completed": false,
-      "createdAt": 1792437111046
-    }
-  ],
+  "supplies": [],
   "misc": [],
   "mainquest": [],
   "sidequest": [],
@@ -87,7 +79,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792439677510,
+    "lastModified": 1792439682296,
     "version": 2
   }
 }
