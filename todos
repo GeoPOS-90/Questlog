@@ -1,85 +1,62 @@
 {
-  "food": [
-    {
-      "id": "mvfmaia9hhhxg",
-      "text": "Apple",
-      "tag": "Produce",
-      "completed": false,
-      "createdAt": 1792436296977
-    },
-    {
-      "id": "mvfmapm7pvntm",
-      "text": "Banana",
-      "tag": "Produce",
-      "completed": false,
-      "createdAt": 1792436306479
-    },
-    {
-      "id": "mvfmrpfuf45h4",
-      "text": "Mushrooms",
-      "tag": "Produce",
-      "completed": false,
-      "createdAt": 1792437099402
-    }
-  ],
+  "food": [],
   "supplies": [],
   "misc": [],
   "mainquest": [],
   "sidequest": [],
   "categoryConfig": {
-    "mainquest": {
-      "labels": [
-        "Story",
-        "Boss",
-        "Dungeon",
-        "Escort"
-      ],
-      "collapsed": {}
-    },
-    "sidequest": {
-      "labels": [
-        "Fetch",
-        "Explore",
-        "Hunt",
-        "Collect"
-      ],
-      "collapsed": {}
-    },
     "food": {
       "labels": [
-        "Produce",
-        "Meat",
-        "Cold",
-        "Dry",
-        "Snacks"
+        "🥩 Proteins",
+        "🥬 Vegetables",
+        "🧀 Dairy",
+        "🍞 Grains",
+        "🍎 Fruits",
+        "❄️ Frozen",
+        "🥫 Canned",
+        "🍪 Snacks"
       ],
       "collapsed": {}
     },
     "supplies": {
       "labels": [
-        "Gear",
-        "Tools",
-        "Consumable",
-        "Ammo",
-        "General",
-        "Bat"
+        "🧹 Cleaning",
+        "🧴 Personal Care",
+        "📦 Household",
+        "🐾 Pet Supplies"
       ],
-      "collapsed": {
-        "Consumable": false
-      }
+      "collapsed": {}
     },
     "misc": {
       "labels": [
-        "Quest",
-        "Loot",
-        "Note",
-        "General"
+        "📋 Tasks",
+        "🛠️ Projects",
+        "💡 Ideas",
+        "📝 Notes"
+      ],
+      "collapsed": {}
+    },
+    "mainquest": {
+      "labels": [
+        "⚔️ Story",
+        "🐉 Boss Battles",
+        "🏰 Dungeons",
+        "👑 Milestones"
+      ],
+      "collapsed": {}
+    },
+    "sidequest": {
+      "labels": [
+        "🗺️ Exploration",
+        "💎 Collectibles",
+        "🤝 Favors",
+        "🎯 Challenges"
       ],
       "collapsed": {}
     }
   },
   "meta": {
-    "lastModified": 1792439682296,
+    "lastModified": 0,
     "version": 2
   }
 }
