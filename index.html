@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quest Log - Provisions, Storehouse & Inventory</title>
+  <title>Quest Log - Main Quest, Side Quest, Provisions, Storehouse & Inventory</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * {
@@ -65,7 +65,10 @@
       border: 1px solid;
       background: #1a1a2e;
       letter-spacing: 0.5px;
-      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
     }
 
     .status-synced   { color: #7fff7f; border-color: #3a6a3a; }
@@ -73,20 +76,19 @@
     .status-local    { color: #80d8ff; border-color: #0091ea; }
     .status-error    { color: #ff5252; border-color: #d50000; }
 
-    .error-detail {
-      font-size: 7px;
-      color: #ff5252;
-      background: #2a1a1a;
-      border: 1px solid #d50000;
-      border-radius: 4px;
-      padding: 8px 10px;
-      margin-top: 8px;
-      word-break: break-all;
-      display: none;
+    .sync-timestamp {
+      font-size: 6px;
+      color: #7a7a8a;
+      margin-top: 2px;
     }
 
-    .error-detail.visible {
-      display: block;
+    @keyframes syncPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .status-badge.pulsing {
+      animation: syncPulse 1s ease-in-out;
     }
 
     .icon-btn {
@@ -106,11 +108,49 @@
       box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
     }
 
+    .icon-btn.small {
+      font-size: 7px;
+      padding: 4px 8px;
+    }
+
+    /* Search Box */
+    .search-container {
+      margin-bottom: 12px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #1a1a2e;
+      color: #ffd700;
+      border: 2px solid #4a4a5e;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
+      padding: 10px 12px;
+      border-radius: 4px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
+    .search-input::placeholder {
+      color: #5a5a6e;
+    }
+
+    .search-results-info {
+      font-size: 7px;
+      color: #7a7a8a;
+      margin-top: 6px;
+      padding-left: 4px;
+    }
+
     /* Tabs Navigation */
     .tabs-nav {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
       margin-bottom: 16px;
     }
 
@@ -119,15 +159,15 @@
       border: 2px solid #4a4a5e;
       border-bottom: none;
       border-radius: 6px 6px 0 0;
-      padding: 12px 6px;
+      padding: 10px 4px;
       font-family: 'Press Start 2P', cursive;
-      font-size: 9px;
+      font-size: 7px;
       color: #8a8a9e;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       transition: all 0.15s;
     }
 
@@ -145,8 +185,8 @@
     }
 
     .tab-count-badge {
-      font-size: 7px;
-      padding: 2px 6px;
+      font-size: 6px;
+      padding: 2px 5px;
       background: #1a1a2e;
       border: 1px solid #5c4033;
       border-radius: 3px;
@@ -246,6 +286,49 @@
       justify-content: space-between;
       align-items: center;
       letter-spacing: 0.5px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+
+    .label-group-header:hover {
+      background: #252540;
+    }
+
+    .label-group-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .collapse-icon {
+      font-size: 8px;
+      transition: transform 0.2s;
+    }
+
+    .label-group-header.collapsed .collapse-icon {
+      transform: rotate(-90deg);
+    }
+
+    .label-group-header .edit-label-btn {
+      font-size: 7px;
+      padding: 2px 5px;
+      background: transparent;
+      border: 1px solid #5c4033;
+      color: #7a7a8a;
+      cursor: pointer;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .label-group-header:hover .edit-label-btn {
+      opacity: 1;
+    }
+
+    .label-group-header .edit-label-btn:hover {
+      border-color: #ffd700;
+      color: #ffd700;
     }
 
     .label-group-list {
@@ -253,6 +336,32 @@
       flex-direction: column;
       gap: 6px;
       min-height: 10px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .label-group-list.collapsed {
+      max-height: 0 !important;
+      margin: 0;
+    }
+
+    .add-category-btn {
+      background: transparent;
+      border: 2px dashed #4a4a5e;
+      color: #5a5a6e;
+      padding: 8px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 7px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 100%;
+      margin-top: 8px;
+      transition: all 0.15s;
+    }
+
+    .add-category-btn:hover {
+      border-color: #7fff7f;
+      color: #7fff7f;
     }
 
     /* Item Card */
@@ -279,6 +388,11 @@
 
     .item-card.drag-target-below {
       border-bottom: 3px solid #ffd700 !important;
+    }
+
+    .item-card.search-highlight {
+      border-color: #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
     }
 
     .drag-handle {
@@ -352,6 +466,16 @@
     .tag-note       { background: #383430; color: #cfd8dc; border-color: #5d5954; }
     .tag-general    { background: #2a2a3e; color: #d4c4a8; border-color: #4a4a5e; }
 
+    /* New tab tags */
+    .tag-story      { background: #3a2a14; color: #ffb74d; border-color: #6d4c1f; }
+    .tag-boss       { background: #4a1a2a; color: #ff5252; border-color: #7b2d3d; }
+    .tag-dungeon    { background: #1a2a4a; color: #64b5f6; border-color: #2d4a7b; }
+    .tag-escort     { background: #2a3a2a; color: #81c784; border-color: #4a6a4a; }
+    .tag-fetch      { background: #3a3a2a; color: #dce775; border-color: #5a5a3a; }
+    .tag-explore    { background: #2a2a3a; color: #b39ddb; border-color: #4a4a6a; }
+    .tag-hunt       { background: #3a2a2a; color: #ef9a9a; border-color: #6a4a4a; }
+    .tag-collect    { background: #2a3a3a; color: #80deea; border-color: #4a6a6a; }
+
     .delete-btn {
       background: #8b0000;
       border: 2px solid #a00;
@@ -414,6 +538,144 @@
       border: 1px dashed #3a3a4e;
       border-radius: 4px;
     }
+
+    /* Modal for editing labels */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #2a2a3e;
+      border: 2px solid #ffd700;
+      border-radius: 6px;
+      padding: 20px;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .modal-title {
+      font-size: 10px;
+      color: #ffd700;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: #d4c4a8;
+      color: #3d2914;
+      border: 2px solid #5c4033;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: #ffd700;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 8px 16px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 2px solid;
+    }
+
+    .modal-btn.confirm {
+      background: #2a4a2a;
+      border-color: #3a6a3a;
+      color: #7fff7f;
+    }
+
+    .modal-btn.cancel {
+      background: #4a2a2a;
+      border-color: #6a3a3a;
+      color: #ff7f7f;
+    }
+
+    .modal-btn.danger {
+      background: #8b0000;
+      border-color: #a00;
+      color: #fff;
+    }
+
+    /* Backup buttons */
+    .backup-section {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    /* Conflict Modal */
+    .conflict-info {
+      font-size: 8px;
+      color: #d4c4a8;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .conflict-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .conflict-btn {
+      padding: 10px 16px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 2px solid;
+      text-align: left;
+    }
+
+    .conflict-btn.local {
+      background: #2a4a2a;
+      border-color: #3a6a3a;
+      color: #7fff7f;
+    }
+
+    .conflict-btn.remote {
+      background: #2a2a4a;
+      border-color: #3a3a6a;
+      color: #7f7fff;
+    }
+
+    .conflict-btn.merge {
+      background: #4a4a2a;
+      border-color: #6a6a3a;
+      color: #ffff7f;
+    }
+
+    /* Hidden file input */
+    #import-file-input {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -423,25 +685,46 @@
       <div class="header-top-row">
         <div class="header-title">📜 QUEST LOG VAULT</div>
         <div class="header-actions">
-          <span class="status-badge status-local" id="sync-status" onclick="toggleErrorDetail()" title="Click for details">💾 LOCAL ONLY</span>
+          <div class="status-badge status-local" id="sync-status">
+            <span id="sync-status-text">💾 LOCAL ONLY</span>
+            <span class="sync-timestamp" id="sync-timestamp"></span>
+          </div>
           <button class="icon-btn" onclick="syncWithGithub()" title="Sync memory now">🔄 SYNC</button>
         </div>
       </div>
-      <div class="error-detail" id="error-detail"></div>
+      <div class="backup-section">
+        <button class="icon-btn small" onclick="exportBackup()" title="Download backup">📥 EXPORT</button>
+        <button class="icon-btn small" onclick="document.getElementById('import-file-input').click()" title="Import backup">📤 IMPORT</button>
+        <input type="file" id="import-file-input" accept=".json" onchange="importBackup(event)">
+      </div>
     </header>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+      <input type="text" class="search-input" id="search-input" placeholder="🔍 Search all quests..." oninput="handleSearch()">
+      <div class="search-results-info" id="search-results-info"></div>
+    </div>
 
     <!-- TABS NAVIGATION -->
     <nav class="tabs-nav">
+      <button class="tab-btn" id="tab-btn-mainquest" onclick="switchTab('mainquest')">
+        <span>⚔️ MAIN</span>
+        <span class="tab-count-badge" id="tab-count-mainquest">0</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-sidequest" onclick="switchTab('sidequest')">
+        <span>🗡️ SIDE</span>
+        <span class="tab-count-badge" id="tab-count-sidequest">0</span>
+      </button>
       <button class="tab-btn active" id="tab-btn-food" onclick="switchTab('food')">
-        <span>🍖 PROVISIONS</span>
+        <span>🍖 FOOD</span>
         <span class="tab-count-badge" id="tab-count-food">0</span>
       </button>
       <button class="tab-btn" id="tab-btn-supplies" onclick="switchTab('supplies')">
-        <span>📦 STOREHOUSE</span>
+        <span>📦 SUPPLY</span>
         <span class="tab-count-badge" id="tab-count-supplies">0</span>
       </button>
       <button class="tab-btn" id="tab-btn-misc" onclick="switchTab('misc')">
-        <span>🎒 INVENTORY</span>
+        <span>🎒 INV</span>
         <span class="tab-count-badge" id="tab-count-misc">0</span>
       </button>
     </nav>
@@ -458,6 +741,8 @@
 
       <div id="active-list-container"></div>
 
+      <button class="add-category-btn" onclick="openAddCategoryModal()">+ ADD CATEGORY</button>
+
       <div class="completed-section" id="completed-section" style="display:none;">
         <div class="completed-header">
           <span>✅ COMPLETED / SECURED</span>
@@ -468,18 +753,59 @@
     </div>
   </div>
 
+  <!-- Edit Label Modal -->
+  <div class="modal-overlay" id="edit-label-modal">
+    <div class="modal-box">
+      <div class="modal-title" id="edit-label-title">EDIT CATEGORY</div>
+      <input type="text" class="modal-input" id="edit-label-input" placeholder="Category name...">
+      <div class="modal-buttons">
+        <button class="modal-btn danger" id="delete-label-btn" onclick="deleteCategory()">🗑️ DELETE</button>
+        <button class="modal-btn cancel" onclick="closeEditLabelModal()">CANCEL</button>
+        <button class="modal-btn confirm" onclick="saveCategory()">SAVE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Category Modal -->
+  <div class="modal-overlay" id="add-category-modal">
+    <div class="modal-box">
+      <div class="modal-title">ADD NEW CATEGORY</div>
+      <input type="text" class="modal-input" id="add-category-input" placeholder="Category name...">
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" onclick="closeAddCategoryModal()">CANCEL</button>
+        <button class="modal-btn confirm" onclick="confirmAddCategory()">ADD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conflict Resolution Modal -->
+  <div class="modal-overlay" id="conflict-modal">
+    <div class="modal-box">
+      <div class="modal-title">⚠️ SYNC CONFLICT</div>
+      <div class="conflict-info">
+        Remote data has changed since your last sync. Choose how to resolve:
+      </div>
+      <div class="conflict-options">
+        <button class="conflict-btn local" onclick="resolveConflict('local')">
+          📱 KEEP LOCAL<br>
+          <small>Overwrite remote with your changes</small>
+        </button>
+        <button class="conflict-btn remote" onclick="resolveConflict('remote')">
+          ☁️ USE REMOTE<br>
+          <small>Discard local and use remote data</small>
+        </button>
+        <button class="conflict-btn merge" onclick="resolveConflict('merge')">
+          🔀 MERGE BOTH<br>
+          <small>Combine items from both versions</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ============================================
-    // EMBEDDED GITHUB CONFIG - Token split to avoid GitHub secret scanning
+    // EMBEDDED GITHUB CONFIG - Edit these values
     // ============================================
-    const GITHUB_CONFIG = {
-      owner: 'GeoPOS-90',
-      repo: 'Questlog',
-      branch: 'main',
-      path: 'todos'
-    };
-
-    // Token split into parts - GitHub scanner can't detect fragmented tokens
     const _t = [
       'github_pat_11B33AJB',
       'Y0Bxt04NO4rX78_RQj1eUOyJ',
@@ -488,88 +814,50 @@
     ];
     const getToken = () => _t.join('');
 
+    const GITHUB_CONFIG = {
+      owner: 'GeoPOS-90',
+      repo: 'Questlog',
+      branch: 'main',
+      path: 'todos'
+    };
+
     // Auto-poll interval (in milliseconds) - 30 seconds
     const AUTO_POLL_INTERVAL = 30000;
 
     // ============================================
-    // DEBUG HELPERS
-    // ============================================
-    let lastError = null;
 
-    function logDebug(context, data) {
-      console.log(`[QuestLog Debug] ${context}:`, data);
-    }
-
-    function setError(message, details = null) {
-      lastError = { message, details, timestamp: new Date().toISOString() };
-      console.error('[QuestLog Error]', message, details);
-
-      const errorEl = document.getElementById('error-detail');
-      errorEl.innerHTML = `<strong>${message}</strong>${details ? '<br>' + escapeHtml(JSON.stringify(details, null, 2)) : ''}`;
-      errorEl.classList.add('visible');
-    }
-
-    function clearError() {
-      lastError = null;
-      const errorEl = document.getElementById('error-detail');
-      errorEl.classList.remove('visible');
-      errorEl.innerHTML = '';
-    }
-
-    function toggleErrorDetail() {
-      const errorEl = document.getElementById('error-detail');
-      if (lastError) {
-        errorEl.classList.toggle('visible');
-      }
-    }
-
-    function validateConfig() {
-      const cfg = GITHUB_CONFIG;
-      const token = getToken();
-      const issues = [];
-
-      if (!cfg.owner) issues.push('Missing owner');
-      if (!cfg.repo) issues.push('Missing repo');
-      if (!cfg.branch) issues.push('Missing branch');
-      if (!cfg.path) issues.push('Missing path');
-      if (!token) issues.push('Missing token');
-      else if (token.length < 40) issues.push(`Token too short (${token.length} chars, expected 40+)`);
-      else if (token.includes(' ')) issues.push('Token contains spaces');
-
-      logDebug('Config Validation', {
-        owner: cfg.owner,
-        repo: cfg.repo,
-        branch: cfg.branch,
-        path: cfg.path,
-        tokenLength: token ? token.length : 0,
-        tokenPrefix: token ? token.substring(0, 15) + '...' : 'MISSING',
-        issues: issues.length ? issues : 'NONE'
-      });
-
-      return issues;
-    }
-
-    // ============================================
-
-    const STORAGE_DATA_KEY = 'questlog_vault_data_v3';
+    const STORAGE_DATA_KEY = 'questlog_vault_data_v4';
     const ACTIVE_TAB_KEY   = 'questlog_vault_active_tab';
 
-    const CATEGORY_CONFIG = {
+    const DEFAULT_CATEGORY_CONFIG = {
+      mainquest: {
+        labels: ['Story', 'Boss', 'Dungeon', 'Escort'],
+        collapsed: {}
+      },
+      sidequest: {
+        labels: ['Fetch', 'Explore', 'Hunt', 'Collect'],
+        collapsed: {}
+      },
       food: {
-        name: 'Provisions',
         labels: ['Produce', 'Meat', 'Cold', 'Dry', 'Snacks'],
-        placeholder: 'Food item (e.g. Fresh Apples)...'
+        collapsed: {}
       },
       supplies: {
-        name: 'Storehouse',
         labels: ['Gear', 'Tools', 'Consumable', 'Ammo', 'General'],
-        placeholder: 'Supply item (e.g. Torches, Iron Nails)...'
+        collapsed: {}
       },
       misc: {
-        name: 'Inventory',
         labels: ['Quest', 'Loot', 'Note', 'General'],
-        placeholder: 'General item or note...'
+        collapsed: {}
       }
+    };
+
+    const TAB_PLACEHOLDERS = {
+      mainquest: 'Main quest objective...',
+      sidequest: 'Side quest task...',
+      food: 'Food item (e.g. Fresh Apples)...',
+      supplies: 'Supply item (e.g. Torches, Iron Nails)...',
+      misc: 'General item or note...'
     };
 
     let currentTab = localStorage.getItem(ACTIVE_TAB_KEY) || 'food';
@@ -577,19 +865,67 @@
     let currentSha = null;
     let isSyncing = false;
     let autoPollTimer = null;
+    let lastSyncTime = null;
+    let editingLabel = null;
+    let editingLabelTab = null;
+    let pendingConflict = null;
+    let searchQuery = '';
 
     // Load Local Data
     function getStore() {
       try {
         const raw = localStorage.getItem(STORAGE_DATA_KEY);
-        if (raw) return JSON.parse(raw);
+        if (raw) {
+          const data = JSON.parse(raw);
+          return migrateData(data);
+        }
       } catch (e) {
         console.error('Storage read error:', e);
       }
-      return { food: [], supplies: [], misc: [] };
+      return getDefaultData();
+    }
+
+    function getDefaultData() {
+      return {
+        mainquest: [],
+        sidequest: [],
+        food: [],
+        supplies: [],
+        misc: [],
+        categoryConfig: JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG)),
+        meta: {
+          lastModified: Date.now(),
+          version: 2
+        }
+      };
+    }
+
+    function migrateData(data) {
+      // Migrate from v1 format (no categoryConfig or meta)
+      if (!data.meta || data.meta.version < 2) {
+        console.log('Migrating data to v2 format...');
+
+        // Add new tabs if missing
+        if (!data.mainquest) data.mainquest = [];
+        if (!data.sidequest) data.sidequest = [];
+
+        // Add categoryConfig if missing
+        if (!data.categoryConfig) {
+          data.categoryConfig = JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG));
+        }
+
+        // Add meta
+        data.meta = {
+          lastModified: Date.now(),
+          version: 2
+        };
+      }
+
+      return data;
     }
 
     function saveStoreLocal(data) {
+      data.meta.lastModified = Date.now();
       localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(data));
     }
 
@@ -605,26 +941,49 @@
 
     function updateStatus(state, label) {
       const el = document.getElementById('sync-status');
+      const textEl = document.getElementById('sync-status-text');
       el.className = `status-badge status-${state}`;
-      el.textContent = label;
+      textEl.textContent = label;
 
-      if (state !== 'error') {
-        clearError();
+      if (state === 'synced') {
+        lastSyncTime = new Date();
+        updateSyncTimestamp();
       }
+    }
+
+    function updateSyncTimestamp() {
+      const el = document.getElementById('sync-timestamp');
+      if (!lastSyncTime) {
+        el.textContent = '';
+        return;
+      }
+
+      const now = new Date();
+      const diff = Math.floor((now - lastSyncTime) / 1000);
+
+      if (diff < 60) {
+        el.textContent = 'just now';
+      } else if (diff < 3600) {
+        const mins = Math.floor(diff / 60);
+        el.textContent = `${mins}m ago`;
+      } else {
+        el.textContent = lastSyncTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      }
+    }
+
+    // Update timestamp every 30 seconds
+    setInterval(updateSyncTimestamp, 30000);
+
+    function triggerPulse() {
+      const el = document.getElementById('sync-status');
+      el.classList.add('pulsing');
+      setTimeout(() => el.classList.remove('pulsing'), 1000);
     }
 
     /* GitHub Sync Engine */
     async function syncWithGithub(silent = false) {
       const cfg = GITHUB_CONFIG;
       const token = getToken();
-
-      // Validate config first
-      const configIssues = validateConfig();
-      if (configIssues.length > 0) {
-        setError('Config Issues', configIssues);
-        updateStatus('error', '⚠️ CONFIG ERROR');
-        return;
-      }
 
       if (!token) {
         updateStatus('local', '💾 LOCAL ONLY');
@@ -634,9 +993,9 @@
       if (isSyncing) return;
       isSyncing = true;
       if (!silent) updateStatus('syncing', '🔄 SYNCING...');
+      if (silent) triggerPulse();
 
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
-      logDebug('Fetch URL', url);
 
       try {
         const res = await fetch(url, {
@@ -646,54 +1005,44 @@
           }
         });
 
-        logDebug('Response Status', { status: res.status, statusText: res.statusText });
-
         if (res.status === 200) {
           const body = await res.json();
-          currentSha = body.sha;
-          logDebug('File SHA', currentSha);
-
-          // Decode utf8 from base64
+          const remoteSha = body.sha;
           const decoded = decodeURIComponent(escape(atob(body.content.replace(/\s/g, ''))));
-          const remoteData = JSON.parse(decoded);
-          logDebug('Remote Data', remoteData);
+          const remoteData = migrateData(JSON.parse(decoded));
 
+          const localData = getStore();
+
+          // Check for conflicts
+          if (currentSha && currentSha !== remoteSha && localData.meta.lastModified > remoteData.meta.lastModified) {
+            // Local has changes AND remote has different SHA
+            pendingConflict = { localData, remoteData, remoteSha };
+            showConflictModal();
+            isSyncing = false;
+            return;
+          }
+
+          currentSha = remoteSha;
           saveStoreLocal(remoteData);
           render();
           updateStatus('synced', '☁️ SYNCED');
         } else if (res.status === 404) {
-          logDebug('File Not Found', 'Creating new file...');
           // File does not exist yet: push initial structure
           await pushToGithub(getStore());
         } else {
-          // Get error details from response
-          let errorBody = null;
-          try {
-            errorBody = await res.json();
-          } catch (e) {
-            errorBody = await res.text();
-          }
-
-          setError(`Sync Failed (HTTP ${res.status})`, {
-            status: res.status,
-            statusText: res.statusText,
-            url: url,
-            response: errorBody
-          });
+          const errorBody = await res.json().catch(() => ({}));
+          console.error('Sync error:', res.status, errorBody);
           updateStatus('error', '⚠️ SYNC ERROR');
         }
       } catch (err) {
-        setError('Network/Fetch Error', {
-          message: err.message,
-          stack: err.stack
-        });
+        console.error('Fetch error:', err);
         updateStatus('error', '⚠️ SYNC ERROR');
       } finally {
         isSyncing = false;
       }
     }
 
-    async function pushToGithub(data) {
+    async function pushToGithub(data, force = false) {
       const cfg = GITHUB_CONFIG;
       const token = getToken();
 
@@ -705,7 +1054,6 @@
       updateStatus('syncing', '🔄 PUSHING...');
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
       const jsonStr = JSON.stringify(data, null, 2);
-      // Encode utf8 to base64
       const content = btoa(unescape(encodeURIComponent(jsonStr)));
 
       const payload = {
@@ -713,9 +1061,7 @@
         content: content,
         branch: cfg.branch
       };
-      if (currentSha) payload.sha = currentSha;
-
-      logDebug('Push Payload', { url, hasSha: !!currentSha, contentLength: content.length });
+      if (currentSha && !force) payload.sha = currentSha;
 
       try {
         const res = await fetch(url, {
@@ -728,39 +1074,20 @@
           body: JSON.stringify(payload)
         });
 
-        logDebug('Push Response', { status: res.status, statusText: res.statusText });
-
         if (res.ok) {
           const body = await res.json();
           currentSha = body.content.sha;
-          logDebug('New SHA after push', currentSha);
           updateStatus('synced', '☁️ SYNCED');
         } else if (res.status === 409) {
-          logDebug('Conflict detected', 'Fetching newer version...');
           // Conflict: fetch newer version first
           await syncWithGithub(true);
         } else {
-          // Get error details from response
-          let errorBody = null;
-          try {
-            errorBody = await res.json();
-          } catch (e) {
-            errorBody = await res.text();
-          }
-
-          setError(`Push Failed (HTTP ${res.status})`, {
-            status: res.status,
-            statusText: res.statusText,
-            url: url,
-            response: errorBody
-          });
+          const errorBody = await res.json().catch(() => ({}));
+          console.error('Push error:', res.status, errorBody);
           updateStatus('error', '⚠️ PUSH ERROR');
         }
       } catch (err) {
-        setError('Push Network Error', {
-          message: err.message,
-          stack: err.stack
-        });
+        console.error('Push error:', err);
         updateStatus('error', '⚠️ PUSH ERROR');
       }
     }
@@ -771,21 +1098,158 @@
       pushToGithub(data);
     }
 
+    /* Conflict Resolution */
+    function showConflictModal() {
+      document.getElementById('conflict-modal').classList.add('active');
+    }
+
+    function closeConflictModal() {
+      document.getElementById('conflict-modal').classList.remove('active');
+      pendingConflict = null;
+    }
+
+    function resolveConflict(choice) {
+      if (!pendingConflict) return;
+
+      const { localData, remoteData, remoteSha } = pendingConflict;
+
+      if (choice === 'local') {
+        // Keep local, overwrite remote
+        currentSha = remoteSha;
+        pushToGithub(localData);
+      } else if (choice === 'remote') {
+        // Use remote, discard local
+        currentSha = remoteSha;
+        saveStoreLocal(remoteData);
+        render();
+        updateStatus('synced', '☁️ SYNCED');
+      } else if (choice === 'merge') {
+        // Merge: combine items from both
+        const mergedData = mergeData(localData, remoteData);
+        currentSha = remoteSha;
+        saveAndSync(mergedData);
+      }
+
+      closeConflictModal();
+    }
+
+    function mergeData(local, remote) {
+      const merged = JSON.parse(JSON.stringify(remote));
+
+      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
+
+      tabs.forEach(tab => {
+        const remoteIds = new Set((remote[tab] || []).map(i => i.id));
+        const localItems = local[tab] || [];
+
+        // Add local items that don't exist in remote
+        localItems.forEach(item => {
+          if (!remoteIds.has(item.id)) {
+            merged[tab].push(item);
+          }
+        });
+      });
+
+      // Merge category configs
+      if (local.categoryConfig) {
+        tabs.forEach(tab => {
+          if (local.categoryConfig[tab]) {
+            const localLabels = local.categoryConfig[tab].labels || [];
+            const remoteLabels = merged.categoryConfig[tab]?.labels || [];
+
+            localLabels.forEach(label => {
+              if (!remoteLabels.includes(label)) {
+                merged.categoryConfig[tab].labels.push(label);
+              }
+            });
+          }
+        });
+      }
+
+      merged.meta.lastModified = Date.now();
+      return merged;
+    }
+
     /* Auto-Poll for remote changes */
     function startAutoPoll() {
       if (autoPollTimer) clearInterval(autoPollTimer);
       autoPollTimer = setInterval(() => {
         syncWithGithub(true); // silent sync
       }, AUTO_POLL_INTERVAL);
-      logDebug('Auto-poll started', `${AUTO_POLL_INTERVAL / 1000} seconds interval`);
     }
 
     function stopAutoPoll() {
       if (autoPollTimer) {
         clearInterval(autoPollTimer);
         autoPollTimer = null;
-        logDebug('Auto-poll stopped', null);
       }
+    }
+
+    /* Export/Import Backup */
+    function exportBackup() {
+      const data = getStore();
+      const jsonStr = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `questlog_backup_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          const migratedData = migrateData(data);
+
+          if (confirm('This will replace your current data. Continue?')) {
+            saveStoreLocal(migratedData);
+            render();
+            pushToGithub(migratedData);
+          }
+        } catch (err) {
+          alert('Invalid backup file!');
+          console.error('Import error:', err);
+        }
+      };
+      reader.readAsText(file);
+
+      // Reset input so same file can be selected again
+      event.target.value = '';
+    }
+
+    /* Search */
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+      render();
+    }
+
+    function getSearchResults() {
+      if (!searchQuery) return null;
+
+      const data = getStore();
+      const results = [];
+      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
+
+      tabs.forEach(tab => {
+        (data[tab] || []).forEach(item => {
+          if (item.text.toLowerCase().includes(searchQuery) || 
+              item.tag.toLowerCase().includes(searchQuery)) {
+            results.push({ ...item, tab });
+          }
+        });
+      });
+
+      return results;
     }
 
     /* Tabs */
@@ -804,12 +1268,130 @@
     function updateTagSelect() {
       const select = document.getElementById('tag-select');
       const input = document.getElementById('quest-input');
-      const cfg = CATEGORY_CONFIG[currentTab];
+      const data = getStore();
+      const labels = data.categoryConfig[currentTab]?.labels || DEFAULT_CATEGORY_CONFIG[currentTab].labels;
 
-      select.innerHTML = cfg.labels.map(lbl => `<option value="${lbl}">${lbl}</option>`).join('');
-      input.placeholder = cfg.placeholder;
+      select.innerHTML = labels.map(lbl => `<option value="${lbl}">${lbl}</option>`).join('');
+      input.placeholder = TAB_PLACEHOLDERS[currentTab] || 'Enter item...';
       input.value = '';
-      input.focus();
+    }
+
+    /* Category Management */
+    function openEditLabelModal(label, tab) {
+      editingLabel = label;
+      editingLabelTab = tab;
+
+      document.getElementById('edit-label-title').textContent = 'EDIT CATEGORY';
+      document.getElementById('edit-label-input').value = label;
+      document.getElementById('delete-label-btn').style.display = 'inline-block';
+      document.getElementById('edit-label-modal').classList.add('active');
+      document.getElementById('edit-label-input').focus();
+    }
+
+    function closeEditLabelModal() {
+      document.getElementById('edit-label-modal').classList.remove('active');
+      editingLabel = null;
+      editingLabelTab = null;
+    }
+
+    function saveCategory() {
+      const newLabel = document.getElementById('edit-label-input').value.trim();
+      if (!newLabel || !editingLabel || !editingLabelTab) return;
+
+      const data = getStore();
+      const labels = data.categoryConfig[editingLabelTab].labels;
+      const index = labels.indexOf(editingLabel);
+
+      if (index !== -1) {
+        labels[index] = newLabel;
+
+        // Update all items with old label
+        (data[editingLabelTab] || []).forEach(item => {
+          if (item.tag.toLowerCase() === editingLabel.toLowerCase()) {
+            item.tag = newLabel;
+          }
+        });
+
+        saveAndSync(data);
+      }
+
+      closeEditLabelModal();
+    }
+
+    function deleteCategory() {
+      if (!editingLabel || !editingLabelTab) return;
+
+      const data = getStore();
+      const items = (data[editingLabelTab] || []).filter(
+        item => item.tag.toLowerCase() === editingLabel.toLowerCase()
+      );
+
+      if (items.length > 0) {
+        if (!confirm(`This category has ${items.length} item(s). Delete them too?`)) {
+          return;
+        }
+        // Remove items in this category
+        data[editingLabelTab] = data[editingLabelTab].filter(
+          item => item.tag.toLowerCase() !== editingLabel.toLowerCase()
+        );
+      }
+
+      // Remove label
+      data.categoryConfig[editingLabelTab].labels = data.categoryConfig[editingLabelTab].labels.filter(
+        l => l !== editingLabel
+      );
+
+      saveAndSync(data);
+      closeEditLabelModal();
+    }
+
+    function openAddCategoryModal() {
+      document.getElementById('add-category-input').value = '';
+      document.getElementById('add-category-modal').classList.add('active');
+      document.getElementById('add-category-input').focus();
+    }
+
+    function closeAddCategoryModal() {
+      document.getElementById('add-category-modal').classList.remove('active');
+    }
+
+    function confirmAddCategory() {
+      const newLabel = document.getElementById('add-category-input').value.trim();
+      if (!newLabel) return;
+
+      const data = getStore();
+
+      if (!data.categoryConfig[currentTab]) {
+        data.categoryConfig[currentTab] = { labels: [], collapsed: {} };
+      }
+
+      // Check if already exists
+      const exists = data.categoryConfig[currentTab].labels.some(
+        l => l.toLowerCase() === newLabel.toLowerCase()
+      );
+
+      if (exists) {
+        alert('Category already exists!');
+        return;
+      }
+
+      data.categoryConfig[currentTab].labels.push(newLabel);
+      saveAndSync(data);
+      closeAddCategoryModal();
+      updateTagSelect();
+    }
+
+    function toggleCollapse(label) {
+      const data = getStore();
+
+      if (!data.categoryConfig[currentTab].collapsed) {
+        data.categoryConfig[currentTab].collapsed = {};
+      }
+
+      data.categoryConfig[currentTab].collapsed[label] = !data.categoryConfig[currentTab].collapsed[label];
+      saveStoreLocal(data);
+      render();
+      // Don't push to GitHub for collapse state - local only preference
     }
 
     /* Actions */
@@ -924,10 +1506,11 @@
       saveAndSync(data);
     }
 
-    function renderItemCard(item) {
+    function renderItemCard(item, highlight = false) {
       const tagClass = `tag-${item.tag.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+      const highlightClass = highlight ? 'search-highlight' : '';
       return `
-        <div class="item-card ${item.completed ? 'completed' : ''}"
+        <div class="item-card ${item.completed ? 'completed' : ''} ${highlightClass}"
              id="card-${item.id}"
              data-id="${item.id}"
              draggable="true"
@@ -949,13 +1532,33 @@
 
     function render() {
       const data = getStore();
-      const config = CATEGORY_CONFIG[currentTab];
+      const labels = data.categoryConfig[currentTab]?.labels || DEFAULT_CATEGORY_CONFIG[currentTab].labels;
+      const collapsed = data.categoryConfig[currentTab]?.collapsed || {};
 
-      Object.keys(CATEGORY_CONFIG).forEach(cat => {
+      // Update tab counts
+      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
+      tabs.forEach(cat => {
         const activeCount = (data[cat] || []).filter(it => !it.completed).length;
         const badge = document.getElementById(`tab-count-${cat}`);
         if (badge) badge.textContent = activeCount;
       });
+
+      // Handle search results
+      const searchResults = getSearchResults();
+      const searchInfo = document.getElementById('search-results-info');
+
+      if (searchResults !== null) {
+        searchInfo.textContent = `Found ${searchResults.length} item(s) matching "${searchQuery}"`;
+
+        if (searchResults.length === 0) {
+          document.getElementById('active-list-container').innerHTML = 
+            '<div class="empty-state">NO MATCHING ITEMS FOUND</div>';
+          document.getElementById('completed-section').style.display = 'none';
+          return;
+        }
+      } else {
+        searchInfo.textContent = '';
+      }
 
       const currentList = data[currentTab] || [];
       const activeItems = currentList.filter(it => !it.completed);
@@ -970,63 +1573,90 @@
         activeContainer.innerHTML = '<div class="empty-state">NO ACTIVE ITEMS IN THIS HALL</div>';
       } else {
         let html = '';
-        config.labels.forEach(label => {
+        labels.forEach(label => {
           const groupItems = activeItems.filter(it => it.tag.toLowerCase() === label.toLowerCase());
+          const isCollapsed = collapsed[label] || false;
+          const matchesSearch = searchQuery ? groupItems.some(it => 
+            it.text.toLowerCase().includes(searchQuery) || it.tag.toLowerCase().includes(searchQuery)
+          ) : true;
+
           if (groupItems.length > 0) {
             html += `
               <div class="label-group-block">
-                <div class="label-group-header">
-                  <span>${label.toUpperCase()}</span>
-                  <span>(${groupItems.length})</span>
+                <div class="label-group-header ${isCollapsed ? 'collapsed' : ''}" onclick="toggleCollapse('${escapeHtml(label)}')">
+                  <div class="label-group-header-left">
+                    <span class="collapse-icon">${isCollapsed ? '▶' : '▼'}</span>
+                    <span>${label.toUpperCase()}</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="edit-label-btn" onclick="event.stopPropagation(); openEditLabelModal('${escapeHtml(label)}', '${currentTab}')">✏️</button>
+                    <span>(${groupItems.length})</span>
+                  </div>
                 </div>
-                <div class="label-group-list">
-                  ${groupItems.map(renderItemCard).join('')}
+                <div class="label-group-list ${isCollapsed ? 'collapsed' : ''}" style="max-height: ${isCollapsed ? 0 : groupItems.length * 60}px;">
+                  ${groupItems.map(item => {
+                    const highlight = searchQuery && (
+                      item.text.toLowerCase().includes(searchQuery) || 
+                      item.tag.toLowerCase().includes(searchQuery)
+                    );
+                    return renderItemCard(item, highlight);
+                  }).join('')}
                 </div>
               </div>
             `;
           }
         });
 
-        const knownLabels = config.labels.map(l => l.toLowerCase());
+        // Items with unknown labels
+        const knownLabels = labels.map(l => l.toLowerCase());
         const otherItems = activeItems.filter(it => !knownLabels.includes(it.tag.toLowerCase()));
         if (otherItems.length > 0) {
           html += `
             <div class="label-group-block">
               <div class="label-group-header">
-                <span>OTHER</span>
+                <div class="label-group-header-left">
+                  <span class="collapse-icon">▼</span>
+                  <span>OTHER</span>
+                </div>
                 <span>(${otherItems.length})</span>
               </div>
               <div class="label-group-list">
-                ${otherItems.map(renderItemCard).join('')}
+                ${otherItems.map(item => renderItemCard(item, false)).join('')}
               </div>
             </div>
           `;
         }
 
-        activeContainer.innerHTML = html;
+        activeContainer.innerHTML = html || '<div class="empty-state">NO ACTIVE ITEMS IN THIS HALL</div>';
       }
 
       if (completedItems.length > 0) {
         completedSection.style.display = 'block';
         completedCount.textContent = completedItems.length;
-        completedContainer.innerHTML = completedItems.map(renderItemCard).join('');
+        completedContainer.innerHTML = completedItems.map(item => renderItemCard(item, false)).join('');
       } else {
         completedSection.style.display = 'none';
         completedContainer.innerHTML = '';
       }
     }
 
-    // Enter Key
+    // Enter Key handlers
     document.getElementById('quest-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') addItem();
     });
 
+    document.getElementById('edit-label-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') saveCategory();
+    });
+
+    document.getElementById('add-category-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') confirmAddCategory();
+    });
+
     // Startup
-    logDebug('App Starting', { timestamp: new Date().toISOString() });
-    validateConfig(); // Log config validation on startup
     switchTab(currentTab);
     syncWithGithub();
-    startAutoPoll(); // Start auto-polling every 30 seconds
+    startAutoPoll();
   </script>
 </body>
 </html>
