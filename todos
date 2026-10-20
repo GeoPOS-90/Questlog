@@ -1,5 +1,13 @@
 {
-  "food": [],
+  "food": [
+    {
+      "id": "mvgrmxh98ltyo",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792505740797
+    }
+  ],
   "supplies": [],
   "misc": [],
   "mainquest": [],
@@ -56,7 +64,7 @@
     }
   },
   "meta": {
-    "lastModified": 0,
+    "lastModified": 1792505740798,
     "version": 2
   }
 }
