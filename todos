@@ -20,6 +20,13 @@
       "tag": "🍎 Fruits",
       "completed": false,
       "createdAt": 1792443534260
+    },
+    {
+      "id": "mvfqxxoj422rr",
+      "text": "fasf",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1792444108484
     }
   ],
   "supplies": [],
@@ -86,7 +93,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792506903691,
+    "lastModified": 1792524385108,
     "version": 2
   }
 }
