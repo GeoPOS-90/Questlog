@@ -38,6 +38,13 @@
       "tag": "⚔️ Story",
       "completed": true,
       "createdAt": 1792443875488
+    },
+    {
+      "id": "mvh3xczwq7wdp",
+      "text": "Pack luggage",
+      "tag": "⚔️ Story",
+      "completed": false,
+      "createdAt": 1792526382862
     }
   ],
   "sidequest": [],
@@ -115,7 +122,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792526366079,
+    "lastModified": 1792526382862,
     "version": 2
   }
 }
