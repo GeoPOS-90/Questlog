@@ -29,7 +29,7 @@
       "id": "mvfqsxweh2ero",
       "text": "Uber ride",
       "tag": "⚔️ Story",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792443875488
     }
   ],
@@ -86,7 +86,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792506894427,
+    "lastModified": 1792506903691,
     "version": 2
   }
 }
