@@ -113,6 +113,67 @@
       padding: 4px 8px;
     }
 
+    /* Debug Panel */
+    .debug-panel {
+      background: #1a1a2e;
+      border: 2px solid #ff5252;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .debug-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 9px;
+      color: #ff5252;
+    }
+
+    .debug-close-btn {
+      background: transparent;
+      border: none;
+      color: #ff5252;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    .debug-content {
+      font-size: 7px;
+      color: #d4c4a8;
+      line-height: 1.6;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .debug-entry {
+      padding: 4px 6px;
+      margin-bottom: 4px;
+      border-radius: 3px;
+      word-break: break-all;
+    }
+
+    .debug-entry.error { background: #3d1c1c; color: #ff7f7f; border-left: 3px solid #ff5252; }
+    .debug-entry.warn { background: #3d341a; color: #ffd87f; border-left: 3px solid #ffd700; }
+    .debug-entry.info { background: #1a334a; color: #7fe5ff; border-left: 3px solid #80d8ff; }
+    .debug-entry.success { background: #1c381c; color: #7fff7f; border-left: 3px solid #7fff7f; }
+
+    .debug-clear-btn {
+      background: #4a2a2a;
+      border: 1px solid #6a3a3a;
+      color: #ff7f7f;
+      padding: 4px 8px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 6px;
+      cursor: pointer;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
     /* Search Box */
     .search-container {
       margin-bottom: 12px;
@@ -690,6 +751,7 @@
             <span class="sync-timestamp" id="sync-timestamp"></span>
           </div>
           <button class="icon-btn" onclick="syncWithGithub()" title="Sync memory now">🔄 SYNC</button>
+          <button class="icon-btn small" onclick="toggleDebugPanel()" title="Toggle debug panel">🔧</button>
         </div>
       </div>
       <div class="backup-section">
@@ -698,6 +760,16 @@
         <input type="file" id="import-file-input" accept=".json" onchange="importBackup(event)">
       </div>
     </header>
+
+    <!-- DEBUG PANEL -->
+    <div class="debug-panel" id="debug-panel" style="display:none;">
+      <div class="debug-header">
+        <span>🔧 DEBUG LOG</span>
+        <button class="debug-close-btn" onclick="toggleDebugPanel()">✕</button>
+      </div>
+      <div class="debug-content" id="debug-content"></div>
+      <button class="debug-clear-btn" onclick="clearDebugLog()">CLEAR</button>
+    </div>
 
     <!-- SEARCH -->
     <div class="search-container">
@@ -807,10 +879,10 @@
     // EMBEDDED GITHUB CONFIG - Edit these values
     // ============================================
     const _t = [
-      'github_pat_11B33AJBY0Y',
-      'shNoRPY23MC_kv8gHZRs4Mc',
-      'FR61SUYizqaXpQljOYeqYJnlHbh9',
-      'p4KMEW3F7XFQtKZeF2vb'
+      'github_pat_11B33AJBY',
+      '0YshNoRPY23MC_kv8gHZRs',
+      '4McFR61SUYizqaXpQljOYe',
+      'qYJnlHbh9p4KMEW3F7XFQtKZeF2vb'
     ];
     const getToken = () => _t.join('');
 
@@ -870,6 +942,43 @@
     let editingLabelTab = null;
     let pendingConflict = null;
     let searchQuery = '';
+    let debugLog = [];
+
+    // Debug Panel Functions
+    function logDebug(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = { timestamp, message, type };
+      debugLog.push(entry);
+
+      if (debugLog.length > 50) debugLog.shift();
+
+      renderDebugPanel();
+
+      if (type === 'error') {
+        document.getElementById('debug-panel').style.display = 'block';
+      }
+
+      console.log(`[${type.toUpperCase()}] ${timestamp}: ${message}`);
+    }
+
+    function renderDebugPanel() {
+      const content = document.getElementById('debug-content');
+      if (!content) return;
+      content.innerHTML = debugLog.map(e => 
+        `<div class="debug-entry ${e.type}">[${e.timestamp}] ${escapeHtml(e.message)}</div>`
+      ).join('');
+      content.scrollTop = content.scrollHeight;
+    }
+
+    function toggleDebugPanel() {
+      const panel = document.getElementById('debug-panel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function clearDebugLog() {
+      debugLog = [];
+      renderDebugPanel();
+    }
 
     // Load Local Data
     function getStore() {
@@ -880,7 +989,7 @@
           return migrateData(data);
         }
       } catch (e) {
-        console.error('Storage read error:', e);
+        logDebug('Storage read error: ' + e.message, 'error');
       }
       return getDefaultData();
     }
@@ -901,20 +1010,16 @@
     }
 
     function migrateData(data) {
-      // Migrate from v1 format (no categoryConfig or meta)
       if (!data.meta || data.meta.version < 2) {
-        console.log('Migrating data to v2 format...');
+        logDebug('Migrating data to v2 format...', 'info');
 
-        // Add new tabs if missing
         if (!data.mainquest) data.mainquest = [];
         if (!data.sidequest) data.sidequest = [];
 
-        // Add categoryConfig if missing
         if (!data.categoryConfig) {
           data.categoryConfig = JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG));
         }
 
-        // Add meta
         data.meta = {
           lastModified: Date.now(),
           version: 2
@@ -971,7 +1076,6 @@
       }
     }
 
-    // Update timestamp every 30 seconds
     setInterval(updateSyncTimestamp, 30000);
 
     function triggerPulse() {
@@ -992,6 +1096,7 @@
 
       if (isSyncing) return;
       isSyncing = true;
+      logDebug('Starting sync...', 'info');
       if (!silent) updateStatus('syncing', '🔄 SYNCING...');
       if (silent) triggerPulse();
 
@@ -1013,9 +1118,7 @@
 
           const localData = getStore();
 
-          // Check for conflicts
           if (currentSha && currentSha !== remoteSha && localData.meta.lastModified > remoteData.meta.lastModified) {
-            // Local has changes AND remote has different SHA
             pendingConflict = { localData, remoteData, remoteSha };
             showConflictModal();
             isSyncing = false;
@@ -1026,16 +1129,17 @@
           saveStoreLocal(remoteData);
           render();
           updateStatus('synced', '☁️ SYNCED');
+          logDebug('Sync completed successfully', 'success');
         } else if (res.status === 404) {
-          // File does not exist yet: push initial structure
+          logDebug('File not found, creating new...', 'warn');
           await pushToGithub(getStore());
         } else {
           const errorBody = await res.json().catch(() => ({}));
-          console.error('Sync error:', res.status, errorBody);
+          logDebug('Sync error: ' + res.status + ' - ' + JSON.stringify(errorBody), 'error');
           updateStatus('error', '⚠️ SYNC ERROR');
         }
       } catch (err) {
-        console.error('Fetch error:', err);
+        logDebug('Fetch error: ' + err.message, 'error');
         updateStatus('error', '⚠️ SYNC ERROR');
       } finally {
         isSyncing = false;
@@ -1051,6 +1155,7 @@
         return;
       }
 
+      logDebug('Pushing to GitHub...', 'info');
       updateStatus('syncing', '🔄 PUSHING...');
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
       const jsonStr = JSON.stringify(data, null, 2);
@@ -1078,16 +1183,17 @@
           const body = await res.json();
           currentSha = body.content.sha;
           updateStatus('synced', '☁️ SYNCED');
+          logDebug('Push completed successfully', 'success');
         } else if (res.status === 409) {
-          // Conflict: fetch newer version first
+          logDebug('Conflict detected, re-syncing...', 'warn');
           await syncWithGithub(true);
         } else {
           const errorBody = await res.json().catch(() => ({}));
-          console.error('Push error:', res.status, errorBody);
+          logDebug('Push error: ' + res.status + ' - ' + JSON.stringify(errorBody), 'error');
           updateStatus('error', '⚠️ PUSH ERROR');
         }
       } catch (err) {
-        console.error('Push error:', err);
+        logDebug('Push error: ' + err.message, 'error');
         updateStatus('error', '⚠️ PUSH ERROR');
       }
     }
@@ -1114,17 +1220,14 @@
       const { localData, remoteData, remoteSha } = pendingConflict;
 
       if (choice === 'local') {
-        // Keep local, overwrite remote
         currentSha = remoteSha;
         pushToGithub(localData);
       } else if (choice === 'remote') {
-        // Use remote, discard local
         currentSha = remoteSha;
         saveStoreLocal(remoteData);
         render();
         updateStatus('synced', '☁️ SYNCED');
       } else if (choice === 'merge') {
-        // Merge: combine items from both
         const mergedData = mergeData(localData, remoteData);
         currentSha = remoteSha;
         saveAndSync(mergedData);
@@ -1142,7 +1245,6 @@
         const remoteIds = new Set((remote[tab] || []).map(i => i.id));
         const localItems = local[tab] || [];
 
-        // Add local items that don't exist in remote
         localItems.forEach(item => {
           if (!remoteIds.has(item.id)) {
             merged[tab].push(item);
@@ -1150,7 +1252,6 @@
         });
       });
 
-      // Merge category configs
       if (local.categoryConfig) {
         tabs.forEach(tab => {
           if (local.categoryConfig[tab]) {
@@ -1174,7 +1275,7 @@
     function startAutoPoll() {
       if (autoPollTimer) clearInterval(autoPollTimer);
       autoPollTimer = setInterval(() => {
-        syncWithGithub(true); // silent sync
+        syncWithGithub(true);
       }, AUTO_POLL_INTERVAL);
     }
 
@@ -1218,12 +1319,11 @@
           }
         } catch (err) {
           alert('Invalid backup file!');
-          console.error('Import error:', err);
+          logDebug('Import error: ' + err.message, 'error');
         }
       };
       reader.readAsText(file);
 
-      // Reset input so same file can be selected again
       event.target.value = '';
     }
 
@@ -1305,7 +1405,6 @@
       if (index !== -1) {
         labels[index] = newLabel;
 
-        // Update all items with old label
         (data[editingLabelTab] || []).forEach(item => {
           if (item.tag.toLowerCase() === editingLabel.toLowerCase()) {
             item.tag = newLabel;
@@ -1330,13 +1429,11 @@
         if (!confirm(`This category has ${items.length} item(s). Delete them too?`)) {
           return;
         }
-        // Remove items in this category
         data[editingLabelTab] = data[editingLabelTab].filter(
           item => item.tag.toLowerCase() !== editingLabel.toLowerCase()
         );
       }
 
-      // Remove label
       data.categoryConfig[editingLabelTab].labels = data.categoryConfig[editingLabelTab].labels.filter(
         l => l !== editingLabel
       );
@@ -1365,7 +1462,6 @@
         data.categoryConfig[currentTab] = { labels: [], collapsed: {} };
       }
 
-      // Check if already exists
       const exists = data.categoryConfig[currentTab].labels.some(
         l => l.toLowerCase() === newLabel.toLowerCase()
       );
@@ -1391,7 +1487,6 @@
       data.categoryConfig[currentTab].collapsed[label] = !data.categoryConfig[currentTab].collapsed[label];
       saveStoreLocal(data);
       render();
-      // Don't push to GitHub for collapse state - local only preference
     }
 
     /* Actions */
@@ -1535,7 +1630,6 @@
       const labels = data.categoryConfig[currentTab]?.labels || DEFAULT_CATEGORY_CONFIG[currentTab].labels;
       const collapsed = data.categoryConfig[currentTab]?.collapsed || {};
 
-      // Update tab counts
       const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
       tabs.forEach(cat => {
         const activeCount = (data[cat] || []).filter(it => !it.completed).length;
@@ -1543,7 +1637,6 @@
         if (badge) badge.textContent = activeCount;
       });
 
-      // Handle search results
       const searchResults = getSearchResults();
       const searchInfo = document.getElementById('search-results-info');
 
@@ -1576,9 +1669,6 @@
         labels.forEach(label => {
           const groupItems = activeItems.filter(it => it.tag.toLowerCase() === label.toLowerCase());
           const isCollapsed = collapsed[label] || false;
-          const matchesSearch = searchQuery ? groupItems.some(it => 
-            it.text.toLowerCase().includes(searchQuery) || it.tag.toLowerCase().includes(searchQuery)
-          ) : true;
 
           if (groupItems.length > 0) {
             html += `
@@ -1607,7 +1697,6 @@
           }
         });
 
-        // Items with unknown labels
         const knownLabels = labels.map(l => l.toLowerCase());
         const otherItems = activeItems.filter(it => !knownLabels.includes(it.tag.toLowerCase()));
         if (otherItems.length > 0) {
