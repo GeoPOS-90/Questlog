@@ -13,11 +13,26 @@
       "tag": "🥬 Vegetables",
       "completed": false,
       "createdAt": 1792506856814
+    },
+    {
+      "id": "mvfqlmlwn7470",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792443534260
     }
   ],
   "supplies": [],
   "misc": [],
-  "mainquest": [],
+  "mainquest": [
+    {
+      "id": "mvfqsxweh2ero",
+      "text": "Uber ride",
+      "tag": "⚔️ Story",
+      "completed": false,
+      "createdAt": 1792443875488
+    }
+  ],
   "sidequest": [],
   "categoryConfig": {
     "food": {
@@ -71,7 +86,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792506856814,
+    "lastModified": 1792506894427,
     "version": 2
   }
 }
