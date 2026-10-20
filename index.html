@@ -113,66 +113,110 @@
       padding: 4px 8px;
     }
 
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      background: #2a4a2a;
+      border: 2px solid #3a6a3a;
+      color: #7fff7f;
+      box-shadow: 0 0 15px rgba(127, 255, 127, 0.3);
+    }
+
+    .toast.error {
+      background: #4a2a2a;
+      border: 2px solid #6a3a3a;
+      color: #ff7f7f;
+      box-shadow: 0 0 15px rgba(255, 127, 127, 0.3);
+    }
+
+    .toast.info {
+      background: #2a2a4a;
+      border: 2px solid #3a3a6a;
+      color: #7f7fff;
+      box-shadow: 0 0 15px rgba(127, 127, 255, 0.3);
+    }
+
     /* Debug Panel */
     .debug-panel {
-      background: #1a1a2e;
-      border: 2px solid #ff5252;
-      border-radius: 6px;
-      padding: 12px;
+      background: #0a0a15;
+      border: 2px solid #4a4a5e;
+      border-radius: 4px;
       margin-bottom: 16px;
       max-height: 200px;
       overflow-y: auto;
+      display: none;
+    }
+
+    .debug-panel.show {
+      display: block;
     }
 
     .debug-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      font-size: 9px;
-      color: #ff5252;
+      padding: 8px 12px;
+      background: #1a1a2e;
+      border-bottom: 1px solid #4a4a5e;
+      position: sticky;
+      top: 0;
     }
 
-    .debug-close-btn {
-      background: transparent;
-      border: none;
-      color: #ff5252;
-      font-size: 12px;
-      cursor: pointer;
-      font-family: 'Press Start 2P', cursive;
+    .debug-title {
+      font-size: 8px;
+      color: #7a7a8a;
     }
 
-    .debug-content {
+    .debug-clear {
       font-size: 7px;
-      color: #d4c4a8;
-      line-height: 1.6;
-      max-height: 120px;
-      overflow-y: auto;
+      padding: 2px 6px;
+      background: transparent;
+      border: 1px solid #5c4033;
+      color: #7a7a8a;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    .debug-clear:hover {
+      border-color: #ffd700;
+      color: #ffd700;
+    }
+
+    .debug-log {
+      padding: 8px 12px;
+      font-size: 7px;
+      line-height: 1.8;
     }
 
     .debug-entry {
-      padding: 4px 6px;
+      color: #5a5a6e;
       margin-bottom: 4px;
-      border-radius: 3px;
       word-break: break-all;
     }
 
-    .debug-entry.error { background: #3d1c1c; color: #ff7f7f; border-left: 3px solid #ff5252; }
-    .debug-entry.warn { background: #3d341a; color: #ffd87f; border-left: 3px solid #ffd700; }
-    .debug-entry.info { background: #1a334a; color: #7fe5ff; border-left: 3px solid #80d8ff; }
-    .debug-entry.success { background: #1c381c; color: #7fff7f; border-left: 3px solid #7fff7f; }
-
-    .debug-clear-btn {
-      background: #4a2a2a;
-      border: 1px solid #6a3a3a;
-      color: #ff7f7f;
-      padding: 4px 8px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 6px;
-      cursor: pointer;
-      border-radius: 3px;
-      margin-top: 8px;
-    }
+    .debug-entry.info { color: #80d8ff; }
+    .debug-entry.success { color: #7fff7f; }
+    .debug-entry.warn { color: #ffd700; }
+    .debug-entry.error { color: #ff5252; }
 
     /* Search Box */
     .search-container {
@@ -691,48 +735,6 @@
       margin-top: 8px;
     }
 
-    /* Conflict Modal */
-    .conflict-info {
-      font-size: 8px;
-      color: #d4c4a8;
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-
-    .conflict-options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .conflict-btn {
-      padding: 10px 16px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      border: 2px solid;
-      text-align: left;
-    }
-
-    .conflict-btn.local {
-      background: #2a4a2a;
-      border-color: #3a6a3a;
-      color: #7fff7f;
-    }
-
-    .conflict-btn.remote {
-      background: #2a2a4a;
-      border-color: #3a3a6a;
-      color: #7f7fff;
-    }
-
-    .conflict-btn.merge {
-      background: #4a4a2a;
-      border-color: #6a6a3a;
-      color: #ffff7f;
-    }
-
     /* Hidden file input */
     #import-file-input {
       display: none;
@@ -762,14 +764,16 @@
     </header>
 
     <!-- DEBUG PANEL -->
-    <div class="debug-panel" id="debug-panel" style="display:none;">
+    <div class="debug-panel" id="debug-panel">
       <div class="debug-header">
-        <span>🔧 DEBUG LOG</span>
-        <button class="debug-close-btn" onclick="toggleDebugPanel()">✕</button>
+        <span class="debug-title">🔧 DEBUG LOG</span>
+        <button class="debug-clear" onclick="clearDebugLog()">CLEAR</button>
       </div>
-      <div class="debug-content" id="debug-content"></div>
-      <button class="debug-clear-btn" onclick="clearDebugLog()">CLEAR</button>
+      <div class="debug-log" id="debug-log"></div>
     </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast"></div>
 
     <!-- SEARCH -->
     <div class="search-container">
@@ -850,39 +854,15 @@
     </div>
   </div>
 
-  <!-- Conflict Resolution Modal -->
-  <div class="modal-overlay" id="conflict-modal">
-    <div class="modal-box">
-      <div class="modal-title">⚠️ SYNC CONFLICT</div>
-      <div class="conflict-info">
-        Remote data has changed since your last sync. Choose how to resolve:
-      </div>
-      <div class="conflict-options">
-        <button class="conflict-btn local" onclick="resolveConflict('local')">
-          📱 KEEP LOCAL<br>
-          <small>Overwrite remote with your changes</small>
-        </button>
-        <button class="conflict-btn remote" onclick="resolveConflict('remote')">
-          ☁️ USE REMOTE<br>
-          <small>Discard local and use remote data</small>
-        </button>
-        <button class="conflict-btn merge" onclick="resolveConflict('merge')">
-          🔀 MERGE BOTH<br>
-          <small>Combine items from both versions</small>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // ============================================
-    // EMBEDDED GITHUB CONFIG - Edit these values
+    // EMBEDDED GITHUB CONFIG - v10
     // ============================================
     const _t = [
-      'github_pat_11B33AJBY',
-      '0YshNoRPY23MC_kv8gHZRs',
-      '4McFR61SUYizqaXpQljOYe',
-      'qYJnlHbh9p4KMEW3F7XFQtKZeF2vb'
+      'github_pat_11B33AJB',
+      'Y0YshNoRPY23MC_kv8gHZ',
+      'Rs4McFR61SUYizqaXpQljO',
+      'YeqYJnlHbh9p4KMEW3F7XFQtKZeF2vb'
     ];
     const getToken = () => _t.join('');
 
@@ -893,8 +873,8 @@
       path: 'todos'
     };
 
-    // Auto-poll interval (in milliseconds) - 30 seconds
-    const AUTO_POLL_INTERVAL = 30000;
+    // Auto-poll interval - 5 minutes (300000ms)
+    const AUTO_POLL_INTERVAL = 300000;
 
     // ============================================
 
@@ -940,47 +920,49 @@
     let lastSyncTime = null;
     let editingLabel = null;
     let editingLabelTab = null;
-    let pendingConflict = null;
     let searchQuery = '';
-    let debugLog = [];
 
-    // Debug Panel Functions
-    function logDebug(message, type = 'info') {
-      const timestamp = new Date().toLocaleTimeString();
-      const entry = { timestamp, message, type };
-      debugLog.push(entry);
+    // ============================================
+    // DEBUG & TOAST FUNCTIONS
+    // ============================================
+    function debugLog(message, type = 'info') {
+      const log = document.getElementById('debug-log');
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = `debug-entry ${type}`;
+      entry.textContent = `[${time}] ${message}`;
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
 
-      if (debugLog.length > 50) debugLog.shift();
-
-      renderDebugPanel();
-
+      // Auto-show panel on errors
       if (type === 'error') {
-        document.getElementById('debug-panel').style.display = 'block';
+        document.getElementById('debug-panel').classList.add('show');
       }
 
-      console.log(`[${type.toUpperCase()}] ${timestamp}: ${message}`);
-    }
-
-    function renderDebugPanel() {
-      const content = document.getElementById('debug-content');
-      if (!content) return;
-      content.innerHTML = debugLog.map(e => 
-        `<div class="debug-entry ${e.type}">[${e.timestamp}] ${escapeHtml(e.message)}</div>`
-      ).join('');
-      content.scrollTop = content.scrollHeight;
-    }
-
-    function toggleDebugPanel() {
-      const panel = document.getElementById('debug-panel');
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      console.log(`[${type.toUpperCase()}] ${message}`);
     }
 
     function clearDebugLog() {
-      debugLog = [];
-      renderDebugPanel();
+      document.getElementById('debug-log').innerHTML = '';
     }
 
-    // Load Local Data
+    function toggleDebugPanel() {
+      document.getElementById('debug-panel').classList.toggle('show');
+    }
+
+    function showToast(message, type = 'success', duration = 2500) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+
+    // ============================================
+    // DATA FUNCTIONS
+    // ============================================
     function getStore() {
       try {
         const raw = localStorage.getItem(STORAGE_DATA_KEY);
@@ -989,7 +971,7 @@
           return migrateData(data);
         }
       } catch (e) {
-        logDebug('Storage read error: ' + e.message, 'error');
+        debugLog('Storage read error: ' + e.message, 'error');
       }
       return getDefaultData();
     }
@@ -1011,21 +993,17 @@
 
     function migrateData(data) {
       if (!data.meta || data.meta.version < 2) {
-        logDebug('Migrating data to v2 format...', 'info');
-
+        debugLog('Migrating data to v2 format...', 'info');
         if (!data.mainquest) data.mainquest = [];
         if (!data.sidequest) data.sidequest = [];
-
         if (!data.categoryConfig) {
           data.categoryConfig = JSON.parse(JSON.stringify(DEFAULT_CATEGORY_CONFIG));
         }
-
         data.meta = {
           lastModified: Date.now(),
           version: 2
         };
       }
-
       return data;
     }
 
@@ -1084,7 +1062,9 @@
       setTimeout(() => el.classList.remove('pulsing'), 1000);
     }
 
-    /* GitHub Sync Engine */
+    // ============================================
+    // GITHUB SYNC - SIMPLIFIED WITH AUTO-MERGE
+    // ============================================
     async function syncWithGithub(silent = false) {
       const cfg = GITHUB_CONFIG;
       const token = getToken();
@@ -1096,9 +1076,10 @@
 
       if (isSyncing) return;
       isSyncing = true;
-      logDebug('Starting sync...', 'info');
       if (!silent) updateStatus('syncing', '🔄 SYNCING...');
       if (silent) triggerPulse();
+
+      debugLog('Starting sync...', 'info');
 
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
 
@@ -1112,41 +1093,56 @@
 
         if (res.status === 200) {
           const body = await res.json();
-          const remoteSha = body.sha;
-          const decoded = decodeURIComponent(escape(atob(body.content.replace(/\s/g, ''))));
-          const remoteData = migrateData(JSON.parse(decoded));
+          currentSha = body.sha;
 
-          const localData = getStore();
-
-          if (currentSha && currentSha !== remoteSha && localData.meta.lastModified > remoteData.meta.lastModified) {
-            pendingConflict = { localData, remoteData, remoteSha };
-            showConflictModal();
+          let remoteData;
+          try {
+            const decoded = decodeURIComponent(escape(atob(body.content.replace(/\s/g, ''))));
+            remoteData = migrateData(JSON.parse(decoded));
+          } catch (parseErr) {
+            debugLog('Remote JSON invalid, pushing local data: ' + parseErr.message, 'warn');
+            await pushToGithub(getStore());
             isSyncing = false;
             return;
           }
 
-          currentSha = remoteSha;
-          saveStoreLocal(remoteData);
+          const localData = getStore();
+
+          // Auto-merge: combine both versions silently
+          const mergedData = mergeData(localData, remoteData);
+          const localHasChanges = JSON.stringify(localData) !== JSON.stringify(remoteData);
+
+          saveStoreLocal(mergedData);
           render();
-          updateStatus('synced', '☁️ SYNCED');
-          logDebug('Sync completed successfully', 'success');
+
+          if (localHasChanges) {
+            debugLog('Local changes detected, pushing merged data...', 'info');
+            await pushToGithub(mergedData);
+          } else {
+            updateStatus('synced', '☁️ SYNCED');
+            if (!silent) showToast('✓ Synced', 'success');
+            debugLog('Sync completed, no changes needed', 'success');
+          }
+
         } else if (res.status === 404) {
-          logDebug('File not found, creating new...', 'warn');
+          debugLog('Remote file not found, creating...', 'warn');
           await pushToGithub(getStore());
         } else {
           const errorBody = await res.json().catch(() => ({}));
-          logDebug('Sync error: ' + res.status + ' - ' + JSON.stringify(errorBody), 'error');
+          debugLog(`Sync error: ${res.status} - ${JSON.stringify(errorBody)}`, 'error');
           updateStatus('error', '⚠️ SYNC ERROR');
+          showToast('⚠️ Sync failed', 'error');
         }
       } catch (err) {
-        logDebug('Fetch error: ' + err.message, 'error');
-        updateStatus('error', '⚠️ SYNC ERROR');
+        debugLog('Fetch error: ' + err.message, 'error');
+        updateStatus('error', '⚠️ OFFLINE');
+        showToast('⚠️ Connection error', 'error');
       } finally {
         isSyncing = false;
       }
     }
 
-    async function pushToGithub(data, force = false) {
+    async function pushToGithub(data) {
       const cfg = GITHUB_CONFIG;
       const token = getToken();
 
@@ -1155,18 +1151,17 @@
         return;
       }
 
-      logDebug('Pushing to GitHub...', 'info');
-      updateStatus('syncing', '🔄 PUSHING...');
+      debugLog('Pushing to GitHub...', 'info');
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
       const jsonStr = JSON.stringify(data, null, 2);
       const content = btoa(unescape(encodeURIComponent(jsonStr)));
 
       const payload = {
-        message: 'Update Quest Log memory',
+        message: 'Update Quest Log',
         content: content,
         branch: cfg.branch
       };
-      if (currentSha && !force) payload.sha = currentSha;
+      if (currentSha) payload.sha = currentSha;
 
       try {
         const res = await fetch(url, {
@@ -1183,18 +1178,22 @@
           const body = await res.json();
           currentSha = body.content.sha;
           updateStatus('synced', '☁️ SYNCED');
-          logDebug('Push completed successfully', 'success');
+          showToast('✓ Synced', 'success');
+          debugLog('Push completed successfully', 'success');
         } else if (res.status === 409) {
-          logDebug('Conflict detected, re-syncing...', 'warn');
+          debugLog('SHA conflict, re-syncing...', 'warn');
+          currentSha = null;
           await syncWithGithub(true);
         } else {
           const errorBody = await res.json().catch(() => ({}));
-          logDebug('Push error: ' + res.status + ' - ' + JSON.stringify(errorBody), 'error');
+          debugLog(`Push error: ${res.status} - ${JSON.stringify(errorBody)}`, 'error');
           updateStatus('error', '⚠️ PUSH ERROR');
+          showToast('⚠️ Push failed', 'error');
         }
       } catch (err) {
-        logDebug('Push error: ' + err.message, 'error');
-        updateStatus('error', '⚠️ PUSH ERROR');
+        debugLog('Push error: ' + err.message, 'error');
+        updateStatus('error', '⚠️ OFFLINE');
+        showToast('⚠️ Connection error', 'error');
       }
     }
 
@@ -1204,42 +1203,14 @@
       pushToGithub(data);
     }
 
-    /* Conflict Resolution */
-    function showConflictModal() {
-      document.getElementById('conflict-modal').classList.add('active');
-    }
-
-    function closeConflictModal() {
-      document.getElementById('conflict-modal').classList.remove('active');
-      pendingConflict = null;
-    }
-
-    function resolveConflict(choice) {
-      if (!pendingConflict) return;
-
-      const { localData, remoteData, remoteSha } = pendingConflict;
-
-      if (choice === 'local') {
-        currentSha = remoteSha;
-        pushToGithub(localData);
-      } else if (choice === 'remote') {
-        currentSha = remoteSha;
-        saveStoreLocal(remoteData);
-        render();
-        updateStatus('synced', '☁️ SYNCED');
-      } else if (choice === 'merge') {
-        const mergedData = mergeData(localData, remoteData);
-        currentSha = remoteSha;
-        saveAndSync(mergedData);
-      }
-
-      closeConflictModal();
-    }
-
+    // ============================================
+    // AUTO-MERGE LOGIC
+    // ============================================
     function mergeData(local, remote) {
       const merged = JSON.parse(JSON.stringify(remote));
-
       const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
+
+      let mergeCount = 0;
 
       tabs.forEach(tab => {
         const remoteIds = new Set((remote[tab] || []).map(i => i.id));
@@ -1248,10 +1219,12 @@
         localItems.forEach(item => {
           if (!remoteIds.has(item.id)) {
             merged[tab].push(item);
+            mergeCount++;
           }
         });
       });
 
+      // Merge category configs
       if (local.categoryConfig) {
         tabs.forEach(tab => {
           if (local.categoryConfig[tab]) {
@@ -1267,14 +1240,21 @@
         });
       }
 
+      if (mergeCount > 0) {
+        debugLog(`Auto-merged ${mergeCount} local item(s)`, 'info');
+      }
+
       merged.meta.lastModified = Date.now();
       return merged;
     }
 
-    /* Auto-Poll for remote changes */
+    // ============================================
+    // AUTO-POLL
+    // ============================================
     function startAutoPoll() {
       if (autoPollTimer) clearInterval(autoPollTimer);
       autoPollTimer = setInterval(() => {
+        debugLog('Auto-poll triggered (5 min interval)', 'info');
         syncWithGithub(true);
       }, AUTO_POLL_INTERVAL);
     }
@@ -1286,7 +1266,9 @@
       }
     }
 
-    /* Export/Import Backup */
+    // ============================================
+    // EXPORT/IMPORT BACKUP
+    // ============================================
     function exportBackup() {
       const data = getStore();
       const jsonStr = JSON.stringify(data, null, 2);
@@ -1300,6 +1282,7 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      showToast('📥 Backup exported', 'info');
     }
 
     function importBackup(event) {
@@ -1316,18 +1299,20 @@
             saveStoreLocal(migratedData);
             render();
             pushToGithub(migratedData);
+            showToast('📤 Backup imported', 'success');
           }
         } catch (err) {
-          alert('Invalid backup file!');
-          logDebug('Import error: ' + err.message, 'error');
+          showToast('⚠️ Invalid backup file', 'error');
+          debugLog('Import error: ' + err.message, 'error');
         }
       };
       reader.readAsText(file);
-
       event.target.value = '';
     }
 
-    /* Search */
+    // ============================================
+    // SEARCH
+    // ============================================
     function handleSearch() {
       searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
       render();
@@ -1352,7 +1337,9 @@
       return results;
     }
 
-    /* Tabs */
+    // ============================================
+    // TABS
+    // ============================================
     function switchTab(tabKey) {
       currentTab = tabKey;
       localStorage.setItem(ACTIVE_TAB_KEY, tabKey);
@@ -1376,7 +1363,9 @@
       input.value = '';
     }
 
-    /* Category Management */
+    // ============================================
+    // CATEGORY MANAGEMENT
+    // ============================================
     function openEditLabelModal(label, tab) {
       editingLabel = label;
       editingLabelTab = tab;
@@ -1467,7 +1456,7 @@
       );
 
       if (exists) {
-        alert('Category already exists!');
+        showToast('⚠️ Category exists', 'error');
         return;
       }
 
@@ -1489,7 +1478,9 @@
       render();
     }
 
-    /* Actions */
+    // ============================================
+    // ITEM ACTIONS
+    // ============================================
     function addItem() {
       const input = document.getElementById('quest-input');
       const select = document.getElementById('tag-select');
@@ -1528,7 +1519,9 @@
       saveAndSync(data);
     }
 
-    /* Drag & Drop */
+    // ============================================
+    // DRAG & DROP
+    // ============================================
     function onDragStart(e, id) {
       draggedId = id;
       e.dataTransfer.effectAllowed = 'move';
@@ -1601,6 +1594,9 @@
       saveAndSync(data);
     }
 
+    // ============================================
+    // RENDER
+    // ============================================
     function renderItemCard(item, highlight = false) {
       const tagClass = `tag-${item.tag.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
       const highlightClass = highlight ? 'search-highlight' : '';
@@ -1729,7 +1725,9 @@
       }
     }
 
-    // Enter Key handlers
+    // ============================================
+    // EVENT LISTENERS & STARTUP
+    // ============================================
     document.getElementById('quest-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') addItem();
     });
@@ -1743,6 +1741,8 @@
     });
 
     // Startup
+    debugLog('Quest Log v10 initialized', 'info');
+    debugLog('Auto-poll interval: 5 minutes', 'info');
     switchTab(currentTab);
     syncWithGithub();
     startAutoPoll();
