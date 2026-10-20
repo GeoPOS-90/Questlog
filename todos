@@ -51,7 +51,12 @@
         "🍎 Fruits",
         "❄️ Frozen",
         "🥫 Canned",
-        "🍪 Snacks"
+        "🍪 Snacks",
+        "Produce",
+        "Meat",
+        "Cold",
+        "Dry",
+        "Snacks"
       ],
       "collapsed": {}
     },
@@ -60,7 +65,12 @@
         "🧹 Cleaning",
         "🧴 Personal Care",
         "📦 Household",
-        "🐾 Pet Supplies"
+        "🐾 Pet Supplies",
+        "Gear",
+        "Tools",
+        "Consumable",
+        "Ammo",
+        "General"
       ],
       "collapsed": {}
     },
@@ -69,7 +79,11 @@
         "📋 Tasks",
         "🛠️ Projects",
         "💡 Ideas",
-        "📝 Notes"
+        "📝 Notes",
+        "Quest",
+        "Loot",
+        "Note",
+        "General"
       ],
       "collapsed": {}
     },
@@ -78,7 +92,11 @@
         "⚔️ Story",
         "🐉 Boss Battles",
         "🏰 Dungeons",
-        "👑 Milestones"
+        "👑 Milestones",
+        "Story",
+        "Boss",
+        "Dungeon",
+        "Escort"
       ],
       "collapsed": {}
     },
@@ -87,13 +105,17 @@
         "🗺️ Exploration",
         "💎 Collectibles",
         "🤝 Favors",
-        "🎯 Challenges"
+        "🎯 Challenges",
+        "Fetch",
+        "Explore",
+        "Hunt",
+        "Collect"
       ],
       "collapsed": {}
     }
   },
   "meta": {
-    "lastModified": 1792524385108,
+    "lastModified": 1792525591103,
     "version": 2
   }
 }
