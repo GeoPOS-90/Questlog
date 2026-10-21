@@ -43,7 +43,7 @@
       "id": "mvh3xczwq7wdp",
       "text": "Pack luggage",
       "tag": "⚔️ Story",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792526382862
     },
     {
@@ -144,7 +144,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792547738412,
+    "lastModified": 1792547765931,
     "version": 2
   }
 }
