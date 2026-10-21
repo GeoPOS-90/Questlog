@@ -43,7 +43,7 @@
       "id": "mvh3xczwq7wdp",
       "text": "Pack luggage",
       "tag": "⚔️ Story",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792526382862
     },
     {
@@ -128,7 +128,7 @@
         "Escort"
       ],
       "collapsed": {
-        "👑 Milestones": true
+        "👑 Milestones": false
       }
     },
     "sidequest": {
@@ -146,7 +146,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792547771591,
+    "lastModified": 1792547780728,
     "version": 2
   }
 }
