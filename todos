@@ -22,13 +22,6 @@
       "createdAt": 1792443534260
     },
     {
-      "id": "mvfqxxoj422rr",
-      "text": "fasf",
-      "tag": "🥩 Proteins",
-      "completed": false,
-      "createdAt": 1792444108484
-    },
-    {
       "id": "mvhhuzea6qix0",
       "text": "Eggs",
       "tag": "🧀 Dairy",
@@ -168,7 +161,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792583574408,
+    "lastModified": 1792583579228,
     "version": 2
   }
 }
