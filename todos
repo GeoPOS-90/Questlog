@@ -27,6 +27,13 @@
       "tag": "🥩 Proteins",
       "completed": false,
       "createdAt": 1792444108484
+    },
+    {
+      "id": "mvhhuzea6qix0",
+      "text": "Eggs",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1792549786548
     }
   ],
   "supplies": [
@@ -161,7 +168,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792549751033,
+    "lastModified": 1792549786548,
     "version": 2
   }
 }
