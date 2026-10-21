@@ -36,6 +36,13 @@
       "tag": "🧹 Cleaning",
       "completed": false,
       "createdAt": 1792547817961
+    },
+    {
+      "id": "mvhgpcamd6l3w",
+      "text": "Food Container Costco Return Save 3$",
+      "tag": "📦 Household",
+      "completed": false,
+      "createdAt": 1792547843710
     }
   ],
   "misc": [],
@@ -154,7 +161,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792547817961,
+    "lastModified": 1792547843710,
     "version": 2
   }
 }
