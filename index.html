@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quest Log - Main Quest, Side Quest, Provisions, Storehouse & Inventory</title>
+  <title>Quest Log v11 - Main Quest, Side Quest, Provisions, Storehouse & Inventory</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * {
@@ -554,7 +554,14 @@
       border: 1px solid;
     }
 
-    /* Tag styles */
+    /* Tag styles - Default */
+    .item-tag {
+      background: #2a2a3e;
+      color: #d4c4a8;
+      border-color: #4a4a5e;
+    }
+
+    /* Legacy tag styles */
     .tag-produce { background: #1c381c; color: #7fff7f; border-color: #3a6a3a; }
     .tag-meat    { background: #3d1c1c; color: #ff7f7f; border-color: #6a3a3a; }
     .tag-cold    { background: #1a334a; color: #7fe5ff; border-color: #2b557b; }
@@ -571,7 +578,6 @@
     .tag-note       { background: #383430; color: #cfd8dc; border-color: #5d5954; }
     .tag-general    { background: #2a2a3e; color: #d4c4a8; border-color: #4a4a5e; }
 
-    /* New tab tags */
     .tag-story      { background: #3a2a14; color: #ffb74d; border-color: #6d4c1f; }
     .tag-boss       { background: #4a1a2a; color: #ff5252; border-color: #7b2d3d; }
     .tag-dungeon    { background: #1a2a4a; color: #64b5f6; border-color: #2d4a7b; }
@@ -580,6 +586,34 @@
     .tag-explore    { background: #2a2a3a; color: #b39ddb; border-color: #4a4a6a; }
     .tag-hunt       { background: #3a2a2a; color: #ef9a9a; border-color: #6a4a4a; }
     .tag-collect    { background: #2a3a3a; color: #80deea; border-color: #4a6a6a; }
+
+    /* Emoji tag styles */
+    .tag-proteins     { background: #3d1c1c; color: #ff7f7f; border-color: #6a3a3a; }
+    .tag-vegetables   { background: #1c381c; color: #7fff7f; border-color: #3a6a3a; }
+    .tag-dairy        { background: #3d341a; color: #ffd87f; border-color: #6a5a2b; }
+    .tag-grains       { background: #3d2f1f; color: #fbc02d; border-color: #6d5336; }
+    .tag-fruits       { background: #3d1c2c; color: #ff7faf; border-color: #6a3a5a; }
+    .tag-frozen       { background: #1a334a; color: #7fe5ff; border-color: #2b557b; }
+    .tag-canned       { background: #2f2a4a; color: #c4b5fd; border-color: #554a8a; }
+
+    .tag-cleaning     { background: #1a3d31; color: #4db6ac; border-color: #2e6d58; }
+    .tag-personalcare { background: #3b1d3d; color: #ff7fe5; border-color: #6b336e; }
+    .tag-household    { background: #3d2f1f; color: #fbc02d; border-color: #6d5336; }
+    .tag-petsupplies  { background: #3a2a14; color: #ffb74d; border-color: #6d4c1f; }
+
+    .tag-tasks        { background: #3a3214; color: #ffd700; border-color: #705e19; }
+    .tag-projects     { background: #2f2a4a; color: #c4b5fd; border-color: #554a8a; }
+    .tag-ideas        { background: #3d341a; color: #ffd87f; border-color: #6a5a2b; }
+    .tag-notes        { background: #383430; color: #cfd8dc; border-color: #5d5954; }
+
+    .tag-bossbattles  { background: #4a1a2a; color: #ff5252; border-color: #7b2d3d; }
+    .tag-dungeons     { background: #1a2a4a; color: #64b5f6; border-color: #2d4a7b; }
+    .tag-milestones   { background: #3a3214; color: #ffd700; border-color: #705e19; }
+
+    .tag-exploration  { background: #2a2a3a; color: #b39ddb; border-color: #4a4a6a; }
+    .tag-collectibles { background: #2a3a3a; color: #80deea; border-color: #4a6a6a; }
+    .tag-favors       { background: #2a3a2a; color: #81c784; border-color: #4a6a4a; }
+    .tag-challenges   { background: #3a2a2a; color: #ef9a9a; border-color: #6a4a4a; }
 
     .delete-btn {
       background: #8b0000;
@@ -746,7 +780,7 @@
     <!-- TOP BAR -->
     <header class="vault-header-card">
       <div class="header-top-row">
-        <div class="header-title">📜 QUEST LOG VAULT</div>
+        <div class="header-title">📜 QUEST LOG v11</div>
         <div class="header-actions">
           <div class="status-badge status-local" id="sync-status">
             <span id="sync-status-text">💾 LOCAL ONLY</span>
@@ -856,7 +890,7 @@
 
   <script>
     // ============================================
-    // EMBEDDED GITHUB CONFIG - v10
+    // EMBEDDED GITHUB CONFIG - v11
     // ============================================
     const _t = [
       'github_pat_11B33AJB',
@@ -875,6 +909,7 @@
 
     // Auto-poll interval - 5 minutes (300000ms)
     const AUTO_POLL_INTERVAL = 300000;
+    const MAX_PUSH_RETRIES = 3;
 
     // ============================================
 
@@ -883,23 +918,23 @@
 
     const DEFAULT_CATEGORY_CONFIG = {
       mainquest: {
-        labels: ['Story', 'Boss', 'Dungeon', 'Escort'],
+        labels: ['⚔️ Story', '🐉 Boss Battles', '🏰 Dungeons', '👑 Milestones'],
         collapsed: {}
       },
       sidequest: {
-        labels: ['Fetch', 'Explore', 'Hunt', 'Collect'],
+        labels: ['🗺️ Exploration', '💎 Collectibles', '🤝 Favors', '🎯 Challenges'],
         collapsed: {}
       },
       food: {
-        labels: ['Produce', 'Meat', 'Cold', 'Dry', 'Snacks'],
+        labels: ['🥩 Proteins', '🥬 Vegetables', '🧀 Dairy', '🍞 Grains', '🍎 Fruits', '❄️ Frozen', '🥫 Canned', '🍪 Snacks'],
         collapsed: {}
       },
       supplies: {
-        labels: ['Gear', 'Tools', 'Consumable', 'Ammo', 'General'],
+        labels: ['🧹 Cleaning', '🧴 Personal Care', '📦 Household', '🐾 Pet Supplies'],
         collapsed: {}
       },
       misc: {
-        labels: ['Quest', 'Loot', 'Note', 'General'],
+        labels: ['📋 Tasks', '🛠️ Projects', '💡 Ideas', '📝 Notes'],
         collapsed: {}
       }
     };
@@ -934,7 +969,6 @@
       log.appendChild(entry);
       log.scrollTop = log.scrollHeight;
 
-      // Auto-show panel on errors
       if (type === 'error') {
         document.getElementById('debug-panel').classList.add('show');
       }
@@ -1063,7 +1097,8 @@
     }
 
     // ============================================
-    // GITHUB SYNC - SIMPLIFIED WITH AUTO-MERGE
+    // GITHUB SYNC - v11 SIMPLIFIED
+    // Pull replaces local. Push retries on 409.
     // ============================================
     async function syncWithGithub(silent = false) {
       const cfg = GITHUB_CONFIG;
@@ -1074,12 +1109,16 @@
         return;
       }
 
-      if (isSyncing) return;
+      if (isSyncing) {
+        debugLog('Sync already in progress, skipping...', 'warn');
+        return;
+      }
+      
       isSyncing = true;
       if (!silent) updateStatus('syncing', '🔄 SYNCING...');
       if (silent) triggerPulse();
 
-      debugLog('Starting sync...', 'info');
+      debugLog('Pulling from GitHub...', 'info');
 
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
 
@@ -1100,32 +1139,22 @@
             const decoded = decodeURIComponent(escape(atob(body.content.replace(/\s/g, ''))));
             remoteData = migrateData(JSON.parse(decoded));
           } catch (parseErr) {
-            debugLog('Remote JSON invalid, pushing local data: ' + parseErr.message, 'warn');
-            await pushToGithub(getStore());
+            debugLog('Remote JSON invalid: ' + parseErr.message, 'error');
+            updateStatus('error', '⚠️ BAD DATA');
             isSyncing = false;
             return;
           }
 
-          const localData = getStore();
-
-          // Auto-merge: combine both versions silently
-          const mergedData = mergeData(localData, remoteData);
-          const localHasChanges = JSON.stringify(localData) !== JSON.stringify(remoteData);
-
-          saveStoreLocal(mergedData);
+          // v11: Pull replaces local - no merge
+          saveStoreLocal(remoteData);
           render();
-
-          if (localHasChanges) {
-            debugLog('Local changes detected, pushing merged data...', 'info');
-            await pushToGithub(mergedData);
-          } else {
-            updateStatus('synced', '☁️ SYNCED');
-            if (!silent) showToast('✓ Synced', 'success');
-            debugLog('Sync completed, no changes needed', 'success');
-          }
+          
+          updateStatus('synced', '☁️ SYNCED');
+          if (!silent) showToast('✓ Synced', 'success');
+          debugLog('Pull completed, local updated', 'success');
 
         } else if (res.status === 404) {
-          debugLog('Remote file not found, creating...', 'warn');
+          debugLog('Remote file not found, pushing local data...', 'warn');
           await pushToGithub(getStore());
         } else {
           const errorBody = await res.json().catch(() => ({}));
@@ -1142,7 +1171,36 @@
       }
     }
 
-    async function pushToGithub(data) {
+    async function fetchFreshSha() {
+      const cfg = GITHUB_CONFIG;
+      const token = getToken();
+      const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}?ref=${cfg.branch}`;
+
+      try {
+        const res = await fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        if (res.status === 200) {
+          const body = await res.json();
+          currentSha = body.sha;
+          debugLog('Fetched fresh SHA: ' + currentSha.substring(0, 7), 'info');
+          return true;
+        } else if (res.status === 404) {
+          currentSha = null;
+          debugLog('File not found, will create new', 'info');
+          return true;
+        }
+      } catch (err) {
+        debugLog('Failed to fetch SHA: ' + err.message, 'error');
+      }
+      return false;
+    }
+
+    async function pushToGithub(data, retryCount = 0) {
       const cfg = GITHUB_CONFIG;
       const token = getToken();
 
@@ -1151,7 +1209,15 @@
         return;
       }
 
-      debugLog('Pushing to GitHub...', 'info');
+      if (isSyncing) {
+        debugLog('Sync in progress, queuing push...', 'warn');
+        return;
+      }
+
+      isSyncing = true;
+      debugLog(`Pushing to GitHub (attempt ${retryCount + 1}/${MAX_PUSH_RETRIES})...`, 'info');
+      updateStatus('syncing', '🔄 PUSHING...');
+
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
       const jsonStr = JSON.stringify(data, null, 2);
       const content = btoa(unescape(encodeURIComponent(jsonStr)));
@@ -1178,22 +1244,38 @@
           const body = await res.json();
           currentSha = body.content.sha;
           updateStatus('synced', '☁️ SYNCED');
-          showToast('✓ Synced', 'success');
+          showToast('✓ Saved', 'success');
           debugLog('Push completed successfully', 'success');
+          isSyncing = false;
         } else if (res.status === 409) {
-          debugLog('SHA conflict, re-syncing...', 'warn');
-          currentSha = null;
-          await syncWithGithub(true);
+          isSyncing = false;
+          
+          if (retryCount < MAX_PUSH_RETRIES - 1) {
+            debugLog('SHA conflict, fetching fresh SHA and retrying...', 'warn');
+            const gotSha = await fetchFreshSha();
+            if (gotSha) {
+              await pushToGithub(data, retryCount + 1);
+            } else {
+              updateStatus('error', '⚠️ RETRY FAILED');
+              showToast('⚠️ Sync failed', 'error');
+            }
+          } else {
+            debugLog('Max retries reached, giving up', 'error');
+            updateStatus('error', '⚠️ CONFLICT');
+            showToast('⚠️ Please sync manually', 'error');
+          }
         } else {
           const errorBody = await res.json().catch(() => ({}));
           debugLog(`Push error: ${res.status} - ${JSON.stringify(errorBody)}`, 'error');
           updateStatus('error', '⚠️ PUSH ERROR');
-          showToast('⚠️ Push failed', 'error');
+          showToast('⚠️ Save failed', 'error');
+          isSyncing = false;
         }
       } catch (err) {
         debugLog('Push error: ' + err.message, 'error');
         updateStatus('error', '⚠️ OFFLINE');
         showToast('⚠️ Connection error', 'error');
+        isSyncing = false;
       }
     }
 
@@ -1201,51 +1283,6 @@
       saveStoreLocal(data);
       render();
       pushToGithub(data);
-    }
-
-    // ============================================
-    // AUTO-MERGE LOGIC
-    // ============================================
-    function mergeData(local, remote) {
-      const merged = JSON.parse(JSON.stringify(remote));
-      const tabs = ['mainquest', 'sidequest', 'food', 'supplies', 'misc'];
-
-      let mergeCount = 0;
-
-      tabs.forEach(tab => {
-        const remoteIds = new Set((remote[tab] || []).map(i => i.id));
-        const localItems = local[tab] || [];
-
-        localItems.forEach(item => {
-          if (!remoteIds.has(item.id)) {
-            merged[tab].push(item);
-            mergeCount++;
-          }
-        });
-      });
-
-      // Merge category configs
-      if (local.categoryConfig) {
-        tabs.forEach(tab => {
-          if (local.categoryConfig[tab]) {
-            const localLabels = local.categoryConfig[tab].labels || [];
-            const remoteLabels = merged.categoryConfig[tab]?.labels || [];
-
-            localLabels.forEach(label => {
-              if (!remoteLabels.includes(label)) {
-                merged.categoryConfig[tab].labels.push(label);
-              }
-            });
-          }
-        });
-      }
-
-      if (mergeCount > 0) {
-        debugLog(`Auto-merged ${mergeCount} local item(s)`, 'info');
-      }
-
-      merged.meta.lastModified = Date.now();
-      return merged;
     }
 
     // ============================================
@@ -1597,8 +1634,18 @@
     // ============================================
     // RENDER
     // ============================================
+    function getTagClass(tag) {
+      // Strip emoji and normalize for CSS class
+      const normalized = tag
+        .replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '');
+      return `tag-${normalized}`;
+    }
+
     function renderItemCard(item, highlight = false) {
-      const tagClass = `tag-${item.tag.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+      const tagClass = getTagClass(item.tag);
       const highlightClass = highlight ? 'search-highlight' : '';
       return `
         <div class="item-card ${item.completed ? 'completed' : ''} ${highlightClass}"
@@ -1672,7 +1719,7 @@
                 <div class="label-group-header ${isCollapsed ? 'collapsed' : ''}" onclick="toggleCollapse('${escapeHtml(label)}')">
                   <div class="label-group-header-left">
                     <span class="collapse-icon">${isCollapsed ? '▶' : '▼'}</span>
-                    <span>${label.toUpperCase()}</span>
+                    <span>${escapeHtml(label).toUpperCase()}</span>
                   </div>
                   <div style="display: flex; align-items: center; gap: 8px;">
                     <button class="edit-label-btn" onclick="event.stopPropagation(); openEditLabelModal('${escapeHtml(label)}', '${currentTab}')">✏️</button>
@@ -1741,7 +1788,8 @@
     });
 
     // Startup
-    debugLog('Quest Log v10 initialized', 'info');
+    debugLog('Quest Log v11 initialized', 'info');
+    debugLog('Sync strategy: Pull replaces, Push retries (max 3)', 'info');
     debugLog('Auto-poll interval: 5 minutes', 'info');
     switchTab(currentTab);
     syncWithGithub();
