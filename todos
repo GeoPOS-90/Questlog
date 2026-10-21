@@ -47,7 +47,15 @@
       "createdAt": 1792526382862
     }
   ],
-  "sidequest": [],
+  "sidequest": [
+    {
+      "id": "mvhfyus7n0p1y",
+      "text": "SOS Plate Sticker + Registration",
+      "tag": "Fetch",
+      "completed": false,
+      "createdAt": 1792546607959
+    }
+  ],
   "categoryConfig": {
     "food": {
       "labels": [
@@ -122,7 +130,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792546534455,
+    "lastModified": 1792546607959,
     "version": 2
   }
 }
