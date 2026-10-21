@@ -1,13 +1,6 @@
 {
   "food": [
     {
-      "id": "mvgrmxh98ltyo",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792505740797
-    },
-    {
       "id": "mvgsaulqo902k",
       "text": "Salad",
       "tag": "🥬 Vegetables",
@@ -161,7 +154,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792583579228,
+    "lastModified": 1792583586772,
     "version": 2
   }
 }
