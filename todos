@@ -45,6 +45,13 @@
       "tag": "⚔️ Story",
       "completed": false,
       "createdAt": 1792526382862
+    },
+    {
+      "id": "mvhgltj8w7mhg",
+      "text": "Vote In Early Election",
+      "tag": "👑 Milestones",
+      "completed": false,
+      "createdAt": 1792547679428
     }
   ],
   "sidequest": [
@@ -137,7 +144,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792547137153,
+    "lastModified": 1792547679428,
     "version": 2
   }
 }
