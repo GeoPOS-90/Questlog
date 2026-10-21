@@ -8,13 +8,6 @@
       "createdAt": 1792506856814
     },
     {
-      "id": "mvfqlmlwn7470",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792443534260
-    },
-    {
       "id": "mvhhuzea6qix0",
       "text": "Eggs",
       "tag": "🧀 Dairy",
@@ -161,7 +154,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792597455387,
+    "lastModified": 1792597465018,
     "version": 2
   }
 }
