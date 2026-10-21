@@ -29,7 +29,15 @@
       "createdAt": 1792444108484
     }
   ],
-  "supplies": [],
+  "supplies": [
+    {
+      "id": "mvhgosfdpj35z",
+      "text": "Paper Towel",
+      "tag": "🧹 Cleaning",
+      "completed": false,
+      "createdAt": 1792547817961
+    }
+  ],
   "misc": [],
   "mainquest": [
     {
@@ -146,7 +154,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792547782800,
+    "lastModified": 1792547817961,
     "version": 2
   }
 }
