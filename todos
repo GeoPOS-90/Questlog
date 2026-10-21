@@ -13,6 +13,13 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1792549786548
+    },
+    {
+      "id": "mvicz51mw5tjv",
+      "text": "Dinner premade",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1792602048588
     }
   ],
   "supplies": [
@@ -147,7 +154,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792597469069,
+    "lastModified": 1792602048588,
     "version": 2
   }
 }
