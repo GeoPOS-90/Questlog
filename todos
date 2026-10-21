@@ -13,13 +13,6 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1792549786548
-    },
-    {
-      "id": "mvgrmxh98ltyo",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792505740797
     }
   ],
   "supplies": [
@@ -154,7 +147,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792597465018,
+    "lastModified": 1792597469069,
     "version": 2
   }
 }
