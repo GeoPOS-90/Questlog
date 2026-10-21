@@ -20,6 +20,27 @@
       "tag": "🥩 Proteins",
       "completed": false,
       "createdAt": 1792602048588
+    },
+    {
+      "id": "mvfqlmlwn7470",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792443534260
+    },
+    {
+      "id": "mvgrmxh98ltyo",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792505740797
+    },
+    {
+      "id": "mvfqxxoj422rr",
+      "text": "fasf",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1792444108484
     }
   ],
   "supplies": [
@@ -154,7 +175,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792602048588,
+    "lastModified": 1792621138062,
     "version": 2
   }
 }
