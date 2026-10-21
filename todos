@@ -20,6 +20,20 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1792549786548
+    },
+    {
+      "id": "mvgrmxh98ltyo",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792505740797
+    },
+    {
+      "id": "mvfqxxoj422rr",
+      "text": "fasf",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1792444108484
     }
   ],
   "supplies": [
@@ -154,7 +168,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792583586772,
+    "lastModified": 1792585141210,
     "version": 2
   }
 }
