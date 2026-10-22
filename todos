@@ -104,6 +104,13 @@
       "tag": "💎 Collectibles",
       "completed": false,
       "createdAt": 1792626931771
+    },
+    {
+      "id": "mvjgpllp3lowy",
+      "text": "Food scale",
+      "tag": "🎯 Challenges",
+      "completed": false,
+      "createdAt": 1792668788125
     }
   ],
   "categoryConfig": {
@@ -182,7 +189,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792633762356,
+    "lastModified": 1792668788125,
     "version": 2
   }
 }
