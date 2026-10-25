@@ -111,6 +111,13 @@
       "tag": "🎯 Challenges",
       "completed": false,
       "createdAt": 1792668788125
+    },
+    {
+      "id": "mvnu7r12q09f6",
+      "text": "Sentry bank transfer",
+      "tag": "💎 Collectibles",
+      "completed": false,
+      "createdAt": 1792933334678
     }
   ],
   "categoryConfig": {
@@ -189,7 +196,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792668788125,
+    "lastModified": 1792933334678,
     "version": 2
   }
 }
