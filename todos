@@ -132,6 +132,13 @@
       "tag": "💎 Collectibles",
       "completed": false,
       "createdAt": 1792933334678
+    },
+    {
+      "id": "mvs5bl7e7uzs3",
+      "text": "Phone plans",
+      "tag": "🤝 Favors",
+      "completed": false,
+      "createdAt": 1793193854234
     }
   ],
   "categoryConfig": {
@@ -210,7 +217,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793192122521,
+    "lastModified": 1793193854234,
     "version": 2
   }
 }
