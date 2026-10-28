@@ -81,6 +81,13 @@
       "tag": "👑 Milestones",
       "completed": false,
       "createdAt": 1792547679428
+    },
+    {
+      "id": "mvs46qtodszbg",
+      "text": "Stat Track Rifle zero+killcount",
+      "tag": "🐉 Boss Battles",
+      "completed": false,
+      "createdAt": 1793191948622
     }
   ],
   "sidequest": [
@@ -196,7 +203,7 @@
     }
   },
   "meta": {
-    "lastModified": 1792933334678,
+    "lastModified": 1793191948622,
     "version": 2
   }
 }
