@@ -88,6 +88,13 @@
       "tag": "🐉 Boss Battles",
       "completed": false,
       "createdAt": 1793191948622
+    },
+    {
+      "id": "mvs4ah09958cb",
+      "text": "Hearing protection upgrade",
+      "tag": "🐉 Boss Battles",
+      "completed": false,
+      "createdAt": 1793192122521
     }
   ],
   "sidequest": [
@@ -203,7 +210,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793191948622,
+    "lastModified": 1793192122521,
     "version": 2
   }
 }
