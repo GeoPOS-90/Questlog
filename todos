@@ -130,7 +130,7 @@
       "id": "mvnu7r12q09f6",
       "text": "Sentry bank transfer",
       "tag": "💎 Collectibles",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792933334678
     },
     {
@@ -217,7 +217,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793300982697,
+    "lastModified": 1793300991240,
     "version": 2
   }
 }
