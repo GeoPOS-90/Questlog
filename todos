@@ -95,6 +95,13 @@
       "tag": "🐉 Boss Battles",
       "completed": false,
       "createdAt": 1793192122521
+    },
+    {
+      "id": "mvtx4zktai723",
+      "text": "Doctor kidney stone",
+      "tag": "🏰 Dungeons",
+      "completed": false,
+      "createdAt": 1793301041693
     }
   ],
   "sidequest": [
@@ -217,7 +224,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793300991240,
+    "lastModified": 1793301041693,
     "version": 2
   }
 }
