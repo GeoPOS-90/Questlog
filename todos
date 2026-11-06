@@ -80,6 +80,13 @@
       "tag": "Loot",
       "completed": false,
       "createdAt": 1793972664710
+    },
+    {
+      "id": "mw51cyq5m098p",
+      "text": "Bobcat 20X DIY with Rebate",
+      "tag": "Loot",
+      "completed": false,
+      "createdAt": 1793973260237
     }
   ],
   "mainquest": [
@@ -267,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972953468,
+    "lastModified": 1793973260237,
     "version": 2
   }
 }
