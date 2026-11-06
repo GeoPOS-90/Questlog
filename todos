@@ -86,7 +86,7 @@
       "id": "mvhgltj8w7mhg",
       "text": "Vote In Early Election",
       "tag": "👑 Milestones",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792547679428
     },
     {
@@ -238,7 +238,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972554809,
+    "lastModified": 1793972557599,
     "version": 2
   }
 }
