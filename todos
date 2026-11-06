@@ -80,7 +80,7 @@
       "id": "mvtx4zktai723",
       "text": "Doctor kidney stone",
       "tag": "🏰 Dungeons",
-      "completed": false,
+      "completed": true,
       "createdAt": 1793301041693
     },
     {
@@ -218,7 +218,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976119040,
+    "lastModified": 1793976147716,
     "version": 2
   }
 }
