@@ -1,13 +1,5 @@
 {
-  "food": [
-    {
-      "id": "mvgrmxh98ltyo",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792505740797
-    }
-  ],
+  "food": [],
   "supplies": [
     {
       "id": "mvhgosfdpj35z",
@@ -31,7 +23,15 @@
       "createdAt": 1793378860459
     }
   ],
-  "misc": [],
+  "misc": [
+    {
+      "id": "mw50zo4razzzi",
+      "text": "CZ Bren 2 5.56",
+      "tag": "Loot",
+      "completed": false,
+      "createdAt": 1793972639979
+    }
+  ],
   "mainquest": [
     {
       "id": "mvfqsxweh2ero",
@@ -210,7 +210,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972606735,
+    "lastModified": 1793972639981,
     "version": 2
   }
 }
