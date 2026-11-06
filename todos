@@ -63,13 +63,6 @@
   ],
   "mainquest": [
     {
-      "id": "mvfqsxweh2ero",
-      "text": "Uber ride",
-      "tag": "⚔️ Story",
-      "completed": true,
-      "createdAt": 1792443875488
-    },
-    {
       "id": "mvh3xczwq7wdp",
       "text": "Pack luggage",
       "tag": "⚔️ Story",
@@ -246,7 +239,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976104576,
+    "lastModified": 1793976109869,
     "version": 2
   }
 }
