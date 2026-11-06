@@ -116,13 +116,6 @@
       "tag": "🏰 Dungeons",
       "completed": true,
       "createdAt": 1793302837138
-    },
-    {
-      "id": "mvu1ydc4ebjxn",
-      "text": "Stomach worm?",
-      "tag": "🐉 Boss Battles",
-      "completed": false,
-      "createdAt": 1793309131012
     }
   ],
   "sidequest": [
@@ -245,7 +238,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972403042,
+    "lastModified": 1793972554809,
     "version": 2
   }
 }
