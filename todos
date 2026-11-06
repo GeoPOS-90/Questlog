@@ -1,20 +1,6 @@
 {
   "food": [
     {
-      "id": "mvhhuzea6qix0",
-      "text": "Eggs",
-      "tag": "🧀 Dairy",
-      "completed": false,
-      "createdAt": 1792549786548
-    },
-    {
-      "id": "mvfqlmlwn7470",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792443534260
-    },
-    {
       "id": "mvgrmxh98ltyo",
       "text": "apple",
       "tag": "🍎 Fruits",
@@ -224,7 +210,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972604833,
+    "lastModified": 1793972606735,
     "version": 2
   }
 }
