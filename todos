@@ -1,13 +1,6 @@
 {
   "food": [
     {
-      "id": "mvgsaulqo902k",
-      "text": "Salad",
-      "tag": "🥬 Vegetables",
-      "completed": false,
-      "createdAt": 1792506856814
-    },
-    {
       "id": "mvhhuzea6qix0",
       "text": "Eggs",
       "tag": "🧀 Dairy",
@@ -27,13 +20,6 @@
       "tag": "🍎 Fruits",
       "completed": false,
       "createdAt": 1792505740797
-    },
-    {
-      "id": "mvfqxxoj422rr",
-      "text": "fasf",
-      "tag": "🥩 Proteins",
-      "completed": false,
-      "createdAt": 1792444108484
     }
   ],
   "supplies": [
@@ -238,7 +224,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972601085,
+    "lastModified": 1793972604833,
     "version": 2
   }
 }
