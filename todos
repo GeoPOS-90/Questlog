@@ -1,48 +1,5 @@
 {
-  "food": [
-    {
-      "id": "mvgsaulqo902k",
-      "text": "Salad",
-      "tag": "🥬 Vegetables",
-      "completed": false,
-      "createdAt": 1792506856814
-    },
-    {
-      "id": "mvhhuzea6qix0",
-      "text": "Eggs",
-      "tag": "🧀 Dairy",
-      "completed": false,
-      "createdAt": 1792549786548
-    },
-    {
-      "id": "mvicz51mw5tjv",
-      "text": "Dinner premade",
-      "tag": "🥩 Proteins",
-      "completed": false,
-      "createdAt": 1792602048588
-    },
-    {
-      "id": "mvfqlmlwn7470",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792443534260
-    },
-    {
-      "id": "mvgrmxh98ltyo",
-      "text": "apple",
-      "tag": "🍎 Fruits",
-      "completed": false,
-      "createdAt": 1792505740797
-    },
-    {
-      "id": "mvfqxxoj422rr",
-      "text": "fasf",
-      "tag": "🥩 Proteins",
-      "completed": false,
-      "createdAt": 1792444108484
-    }
-  ],
+  "food": [],
   "supplies": [
     {
       "id": "mvhgosfdpj35z",
@@ -73,6 +30,13 @@
       "tag": "Loot",
       "completed": false,
       "createdAt": 1793972639979
+    },
+    {
+      "id": "mw51077qs6p8n",
+      "text": "WASR-10",
+      "tag": "Loot",
+      "completed": false,
+      "createdAt": 1793972664710
     }
   ],
   "mainquest": [
@@ -131,13 +95,6 @@
       "tag": "🐉 Boss Battles",
       "completed": false,
       "createdAt": 1793972591021
-    },
-    {
-      "id": "mvu1ydc4ebjxn",
-      "text": "Stomach worm?",
-      "tag": "🐉 Boss Battles",
-      "completed": false,
-      "createdAt": 1793309131012
     }
   ],
   "sidequest": [
@@ -260,7 +217,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972652640,
+    "lastModified": 1793972664711,
     "version": 2
   }
 }
