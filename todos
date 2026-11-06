@@ -4,7 +4,7 @@
       "id": "mvgsaulqo902k",
       "text": "Salad",
       "tag": "🥬 Vegetables",
-      "completed": true,
+      "completed": false,
       "createdAt": 1792506856814
     },
     {
@@ -13,6 +13,34 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1792549786548
+    },
+    {
+      "id": "mvicz51mw5tjv",
+      "text": "Dinner premade",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1792602048588
+    },
+    {
+      "id": "mvfqlmlwn7470",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792443534260
+    },
+    {
+      "id": "mvgrmxh98ltyo",
+      "text": "apple",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1792505740797
+    },
+    {
+      "id": "mvfqxxoj422rr",
+      "text": "fasf",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1792444108484
     }
   ],
   "supplies": [
@@ -63,6 +91,27 @@
   ],
   "mainquest": [
     {
+      "id": "mvfqsxweh2ero",
+      "text": "Uber ride",
+      "tag": "⚔️ Story",
+      "completed": true,
+      "createdAt": 1792443875488
+    },
+    {
+      "id": "mvh3xczwq7wdp",
+      "text": "Pack luggage",
+      "tag": "⚔️ Story",
+      "completed": true,
+      "createdAt": 1792526382862
+    },
+    {
+      "id": "mvhgltj8w7mhg",
+      "text": "Vote In Early Election",
+      "tag": "👑 Milestones",
+      "completed": true,
+      "createdAt": 1792547679428
+    },
+    {
       "id": "mvs46qtodszbg",
       "text": "Stat Track Rifle zero+killcount",
       "tag": "🐉 Boss Battles",
@@ -75,6 +124,13 @@
       "tag": "🐉 Boss Battles",
       "completed": false,
       "createdAt": 1793192122521
+    },
+    {
+      "id": "mvty7gy9x4bly",
+      "text": "Pick up glasses",
+      "tag": "🏰 Dungeons",
+      "completed": true,
+      "createdAt": 1793302837138
     },
     {
       "id": "mw50ymcs52sdr",
@@ -204,7 +260,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976155388,
+    "lastModified": 1793976181902,
     "version": 2
   }
 }
