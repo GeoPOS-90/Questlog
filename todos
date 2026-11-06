@@ -136,7 +136,7 @@
       "id": "mvty7gy9x4bly",
       "text": "Pick up glasses",
       "tag": "🏰 Dungeons",
-      "completed": true,
+      "completed": false,
       "createdAt": 1793302837138
     },
     {
@@ -274,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976007879,
+    "lastModified": 1793976011393,
     "version": 2
   }
 }
