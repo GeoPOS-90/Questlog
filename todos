@@ -116,6 +116,13 @@
       "tag": "🏰 Dungeons",
       "completed": true,
       "createdAt": 1793302837138
+    },
+    {
+      "id": "mw50ymcs52sdr",
+      "text": "Gun Upgrade",
+      "tag": "🐉 Boss Battles",
+      "completed": false,
+      "createdAt": 1793972591021
     }
   ],
   "sidequest": [
@@ -238,7 +245,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793972557599,
+    "lastModified": 1793972591021,
     "version": 2
   }
 }
