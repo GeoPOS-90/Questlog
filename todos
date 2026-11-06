@@ -63,13 +63,6 @@
   ],
   "mainquest": [
     {
-      "id": "mvh3xczwq7wdp",
-      "text": "Pack luggage",
-      "tag": "⚔️ Story",
-      "completed": true,
-      "createdAt": 1792526382862
-    },
-    {
       "id": "mvhgltj8w7mhg",
       "text": "Vote In Early Election",
       "tag": "👑 Milestones",
@@ -239,7 +232,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976109869,
+    "lastModified": 1793976117402,
     "version": 2
   }
 }
