@@ -4,7 +4,7 @@
       "id": "mvgsaulqo902k",
       "text": "Salad",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792506856814
     },
     {
@@ -13,13 +13,6 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1792549786548
-    },
-    {
-      "id": "mvicz51mw5tjv",
-      "text": "Dinner premade",
-      "tag": "🥩 Proteins",
-      "completed": false,
-      "createdAt": 1792602048588
     },
     {
       "id": "mvfqlmlwn7470",
@@ -34,13 +27,6 @@
       "tag": "🍎 Fruits",
       "completed": false,
       "createdAt": 1792505740797
-    },
-    {
-      "id": "mvfqxxoj422rr",
-      "text": "fasf",
-      "tag": "🥩 Proteins",
-      "completed": false,
-      "createdAt": 1792444108484
     }
   ],
   "supplies": [
@@ -129,7 +115,7 @@
       "id": "mvtx4zktai723",
       "text": "Doctor kidney stone",
       "tag": "🏰 Dungeons",
-      "completed": true,
+      "completed": false,
       "createdAt": 1793301041693
     },
     {
@@ -145,6 +131,13 @@
       "tag": "🐉 Boss Battles",
       "completed": false,
       "createdAt": 1793972591021
+    },
+    {
+      "id": "mvu1ydc4ebjxn",
+      "text": "Stomach worm?",
+      "tag": "🐉 Boss Battles",
+      "completed": false,
+      "createdAt": 1793309131012
     }
   ],
   "sidequest": [
@@ -267,7 +260,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976015977,
+    "lastModified": 1793976078964,
     "version": 2
   }
 }
