@@ -77,13 +77,6 @@
       "createdAt": 1793192122521
     },
     {
-      "id": "mvtx4zktai723",
-      "text": "Doctor kidney stone",
-      "tag": "🏰 Dungeons",
-      "completed": true,
-      "createdAt": 1793301041693
-    },
-    {
       "id": "mw50ymcs52sdr",
       "text": "Gun Upgrade",
       "tag": "🐉 Boss Battles",
@@ -218,7 +211,7 @@
     }
   },
   "meta": {
-    "lastModified": 1793976147716,
+    "lastModified": 1793976152834,
     "version": 2
   }
 }
