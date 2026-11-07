@@ -62,7 +62,7 @@
       "id": "mvv7gwx5w4wyb",
       "text": "Aluminum Paper",
       "tag": "🧹 Cleaning",
-      "completed": false,
+      "completed": true,
       "createdAt": 1793378860459
     }
   ],
@@ -274,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794062254514,
+    "lastModified": 1794062347318,
     "version": 2
   }
 }
