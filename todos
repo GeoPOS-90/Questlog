@@ -180,7 +180,7 @@
       "id": "mvirsh15jxags",
       "text": "Costco credit card payout",
       "tag": "💎 Collectibles",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792626931771
     },
     {
@@ -281,7 +281,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168483526,
+    "lastModified": 1794168488317,
     "version": 2
   }
 }
