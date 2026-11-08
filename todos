@@ -18,7 +18,7 @@
       "id": "mvicz51mw5tjv",
       "text": "Dinner premade",
       "tag": "🥩 Proteins",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792602048588
     },
     {
@@ -267,7 +267,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168552116,
+    "lastModified": 1794168640835,
     "version": 2
   }
 }
