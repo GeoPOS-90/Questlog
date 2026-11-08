@@ -147,13 +147,6 @@
       "createdAt": 1793972591021
     },
     {
-      "id": "mvtx4zktai723",
-      "text": "Doctor kidney stone",
-      "tag": "🏰 Dungeons",
-      "completed": true,
-      "createdAt": 1793301041693
-    },
-    {
       "id": "mvu1ydc4ebjxn",
       "text": "Stomach worm?",
       "tag": "🐉 Boss Battles",
@@ -281,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168498341,
+    "lastModified": 1794168512058,
     "version": 2
   }
 }
