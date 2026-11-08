@@ -41,6 +41,13 @@
       "tag": "🥩 Proteins",
       "completed": false,
       "createdAt": 1792444108484
+    },
+    {
+      "id": "mw89knd77oq8o",
+      "text": "Garlic",
+      "tag": "🥬 Vegetables",
+      "completed": false,
+      "createdAt": 1794168454219
     }
   ],
   "supplies": [
@@ -274,7 +281,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168406174,
+    "lastModified": 1794168454219,
     "version": 2
   }
 }
