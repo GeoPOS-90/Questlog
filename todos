@@ -27,6 +27,13 @@
       "tag": "🥬 Vegetables",
       "completed": false,
       "createdAt": 1794168454219
+    },
+    {
+      "id": "mw8b4smpyahyz",
+      "text": "Bananas",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1794171073777
     }
   ],
   "supplies": [
@@ -253,7 +260,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794170812216,
+    "lastModified": 1794171073777,
     "version": 2
   }
 }
