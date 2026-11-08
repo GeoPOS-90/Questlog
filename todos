@@ -48,6 +48,13 @@
       "tag": "🥬 Vegetables",
       "completed": false,
       "createdAt": 1794168454219
+    },
+    {
+      "id": "mw89l3vb0gw0x",
+      "text": "Eggs",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1794168475608
     }
   ],
   "supplies": [
@@ -281,7 +288,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168454219,
+    "lastModified": 1794168475608,
     "version": 2
   }
 }
