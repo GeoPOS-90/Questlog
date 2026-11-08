@@ -34,6 +34,13 @@
       "tag": "🍎 Fruits",
       "completed": false,
       "createdAt": 1794171073777
+    },
+    {
+      "id": "mw8bmv5avmv1j",
+      "text": "Yogurt",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1794171916848
     }
   ],
   "supplies": [
@@ -260,7 +267,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794171715192,
+    "lastModified": 1794171916848,
     "version": 2
   }
 }
