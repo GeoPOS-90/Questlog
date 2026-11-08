@@ -39,7 +39,7 @@
       "id": "mvfqxxoj422rr",
       "text": "fasf",
       "tag": "🥩 Proteins",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792444108484
     },
     {
@@ -281,7 +281,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168478039,
+    "lastModified": 1794168483526,
     "version": 2
   }
 }
