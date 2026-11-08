@@ -36,13 +36,6 @@
       "createdAt": 1792505740797
     },
     {
-      "id": "mvfqxxoj422rr",
-      "text": "fasf",
-      "tag": "🥩 Proteins",
-      "completed": true,
-      "createdAt": 1792444108484
-    },
-    {
       "id": "mw89knd77oq8o",
       "text": "Garlic",
       "tag": "🥬 Vegetables",
@@ -274,7 +267,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168512058,
+    "lastModified": 1794168552116,
     "version": 2
   }
 }
