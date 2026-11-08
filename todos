@@ -15,13 +15,6 @@
       "createdAt": 1792549786548
     },
     {
-      "id": "mvicz51mw5tjv",
-      "text": "Dinner premade",
-      "tag": "🥩 Proteins",
-      "completed": true,
-      "createdAt": 1792602048588
-    },
-    {
       "id": "mvfqlmlwn7470",
       "text": "apple",
       "tag": "🍎 Fruits",
@@ -267,7 +260,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794168640835,
+    "lastModified": 1794168643603,
     "version": 2
   }
 }
