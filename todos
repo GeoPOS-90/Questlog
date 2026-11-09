@@ -46,7 +46,7 @@
       "id": "mw8bmzrn5zfth",
       "text": "Cottage cheese",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794171922835
     }
   ],
@@ -274,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794229103912,
+    "lastModified": 1794229107153,
     "version": 2
   }
 }
