@@ -11,7 +11,7 @@
       "id": "mvhhuzea6qix0",
       "text": "Eggs",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792549786548
     },
     {
@@ -32,7 +32,7 @@
       "id": "mw8b4smpyahyz",
       "text": "Bananas",
       "tag": "🍎 Fruits",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794171073777
     },
     {
@@ -274,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794229107153,
+    "lastModified": 1794229109408,
     "version": 2
   }
 }
