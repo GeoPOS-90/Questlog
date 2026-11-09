@@ -25,7 +25,7 @@
       "id": "mw89knd77oq8o",
       "text": "Garlic",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794168454219
     },
     {
@@ -274,7 +274,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794228550739,
+    "lastModified": 1794229103912,
     "version": 2
   }
 }
