@@ -18,7 +18,7 @@
       "id": "mvfqlmlwn7470",
       "text": "apple",
       "tag": "🍎 Fruits",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792443534260
     },
     {
@@ -196,6 +196,13 @@
       "tag": "🤝 Favors",
       "completed": false,
       "createdAt": 1793193854234
+    },
+    {
+      "id": "mw99p8pgz82nw",
+      "text": "15 dollar Boot Barn promo",
+      "tag": "💎 Collectibles",
+      "completed": false,
+      "createdAt": 1794229134677
     }
   ],
   "categoryConfig": {
@@ -274,7 +281,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794229109408,
+    "lastModified": 1794229134678,
     "version": 2
   }
 }
