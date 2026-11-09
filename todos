@@ -4,7 +4,7 @@
       "id": "mvgsaulqo902k",
       "text": "Salad",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792506856814
     },
     {
@@ -270,7 +270,8 @@
         "Escort"
       ],
       "collapsed": {
-        "👑 Milestones": false
+        "👑 Milestones": false,
+        "🐉 Boss Battles": true
       }
     },
     "sidequest": {
@@ -288,7 +289,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794241181376,
+    "lastModified": 1794241266229,
     "version": 2
   }
 }
