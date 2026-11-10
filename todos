@@ -94,6 +94,13 @@
       "tag": "Loot",
       "completed": false,
       "createdAt": 1793973260237
+    },
+    {
+      "id": "mwb5v597pyton",
+      "text": "Binder for MtG Marvel",
+      "tag": "Loot",
+      "completed": false,
+      "createdAt": 1794343624029
     }
   ],
   "mainquest": [
@@ -296,7 +303,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794343114122,
+    "lastModified": 1794343624029,
     "version": 2
   }
 }
