@@ -85,13 +85,6 @@
       "createdAt": 1794610318833
     },
     {
-      "id": "mwfknvqp4yz6s",
-      "text": "Egg whites",
-      "tag": "🥬 Vegetables",
-      "completed": false,
-      "createdAt": 1794610344049
-    },
-    {
       "id": "mwfkome2aulhc",
       "text": "Chicken",
       "tag": "🥩 Proteins",
@@ -130,7 +123,7 @@
       "id": "mwfluofbjbzb5",
       "text": "Salmon",
       "tag": "🥩 Proteins",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794612340775
     }
   ],
@@ -387,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794612348905,
+    "lastModified": 1794612354289,
     "version": 2
   }
 }
