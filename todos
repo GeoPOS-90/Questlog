@@ -104,6 +104,13 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1794610406628
+    },
+    {
+      "id": "mwfkplx7r06du",
+      "text": "Shrimp",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1794610424635
     }
   ],
   "supplies": [
@@ -359,7 +366,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610406628,
+    "lastModified": 1794610424635,
     "version": 2
   }
 }
