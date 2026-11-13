@@ -111,6 +111,13 @@
       "tag": "🥩 Proteins",
       "completed": false,
       "createdAt": 1794610424635
+    },
+    {
+      "id": "mwfkpy2urtkbi",
+      "text": "Egg whites",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1794610440390
     }
   ],
   "supplies": [
@@ -366,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610424635,
+    "lastModified": 1794610440390,
     "version": 2
   }
 }
