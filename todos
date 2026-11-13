@@ -95,7 +95,7 @@
       "id": "mwfkp8102ptck",
       "text": "Big yogurt",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610406628
     },
     {
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794612354289,
+    "lastModified": 1794613117303,
     "version": 2
   }
 }
