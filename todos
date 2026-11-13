@@ -48,6 +48,13 @@
       "tag": "🧀 Dairy",
       "completed": true,
       "createdAt": 1794171922835
+    },
+    {
+      "id": "mwfklehiei0zl",
+      "text": "Peppers",
+      "tag": "🥬 Vegetables",
+      "completed": false,
+      "createdAt": 1794610228375
     }
   ],
   "supplies": [
@@ -303,7 +310,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610196934,
+    "lastModified": 1794610228376,
     "version": 2
   }
 }
