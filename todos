@@ -97,6 +97,13 @@
       "tag": "🥩 Proteins",
       "completed": false,
       "createdAt": 1794610378586
+    },
+    {
+      "id": "mwfkp8102ptck",
+      "text": "Big yogurt",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1794610406628
     }
   ],
   "supplies": [
@@ -352,7 +359,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610378586,
+    "lastModified": 1794610406628,
     "version": 2
   }
 }
