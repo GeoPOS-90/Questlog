@@ -11,7 +11,7 @@
       "id": "mvhhuzea6qix0",
       "text": "Eggs",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792549786548
     },
     {
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794613120841,
+    "lastModified": 1794613124090,
     "version": 2
   }
 }
