@@ -53,7 +53,7 @@
       "id": "mwfklehiei0zl",
       "text": "Peppers",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610228375
     },
     {
@@ -373,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611845565,
+    "lastModified": 1794611857132,
     "version": 2
   }
 }
