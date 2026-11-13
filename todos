@@ -95,7 +95,7 @@
       "id": "mwfkome2aulhc",
       "text": "Chicken",
       "tag": "🥩 Proteins",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610378586
     },
     {
@@ -387,7 +387,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794612340775,
+    "lastModified": 1794612348905,
     "version": 2
   }
 }
