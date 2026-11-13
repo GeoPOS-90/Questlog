@@ -76,6 +76,13 @@
       "tag": "🥬 Vegetables",
       "completed": false,
       "createdAt": 1794610299930
+    },
+    {
+      "id": "mwfknca94kh27",
+      "text": "Butternut squash",
+      "tag": "🥬 Vegetables",
+      "completed": false,
+      "createdAt": 1794610318833
     }
   ],
   "supplies": [
@@ -331,7 +338,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610299930,
+    "lastModified": 1794610318833,
     "version": 2
   }
 }
