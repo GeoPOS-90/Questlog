@@ -18,7 +18,7 @@
       "id": "mvfqlmlwn7470",
       "text": "apple",
       "tag": "🍎 Fruits",
-      "completed": true,
+      "completed": false,
       "createdAt": 1792443534260
     },
     {
@@ -303,7 +303,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794553304559,
+    "lastModified": 1794610196934,
     "version": 2
   }
 }
