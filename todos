@@ -125,6 +125,13 @@
       "tag": "🥬 Vegetables",
       "completed": true,
       "createdAt": 1794611979249
+    },
+    {
+      "id": "mwfluofbjbzb5",
+      "text": "Salmon",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1794612340775
     }
   ],
   "supplies": [
@@ -380,7 +387,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611990114,
+    "lastModified": 1794612340775,
     "version": 2
   }
 }
