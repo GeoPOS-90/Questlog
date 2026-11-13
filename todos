@@ -67,7 +67,7 @@
       "id": "mwfkmkzz66fvi",
       "text": "Potatoes",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610283471
     },
     {
@@ -373,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611857132,
+    "lastModified": 1794611894407,
     "version": 2
   }
 }
