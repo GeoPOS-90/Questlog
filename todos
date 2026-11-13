@@ -123,7 +123,7 @@
       "id": "mwflmxgvrkav3",
       "text": "Carrots",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794611979249
     }
   ],
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611979249,
+    "lastModified": 1794611982706,
     "version": 2
   }
 }
