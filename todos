@@ -90,6 +90,13 @@
       "tag": "🥬 Vegetables",
       "completed": false,
       "createdAt": 1794610344049
+    },
+    {
+      "id": "mwfkome2aulhc",
+      "text": "Chicken",
+      "tag": "🥩 Proteins",
+      "completed": false,
+      "createdAt": 1794610378586
     }
   ],
   "supplies": [
@@ -345,7 +352,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610344049,
+    "lastModified": 1794610378586,
     "version": 2
   }
 }
