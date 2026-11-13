@@ -60,7 +60,7 @@
       "id": "mwfkme0vsyt1t",
       "text": "Mushroom",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610274431
     },
     {
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611982706,
+    "lastModified": 1794611990114,
     "version": 2
   }
 }
