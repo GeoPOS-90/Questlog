@@ -118,6 +118,13 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1794610440390
+    },
+    {
+      "id": "mwflmxgvrkav3",
+      "text": "Carrots",
+      "tag": "🥬 Vegetables",
+      "completed": false,
+      "createdAt": 1794611979249
     }
   ],
   "supplies": [
@@ -373,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611973267,
+    "lastModified": 1794611979249,
     "version": 2
   }
 }
