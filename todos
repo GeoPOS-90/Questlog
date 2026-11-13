@@ -39,7 +39,7 @@
       "id": "mw8bmv5avmv1j",
       "text": "Yogurt",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794171916848
     },
     {
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794613117303,
+    "lastModified": 1794613120841,
     "version": 2
   }
 }
