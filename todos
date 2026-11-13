@@ -81,7 +81,7 @@
       "id": "mwfknca94kh27",
       "text": "Butternut squash",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610318833
     },
     {
@@ -373,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611904261,
+    "lastModified": 1794611973267,
     "version": 2
   }
 }
