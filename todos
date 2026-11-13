@@ -74,7 +74,7 @@
       "id": "mwfkmxp6639ng",
       "text": "Onions",
       "tag": "🥬 Vegetables",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610299930
     },
     {
@@ -373,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794611894407,
+    "lastModified": 1794611904261,
     "version": 2
   }
 }
