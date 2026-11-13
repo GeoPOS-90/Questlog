@@ -83,6 +83,13 @@
       "tag": "🥬 Vegetables",
       "completed": false,
       "createdAt": 1794610318833
+    },
+    {
+      "id": "mwfknvqp4yz6s",
+      "text": "Egg whites",
+      "tag": "🥬 Vegetables",
+      "completed": false,
+      "createdAt": 1794610344049
     }
   ],
   "supplies": [
@@ -338,7 +345,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794610318833,
+    "lastModified": 1794610344049,
     "version": 2
   }
 }
