@@ -301,6 +301,13 @@
       "tag": "🗺️ Exploration",
       "completed": false,
       "createdAt": 1794256589246
+    },
+    {
+      "id": "mwkrfdwxkw5im",
+      "text": "Shoe heel grabb",
+      "tag": "🗺️ Exploration",
+      "completed": false,
+      "createdAt": 1794924035891
     }
   ],
   "categoryConfig": {
@@ -380,7 +387,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794924012897,
+    "lastModified": 1794924035891,
     "version": 2
   }
 }
