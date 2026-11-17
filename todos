@@ -155,7 +155,7 @@
       "id": "mw50zo4razzzi",
       "text": "CZ Bren 2 5.56",
       "tag": "Loot",
-      "completed": false,
+      "completed": true,
       "createdAt": 1793972639979
     },
     {
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794924010746,
+    "lastModified": 1794924012897,
     "version": 2
   }
 }
