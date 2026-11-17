@@ -176,7 +176,7 @@
       "id": "mwb5v597pyton",
       "text": "Binder for MtG Marvel",
       "tag": "Loot",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794343624029
     }
   ],
@@ -380,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794923503965,
+    "lastModified": 1794924010746,
     "version": 2
   }
 }
