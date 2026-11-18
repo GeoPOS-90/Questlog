@@ -243,7 +243,7 @@
       "id": "mvhfyus7n0p1y",
       "text": "SOS Plate Sticker + Registration",
       "tag": "Fetch",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792546607959
     },
     {
@@ -387,7 +387,7 @@
     }
   },
   "meta": {
-    "lastModified": 1794968029022,
+    "lastModified": 1794968564189,
     "version": 2
   }
 }
