@@ -125,6 +125,13 @@
       "tag": "🍎 Fruits",
       "completed": false,
       "createdAt": 1795091867347
+    },
+    {
+      "id": "mwfkpy2urtkbi",
+      "text": "Egg whites",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1794610440390
     }
   ],
   "supplies": [
@@ -387,7 +394,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795091879553,
+    "lastModified": 1795091918522,
     "version": 2
   }
 }
