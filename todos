@@ -106,13 +106,6 @@
       "createdAt": 1794610424635
     },
     {
-      "id": "mwfkpy2urtkbi",
-      "text": "Egg whites",
-      "tag": "🧀 Dairy",
-      "completed": false,
-      "createdAt": 1794610440390
-    },
-    {
       "id": "mwflmxgvrkav3",
       "text": "Carrots",
       "tag": "🥬 Vegetables",
@@ -394,7 +387,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795091874058,
+    "lastModified": 1795091879553,
     "version": 2
   }
 }
