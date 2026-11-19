@@ -125,6 +125,13 @@
       "tag": "🥩 Proteins",
       "completed": true,
       "createdAt": 1794612340775
+    },
+    {
+      "id": "mwnjclhuydtj2",
+      "text": "Cherry",
+      "tag": "🍎 Fruits",
+      "completed": false,
+      "createdAt": 1795091867347
     }
   ],
   "supplies": [
@@ -387,7 +394,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795091315786,
+    "lastModified": 1795091867348,
     "version": 2
   }
 }
