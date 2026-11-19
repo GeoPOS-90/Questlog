@@ -32,7 +32,7 @@
       "id": "mw8b4smpyahyz",
       "text": "Bananas",
       "tag": "🍎 Fruits",
-      "completed": true,
+      "completed": false,
       "createdAt": 1794171073777
     },
     {
@@ -394,7 +394,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795091867348,
+    "lastModified": 1795091874058,
     "version": 2
   }
 }
