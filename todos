@@ -315,6 +315,13 @@
       "tag": "🗺️ Exploration",
       "completed": false,
       "createdAt": 1794924035891
+    },
+    {
+      "id": "mwp6kzayk5nsp",
+      "text": "Phone case",
+      "tag": "Fetch",
+      "completed": false,
+      "createdAt": 1795191355836
     }
   ],
   "categoryConfig": {
@@ -394,7 +401,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795191130634,
+    "lastModified": 1795191355837,
     "version": 2
   }
 }
