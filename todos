@@ -132,6 +132,13 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1794610440390
+    },
+    {
+      "id": "mwsdutigh68jg",
+      "text": "Milk",
+      "tag": "🧀 Dairy",
+      "completed": false,
+      "createdAt": 1795384970729
     }
   ],
   "supplies": [
@@ -408,7 +415,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795279482257,
+    "lastModified": 1795384970729,
     "version": 2
   }
 }
