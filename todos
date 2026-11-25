@@ -139,6 +139,13 @@
       "tag": "🧀 Dairy",
       "completed": false,
       "createdAt": 1795384970729
+    },
+    {
+      "id": "mww6bjbtidkht",
+      "text": "Oatmeal",
+      "tag": "🍞 Grains",
+      "completed": false,
+      "createdAt": 1795614178459
     }
   ],
   "supplies": [
@@ -415,7 +422,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795387041484,
+    "lastModified": 1795614178459,
     "version": 2
   }
 }
