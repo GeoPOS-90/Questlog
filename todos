@@ -320,7 +320,7 @@
       "id": "mwp7o4br78cz9",
       "text": "Computer screw kit and 256satassd",
       "tag": "🗺️ Exploration",
-      "completed": false,
+      "completed": true,
       "createdAt": 1795193181927
     }
   ],
@@ -401,7 +401,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706660507,
+    "lastModified": 1795706664745,
     "version": 2
   }
 }
