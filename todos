@@ -303,13 +303,6 @@
       "createdAt": 1794230259185
     },
     {
-      "id": "mw9q1oscoxqh7",
-      "text": "Check why USBnk Cc High",
-      "tag": "🗺️ Exploration",
-      "completed": false,
-      "createdAt": 1794256589246
-    },
-    {
       "id": "mwkrfdwxkw5im",
       "text": "Shoe heel grabb",
       "tag": "🗺️ Exploration",
@@ -390,7 +383,7 @@
       ],
       "collapsed": {
         "👑 Milestones": false,
-        "🐉 Boss Battles": false
+        "🐉 Boss Battles": true
       }
     },
     "sidequest": {
@@ -408,7 +401,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706646113,
+    "lastModified": 1795706660507,
     "version": 2
   }
 }
