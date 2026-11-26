@@ -192,13 +192,6 @@
       "tag": "Loot",
       "completed": true,
       "createdAt": 1794343624029
-    },
-    {
-      "id": "mwxpcps0llagy",
-      "text": "Cz bren scope",
-      "tag": "📋 Tasks",
-      "completed": false,
-      "createdAt": 1795706612352
     }
   ],
   "mainquest": [
@@ -422,7 +415,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706612352,
+    "lastModified": 1795706614997,
     "version": 2
   }
 }
