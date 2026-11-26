@@ -282,13 +282,6 @@
       "createdAt": 1793193854234
     },
     {
-      "id": "mw9adcdrihtds",
-      "text": "Internet swap?",
-      "tag": "Fetch",
-      "completed": false,
-      "createdAt": 1794230259185
-    },
-    {
       "id": "mwkrfdwxkw5im",
       "text": "Shoe heel grabb",
       "tag": "🗺️ Exploration",
@@ -380,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706674808,
+    "lastModified": 1795706678257,
     "version": 2
   }
 }
