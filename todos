@@ -247,13 +247,6 @@
   ],
   "sidequest": [
     {
-      "id": "mvhfyus7n0p1y",
-      "text": "SOS Plate Sticker + Registration",
-      "tag": "Fetch",
-      "completed": false,
-      "createdAt": 1792546607959
-    },
-    {
       "id": "mvhfzb22820vy",
       "text": "Annual Enrollement at Work Benefits",
       "tag": "Fetch",
@@ -394,7 +387,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706667263,
+    "lastModified": 1795706673392,
     "version": 2
   }
 }
