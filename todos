@@ -296,13 +296,6 @@
       "createdAt": 1794924035891
     },
     {
-      "id": "mwp6kzayk5nsp",
-      "text": "Phone case",
-      "tag": "Fetch",
-      "completed": false,
-      "createdAt": 1795191355836
-    },
-    {
       "id": "mwp7o4br78cz9",
       "text": "Computer screw kit and 256satassd",
       "tag": "🗺️ Exploration",
@@ -387,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706673392,
+    "lastModified": 1795706674808,
     "version": 2
   }
 }
