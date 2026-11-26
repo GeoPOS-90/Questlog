@@ -123,7 +123,7 @@
       "id": "mwnjclhuydtj2",
       "text": "Cherry",
       "tag": "🍎 Fruits",
-      "completed": false,
+      "completed": true,
       "createdAt": 1795091867347
     },
     {
@@ -137,7 +137,7 @@
       "id": "mwsdutigh68jg",
       "text": "Milk",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1795384970729
     },
     {
@@ -373,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706694923,
+    "lastModified": 1795706699800,
     "version": 2
   }
 }
