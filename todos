@@ -231,13 +231,6 @@
       "createdAt": 1793191948622
     },
     {
-      "id": "mvs4ah09958cb",
-      "text": "Hearing protection upgrade",
-      "tag": "🐉 Boss Battles",
-      "completed": false,
-      "createdAt": 1793192122521
-    },
-    {
       "id": "mvty7gy9x4bly",
       "text": "Pick up glasses",
       "tag": "🏰 Dungeons",
@@ -415,7 +408,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706643753,
+    "lastModified": 1795706646113,
     "version": 2
   }
 }
