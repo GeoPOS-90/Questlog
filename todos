@@ -192,6 +192,13 @@
       "tag": "Loot",
       "completed": true,
       "createdAt": 1794343624029
+    },
+    {
+      "id": "mwxpd10see537",
+      "text": "Cz bren scope",
+      "tag": "Loot",
+      "completed": false,
+      "createdAt": 1795706626924
     }
   ],
   "mainquest": [
@@ -415,7 +422,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706614997,
+    "lastModified": 1795706626924,
     "version": 2
   }
 }
