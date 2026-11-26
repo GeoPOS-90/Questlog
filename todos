@@ -289,13 +289,6 @@
       "createdAt": 1793193854234
     },
     {
-      "id": "mw99p8pgz82nw",
-      "text": "15 dollar Boot Barn promo",
-      "tag": "💎 Collectibles",
-      "completed": false,
-      "createdAt": 1794229134677
-    },
-    {
       "id": "mw9adcdrihtds",
       "text": "Internet swap?",
       "tag": "Fetch",
@@ -401,7 +394,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706664745,
+    "lastModified": 1795706667263,
     "version": 2
   }
 }
