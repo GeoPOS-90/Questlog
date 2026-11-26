@@ -153,7 +153,7 @@
       "id": "mvhgosfdpj35z",
       "text": "Paper Towel",
       "tag": "🧹 Cleaning",
-      "completed": false,
+      "completed": true,
       "createdAt": 1792547817961
     },
     {
@@ -422,7 +422,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706626924,
+    "lastModified": 1795706631734,
     "version": 2
   }
 }
