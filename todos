@@ -250,13 +250,6 @@
       "tag": "🐉 Boss Battles",
       "completed": true,
       "createdAt": 1793972591021
-    },
-    {
-      "id": "mvu1ydc4ebjxn",
-      "text": "Stomach worm?",
-      "tag": "🐉 Boss Battles",
-      "completed": false,
-      "createdAt": 1793309131012
     }
   ],
   "sidequest": [
@@ -404,7 +397,7 @@
       ],
       "collapsed": {
         "👑 Milestones": false,
-        "🐉 Boss Battles": true
+        "🐉 Boss Battles": false
       }
     },
     "sidequest": {
@@ -422,7 +415,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706631734,
+    "lastModified": 1795706643753,
     "version": 2
   }
 }
