@@ -130,7 +130,7 @@
       "id": "mwfkpy2urtkbi",
       "text": "Egg whites",
       "tag": "🧀 Dairy",
-      "completed": false,
+      "completed": true,
       "createdAt": 1794610440390
     },
     {
@@ -373,7 +373,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706693003,
+    "lastModified": 1795706694923,
     "version": 2
   }
 }
