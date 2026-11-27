@@ -199,6 +199,13 @@
       "tag": "Loot",
       "completed": false,
       "createdAt": 1795706626924
+    },
+    {
+      "id": "mwz8n8yinbifr",
+      "text": "SAVIOR rifle bag 64$ 42inch",
+      "tag": "Loot",
+      "completed": false,
+      "createdAt": 1795799482650
     }
   ],
   "mainquest": [
@@ -373,7 +380,7 @@
     }
   },
   "meta": {
-    "lastModified": 1795706699800,
+    "lastModified": 1795799482650,
     "version": 2
   }
 }
